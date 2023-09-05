@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     (async () => {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/greetings`
+        `${process.env.REACT_APP_API_BASE_URL}/greetings test`
       );
       setMessage(data?.message || "");
     })();
