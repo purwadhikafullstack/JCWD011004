@@ -1,27 +1,31 @@
-import axios from "axios";
-import logo from "./logo.svg";
-import "./App.css";
-import { useEffect, useState } from "react";
+import React, { useState } from 'react';
+import LoginModal from '../src/components/loginModal/loginModal'
 
-function App() {
-  const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    (async () => {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/greetings`
-      );
-      setMessage(data?.message || "");
-    })();
-  }, []);
+const App = () => {
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+
+  const handleOpenLoginModal = () => {
+    setLoginModalOpen(true);
+  };
+
+  const handleCloseLoginModal = () => {
+    setLoginModalOpen(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {message}
-      </header>
+    <div>
+      <h1>Contoh Aplikasi React</h1>
+      <button
+        className="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 focus:outline-none"
+        onClick={handleOpenLoginModal}
+      >
+        Buka Modal Login
+      </button>
+
+      <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseLoginModal} />
     </div>
   );
-}
+};
 
 export default App;
