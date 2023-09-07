@@ -19,11 +19,20 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
       )
 
       if (response.status === 200) {
-        // Login berhasil
         console.log('Login Berhasil')
         toast.success('Login Berhasil', {
           position: toast.POSITION.TOP_CENTER
         })
+        const userRole = response.data.role
+        if (userRole === 1) {
+          setTimeout(() => {
+            window.location.href = '/admin'
+          }, 1000)
+        } else {
+          setTimeout(() => {
+            window.location.href = '/user'
+          }, 1000)
+        }
       } else {
         // Login gagal
         console.log('Login Gagal')
@@ -59,17 +68,17 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
         >
           <span className="text-2xl font-bold cursor-pointer">×</span>
         </button>
-        <h2 className="text-2xl font-semibold mb-4 ">Login</h2>
+        <h2 className="text-2xl font-semibold mb-4">Login</h2>
         <div className="mb-4">
           <label
-            htmlFor="username"
+            htmlFor="email"
             className="block text-gray-600 font-medium flex"
           >
             Email
           </label>
           <input
             type="text"
-            id="username"
+            id="email"
             className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -103,7 +112,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
         </div>
         <div className="mt-4 text-center text-sm">
           <p className="text-black-500">
-            Didn&apos;t have an account?{' '}
+            Didn't have an account?{' '}
             <span
               className="text-blue-500 cursor-pointer hover:underline"
               onClick={onOpenRegister}
