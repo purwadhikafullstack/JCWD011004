@@ -1,12 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import axios from 'axios'
 
 const LoginModal = ({ isOpen, onClose }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
-  const handleLogin = () => {
-    // Logika autentikasi Anda di sini
-  };
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/auth/login', {
+        username,
+        password
+      })
+
+      if (response.status === 200) {
+        // Jika autentikasi berhasil, Anda dapat mengarahkan pengguna ke halaman lain atau mengambil tindakan lain yang sesuai.
+        console.log('Login berhasil')
+      } else {
+        setError('Login gagal. Periksa kembali username dan password Anda.')
+      }
+    } catch (error) {
+      if (error.response) {
+        setError('Login gagal. Periksa kembali username dan password Anda.')
+      } else {
+        setError('Terjadi kesalahan dalam mengirim permintaan.')
+      }
+    }
+  }
 
   return (
     <div
@@ -19,12 +39,12 @@ const LoginModal = ({ isOpen, onClose }) => {
           className="absolute top-0 right-0 m-3 text-black-500 hover:text-black-500 focus:outline-none"
           onClick={onClose}
         >
-          <span className="text-2xl font-bold cursor-pointer">×</span> 
+          <span className="text-2xl font-bold cursor-pointer">×</span>
         </button>
-        <h2 className="text-2xl font-semibold mb-4 jus">Login</h2>
+        <h2 className="text-2xl font-semibold mb-4">Login</h2>
         <div className="mb-4">
           <label htmlFor="username" className="block text-gray-600 font-medium">
-            Email
+            Username
           </label>
           <input
             type="text"
@@ -46,8 +66,9 @@ const LoginModal = ({ isOpen, onClose }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        {error && <p className="text-red-500 mb-2">{error}</p>}
         <div className="mb-3 mt-[-0.25rem] flex justify-end text-blue-700 text-sm cursor-pointer hover:underline">
-        <span>Forgot Password?</span>
+          <span>Forgot Password?</span>
         </div>
         <div className="flex justify-center">
           <button
@@ -59,12 +80,15 @@ const LoginModal = ({ isOpen, onClose }) => {
         </div>
         <div className="mt-4 text-center text-sm">
           <p className="text-black-500">
-            Don't have an account? <span className=" text-blue-500 cursor-pointer hover:underline">Register</span>
+            Don't have an account?{' '}
+            <span className="text-blue-500 cursor-pointer hover:underline">
+              Register
+            </span>
           </p>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginModal;
+export default LoginModal

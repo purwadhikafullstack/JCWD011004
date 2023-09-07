@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
+  }
+  , {
+    sequelize,
+    modelName: "Role",
   });
   return Role;
 };
