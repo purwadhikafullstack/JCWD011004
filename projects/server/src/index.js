@@ -2,7 +2,7 @@ require('dotenv/config')
 const express = require('express')
 const cors = require('cors')
 const { join } = require('path')
-const { register } = require('./routes')
+const { authRouter } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
 
@@ -23,7 +23,7 @@ app.use(express.json());
 
 // ===========================
 // NOTE : Add your routes here
-app.use('/api', register)
+app.use('/api/auth', authRouter)
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`)
@@ -69,7 +69,6 @@ app.get('*', (req, res) => {
 
 //#endregion
 
-app.use("/auth", auth);
 
 app.listen(PORT, (err) => {
   if (err) {

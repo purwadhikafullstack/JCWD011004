@@ -1,12 +1,43 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogin = () => {
-    // Logic for authentication goes here
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/api/auth/login',
+        {
+          email: email,
+          password: password
+        }
+      )
+
+      if (response.status === 200) {
+        // Login berhasil
+        console.log('Login Berhasil')
+        toast.success('Login Berhasil', {
+          position: toast.POSITION.TOP_CENTER
+        })
+      } else {
+        // Login gagal
+        console.log('Login Gagal')
+        toast.error('Login Gagal', {
+          position: toast.POSITION.TOP_CENTER
+        })
+      }
+    } catch (error) {
+      // Terjadi kesalahan dalam melakukan permintaan ke API
+      console.error('Terjadi kesalahan:', error)
+      toast.error('Terjadi kesalahan', {
+        position: toast.POSITION.TOP_CENTER
+      })
+    }
   }
 
   LoginModal.propTypes = {
@@ -40,8 +71,8 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
             type="text"
             id="username"
             className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -82,6 +113,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
           </p>
         </div>
       </div>
+      <ToastContainer />
     </div>
   )
 }

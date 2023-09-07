@@ -1,6 +1,6 @@
 // routes/index.js
-const register = require('./register')
+const authRouter = require('./authRouter')
 
 module.exports = {
-  register
+  authRouter
 }
