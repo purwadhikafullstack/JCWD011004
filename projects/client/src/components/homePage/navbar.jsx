@@ -9,7 +9,7 @@ function Navbar() {
       <nav>
         <div className="container mx-auto">
           <div className="flex justify-between items-center">
-            <div className="text-3xl font-semibold">AKUI</div>
+            <div className="text-3xl font-bold">AKUI</div>
             <div className="flex space-x-6 items-center">
               <input
                 type="text"
@@ -18,7 +18,7 @@ function Navbar() {
               />
               <ul className="flex space-x-6">
                 <li className="flex justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
-                  <AiOutlineHeart /> Liked
+                  <AiOutlineHeart /> Wishlist
                 </li>
                 <li className="flex justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
                   <FiShoppingCart /> Cart

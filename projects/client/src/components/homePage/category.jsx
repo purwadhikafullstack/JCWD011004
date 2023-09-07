@@ -1,18 +1,18 @@
 import React from 'react'
 
 function CategoryList() {
-  const categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4']
+  const categories = ['Chairs', 'Sofas', 'Table', 'Wardrobe', 'Bed']
 
   return (
-    <nav className="bg-gray-900 text-white p-4">
+    <nav className="bg-gray-900 text-white py-2 px-4 xl:px-24">
       <div className="flex justify-center items-center">
-        <ul className="flex space-x-7">
+        <ul className="flex justify-between w-full max-w-screen-lg">
           {categories.map((category, index) => (
             <li
               key={index}
-              className="hover:text-gray-400 transition duration-300 ease-in-out"
+              className="text-lg font-semibold hover:text-gray-400 transition duration-300 ease-in-out"
             >
-              {category}
+              <a href="#">{category}</a>
             </li>
           ))}
         </ul>
