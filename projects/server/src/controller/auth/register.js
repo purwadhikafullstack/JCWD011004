@@ -1,7 +1,8 @@
 // controllers/auth/register.js
 const nodemailer = require('nodemailer')
 const bcrypt = require('bcrypt')
-const { User } = require('../../../models')
+db = require('../../../models')
+const User = db.User
 
 async function registerUser(req, res) {
   try {
@@ -11,12 +12,10 @@ async function registerUser(req, res) {
     if (existingUser) {
       return res.status(400).json({ message: 'Email is already registered' })
     }
-    const hashedPassword = await bcrypt.hash(req.body.password, 10)
     const newUser = await User.create({
       email,
       roleId: 3,
-      isVerified: false,
-      password: hashedPassword
+      isVerified: false
     })
 
     // Send a confirmation email to the user
@@ -45,7 +44,7 @@ async function registerUser(req, res) {
         return res.status(500).json({ message: 'Email sending failed' })
       }
       console.log('Email sent:', info.response)
-      res.status(201).json({
+      res.status(200).json({
         message:
           'Registration successful. Please check your email for further instructions.'
       })

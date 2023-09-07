@@ -28,9 +28,12 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
         >
           <span className="text-2xl font-bold cursor-pointer">×</span>
         </button>
-        <h2 className="text-2xl font-semibold mb-4 jus">Login</h2>
+        <h2 className="text-2xl font-semibold mb-4 ">Login</h2>
         <div className="mb-4">
-          <label htmlFor="username" className="block text-gray-600 font-medium">
+          <label
+            htmlFor="username"
+            className="block text-gray-600 font-medium flex"
+          >
             Email
           </label>
           <input
@@ -42,7 +45,10 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-600 font-medium">
+          <label
+            htmlFor="password"
+            className="block text-gray-600 font-medium flex"
+          >
             Password
           </label>
           <input

@@ -20,9 +20,13 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('YOUR_API_ENDPOINT', values)
+        const response = await axios.post(
+          'http://localhost:8000/api/register',
+          values
+        )
         if (response.status === 200) {
           // Handle success
+          console.log('register done')
         }
       } catch (error) {
         // Handle API errors (e.g., display an error message)
