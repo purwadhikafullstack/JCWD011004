@@ -1,31 +1,18 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import PropTypes from 'prop-types'
 
-const LoginModal = ({ isOpen, onClose }) => {
+const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post('http://localhost:8000/auth/login', {
-        username,
-        password
-      })
+  const handleLogin = () => {
+    // Logic for authentication goes here
+  }
 
-      if (response.status === 200) {
-        // Jika autentikasi berhasil, Anda dapat mengarahkan pengguna ke halaman lain atau mengambil tindakan lain yang sesuai.
-        console.log('Login berhasil')
-      } else {
-        setError('Login gagal. Periksa kembali username dan password Anda.')
-      }
-    } catch (error) {
-      if (error.response) {
-        setError('Login gagal. Periksa kembali username dan password Anda.')
-      } else {
-        setError('Terjadi kesalahan dalam mengirim permintaan.')
-      }
-    }
+  LoginModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onOpenRegister: PropTypes.func.isRequired
   }
 
   return (
@@ -41,10 +28,13 @@ const LoginModal = ({ isOpen, onClose }) => {
         >
           <span className="text-2xl font-bold cursor-pointer">×</span>
         </button>
-        <h2 className="text-2xl font-semibold mb-4">Login</h2>
+        <h2 className="text-2xl font-semibold mb-4 ">Login</h2>
         <div className="mb-4">
-          <label htmlFor="username" className="block text-gray-600 font-medium">
-            Username
+          <label
+            htmlFor="username"
+            className="block text-gray-600 font-medium flex"
+          >
+            Email
           </label>
           <input
             type="text"
@@ -55,7 +45,10 @@ const LoginModal = ({ isOpen, onClose }) => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-600 font-medium">
+          <label
+            htmlFor="password"
+            className="block text-gray-600 font-medium flex"
+          >
             Password
           </label>
           <input
@@ -66,7 +59,6 @@ const LoginModal = ({ isOpen, onClose }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        {error && <p className="text-red-500 mb-2">{error}</p>}
         <div className="mb-3 mt-[-0.25rem] flex justify-end text-blue-700 text-sm cursor-pointer hover:underline">
           <span>Forgot Password?</span>
         </div>
@@ -80,8 +72,11 @@ const LoginModal = ({ isOpen, onClose }) => {
         </div>
         <div className="mt-4 text-center text-sm">
           <p className="text-black-500">
-            Don't have an account?{' '}
-            <span className="text-blue-500 cursor-pointer hover:underline">
+            Didn&apos;t have an account?{' '}
+            <span
+              className="text-blue-500 cursor-pointer hover:underline"
+              onClick={onOpenRegister}
+            >
               Register
             </span>
           </p>
