@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import LoginModal from '../components/loginModal/loginModal'
 
-
 const LoginPage = () => {
-  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false)
 
   const handleOpenLoginModal = () => {
-    setLoginModalOpen(true);
-  };
+    setLoginModalOpen(true)
+  }
 
   const handleCloseLoginModal = () => {
-    setLoginModalOpen(false);
-  };
+    setLoginModalOpen(false)
+  }
 
   return (
     <div>
@@ -25,7 +24,7 @@ const LoginPage = () => {
 
       <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseLoginModal} />
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage
