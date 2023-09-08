@@ -9,7 +9,6 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
   const [password, setPassword] = useState('')
 
   const apiUrl = process.env.REACT_APP_API_BASE_URL
-  console.log(apiUrl)
 
   const handleLogin = async () => {
     try {
