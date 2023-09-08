@@ -15,7 +15,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
   const handleLogin = async () => {
     try {
       if (!email || !password) {
-        toast.error('Email dan password harus diisi', {
+        toast.error('Email dan password harus di isi', {
           position: toast.POSITION.TOP_CENTER
         })
         return
