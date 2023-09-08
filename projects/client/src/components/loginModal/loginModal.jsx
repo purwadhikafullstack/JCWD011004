@@ -3,15 +3,24 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
   const apiUrl = process.env.REACT_APP_API_BASE_URL
 
   const handleLogin = async () => {
     try {
+      if (!email || !password) {
+        toast.error('Email dan password harus diisi', {
+          position: toast.POSITION.TOP_CENTER
+        })
+        return
+      }
+
       const response = await axios.post(`${apiUrl}/auth/login`, {
         email: email,
         password: password
@@ -65,34 +74,43 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
         </button>
         <h2 className="text-2xl font-semibold mb-4">Login</h2>
         <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-gray-600 font-medium flex"
-          >
+          <label htmlFor="email" className="text-gray-600 font-medium flex">
             Email
           </label>
           <input
             type="text"
             id="email"
             className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="mb-4">
-          <label
-            htmlFor="password"
-            className="block text-gray-600 font-medium flex"
-          >
+        <div className="mb-4 relative">
+          <label htmlFor="password" className="text-gray-600 font-medium flex">
             Password
           </label>
-          <input
-            type="password"
-            id="password"
-            className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              className="w-full p-2  border rounded border-gray-300 focus:outline-none focus:border-blue-500"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {showPassword ? (
+              <FaEyeSlash
+                className="absolute top-2 right-2 cursor-pointer text-gray-600"
+                onClick={() => setShowPassword(false)}
+              />
+            ) : (
+              <FaEye
+                className="absolute top-2 right-2 cursor-pointer text-gray-600"
+                onClick={() => setShowPassword(true)}
+              />
+            )}
+          </div>
         </div>
         <div className="mb-3 mt-[-0.25rem] flex justify-end text-blue-700 text-sm cursor-pointer hover:underline">
           <span>Forgot Password?</span>
@@ -107,7 +125,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
         </div>
         <div className="mt-4 text-center text-sm">
           <p className="text-black-500">
-            Didnt have an account?{' '}
+            Dont have an account?{' '}
             <span
               className="text-blue-500 cursor-pointer hover:underline"
               onClick={onOpenRegister}
