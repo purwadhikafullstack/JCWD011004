@@ -8,18 +8,17 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const apiUrl = process.env.REACT_APP_API_BASE_URL
+  console.log(apiUrl)
+
   const handleLogin = async () => {
     try {
-      const response = await axios.post(
-        'http://localhost:8000/api/auth/login',
-        {
-          email: email,
-          password: password
-        }
-      )
+      const response = await axios.post(`${apiUrl}/auth/login`, {
+        email: email,
+        password: password
+      })
 
       if (response.status === 200) {
-        console.log('Login Berhasil')
         toast.success('Login Berhasil', {
           position: toast.POSITION.TOP_CENTER
         })
@@ -34,14 +33,11 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
           }, 1000)
         }
       } else {
-        // Login gagal
-        console.log('Login Gagal')
         toast.error('Login Gagal', {
           position: toast.POSITION.TOP_CENTER
         })
       }
     } catch (error) {
-      // Terjadi kesalahan dalam melakukan permintaan ke API
       console.error('Terjadi kesalahan:', error)
       toast.error('Terjadi kesalahan', {
         position: toast.POSITION.TOP_CENTER
@@ -112,7 +108,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
         </div>
         <div className="mt-4 text-center text-sm">
           <p className="text-black-500">
-            Didn't have an account?{' '}
+            Didnt have an account?{' '}
             <span
               className="text-blue-500 cursor-pointer hover:underline"
               onClick={onOpenRegister}
