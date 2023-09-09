@@ -1,5 +1,5 @@
 import React from 'react'
-import Card from '../commonComponent/cardProduct'
+import Card from '../card/cardProduct'
 import Dropdown from './dropdown'
 
 function CardList() {
