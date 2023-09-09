@@ -15,9 +15,9 @@ app.use(
   })
 )
 
-app.use(express.json());
-// const db = require('../models');
-// db.sequelize.sync({alter: true});
+app.use(express.json())
+// const db = require('../models')
+// db.sequelize.sync({ alter: true })
 
 //#region API ROUTES
 
@@ -68,7 +68,6 @@ app.get('*', (req, res) => {
 })
 
 //#endregion
-
 
 app.listen(PORT, (err) => {
   if (err) {
