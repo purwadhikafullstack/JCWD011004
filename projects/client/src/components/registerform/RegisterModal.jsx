@@ -3,19 +3,19 @@ import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email('Invalid email address')
       .required('Email is required')
-    // Add other fields and validation rules as needed
   })
 
   const formik = useFormik({
     initialValues: {
       email: ''
-      // Initialize other form fields here
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -25,11 +25,14 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
           values
         )
         if (response.status === 200) {
-          // Handle success
-          console.log('register done')
+          toast.success('Register Berhasil', {
+            position: toast.POSITION.TOP_CENTER
+          })
         }
       } catch (error) {
-        // Handle API errors (e.g., display an error message)
+        toast.error(error.response.data.message, {
+          position: toast.POSITION.TOP_CENTER
+        })
       }
     }
   })
@@ -94,6 +97,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
           </p>
         </div>
       </div>
+      <ToastContainer />
     </div>
   )
 }
