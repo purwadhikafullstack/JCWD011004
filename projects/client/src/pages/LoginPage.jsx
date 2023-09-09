@@ -1,15 +1,26 @@
 import React, { useState } from 'react'
 import LoginModal from '../components/loginModal/loginModal'
-
+import RegisterModal from '../components/registerform/RegisterModal'
 const LoginPage = () => {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false)
+  const [isRegisterModalOpen, setRegisterModalOpen] = useState(false)
 
   const handleOpenLoginModal = () => {
     setLoginModalOpen(true)
+    setRegisterModalOpen(false)
   }
 
   const handleCloseLoginModal = () => {
     setLoginModalOpen(false)
+  }
+
+  const handleopenRegisterModal = () => {
+    setLoginModalOpen(false)
+    setRegisterModalOpen(true)
+  }
+
+  const handlecloseRegisterModal = () => {
+    setRegisterModalOpen(false)
   }
 
   return (
@@ -22,7 +33,16 @@ const LoginPage = () => {
         Buka Modal Login
       </button>
 
-      <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseLoginModal} />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={handleCloseLoginModal}
+        onOpenRegister={handleopenRegisterModal}
+      />
+      <RegisterModal
+        isOpen={isRegisterModalOpen}
+        onClose={handlecloseRegisterModal}
+        onOpenLogin={handleOpenLoginModal}
+      />
     </div>
   )
 }
