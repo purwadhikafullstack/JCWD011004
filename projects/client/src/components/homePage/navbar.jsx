@@ -2,8 +2,10 @@ import React from 'react'
 import { FiShoppingCart } from 'react-icons/fi'
 import { RxAvatar } from 'react-icons/rx'
 import { AiOutlineHeart } from 'react-icons/ai'
+import ButtonLoginRegister from './buttonLoginRegister'
 
 function Navbar() {
+  const token = localStorage.getItem('token')
   return (
     <div className="container mx-auto max-w-screen-lg fixed top-0 bg-gray-900 text-white px-7 py-5 z-50">
       <nav>
@@ -23,8 +25,14 @@ function Navbar() {
                 <li className="flex justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
                   <FiShoppingCart /> Cart
                 </li>
-                <li className="flex justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
-                  <RxAvatar /> Profile
+                <li className="flex justify-between items-center text-gray-400 transition duration-300 ease-in-out">
+                  {token ? (
+                    <>
+                      <RxAvatar /> Profile
+                    </>
+                  ) : (
+                    <ButtonLoginRegister />
+                  )}
                 </li>
               </ul>
             </div>
