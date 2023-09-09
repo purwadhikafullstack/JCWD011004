@@ -3,14 +3,7 @@ import React from 'react'
 function Footer() {
   return (
     <footer className="bg-gray-900 text-white py-6">
-      <div className="container mx-auto flex flex-wrap">
-        <div className="w-full md:w-1/2 lg:w-1/4 px-4 mb-4">
-          <h2 className="text-xl font-semibold mb-4">About Us</h2>
-          <p className="text-gray-400">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla metus
-            augue, aliquet a tortor at, auctor lacinia purus.
-          </p>
-        </div>
+      <div className="container mx-auto flex flex-wrap justify-center">
         <div className="w-full md:w-1/2 lg:w-1/4 px-4 mb-4">
           <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
           <p className="text-gray-400">Email: contact@example.com</p>
@@ -20,14 +13,6 @@ function Footer() {
         <div className="w-full md:w-1/2 lg:w-1/4 px-4 mb-4">
           <h2 className="text-xl font-semibold mb-4">Links</h2>
           <ul className="list-none">
-            <li className="mb-2">
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition duration-300"
-              >
-                Home
-              </a>
-            </li>
             <li className="mb-2">
               <a
                 href="#"
@@ -44,14 +29,6 @@ function Footer() {
                 About Us
               </a>
             </li>
-            <li className="mb-2">
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition duration-300"
-              >
-                Contact
-              </a>
-            </li>
           </ul>
         </div>
         <div className="w-full md:w-1/2 lg:w-1/4 px-4 mb-4">
@@ -59,7 +36,7 @@ function Footer() {
           <ul className="list-none">
             <li className="mb-2">
               <a
-                href="#"
+                href="https://web.facebook.com/"
                 className="text-gray-400 hover:text-white transition duration-300"
               >
                 Facebook
@@ -67,7 +44,7 @@ function Footer() {
             </li>
             <li className="mb-2">
               <a
-                href="#"
+                href="https://twitter.com/"
                 className="text-gray-400 hover:text-white transition duration-300"
               >
                 Twitter
@@ -75,7 +52,7 @@ function Footer() {
             </li>
             <li className="mb-2">
               <a
-                href="#"
+                href="https://www.instagram.com/"
                 className="text-gray-400 hover:text-white transition duration-300"
               >
                 Instagram
