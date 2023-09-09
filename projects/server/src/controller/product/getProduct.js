@@ -26,7 +26,6 @@ async function getAllProduct(req, res){
                 order = [['createdAt', 'DESC']];
             }
         }
-
         const size = limit ? parseInt(limit) : 12; // jika pergam tidak diketahui, maka defaultnya adalah 12
         const offset = page ? (parseInt(page) - 1) * size : 0; // Menghitung offset berdasarkan halaman, 12 artikel 
 
