@@ -15,7 +15,7 @@ function Footer() {
           <ul className="list-none">
             <li className="mb-2">
               <a
-                href="#"
+                href="/product"
                 className="text-gray-400 hover:text-white transition duration-300"
               >
                 Products

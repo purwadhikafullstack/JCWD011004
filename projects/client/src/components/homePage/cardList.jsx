@@ -1,6 +1,6 @@
 import React from 'react'
 import Card from '../card/cardProduct'
-import Dropdown from './dropdown'
+import Dropdown from '../dropdownSort/dropdown'
 
 function CardList() {
   return (
@@ -17,7 +17,7 @@ function CardList() {
         <Card />
       </div>
       <div className="my-2 pl-5 hover:text-orange-400 transition duration-300 ease-in-out border-t border-gray-500 border-b text-left">
-        <a href="#" className="text-lg font-bold">
+        <a href="/product" className="text-lg font-bold">
           ALL PRODUCT
         </a>
       </div>
