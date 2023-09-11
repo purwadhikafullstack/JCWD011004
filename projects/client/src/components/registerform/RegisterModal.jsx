@@ -58,10 +58,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
         </h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="flex block text-gray-600 font-medium"
-            >
+            <label htmlFor="email" className="flex text-gray-600 font-medium">
               Email
             </label>
             <input

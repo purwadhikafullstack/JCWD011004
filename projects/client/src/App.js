@@ -2,6 +2,7 @@ import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import ProductPage from './pages/ProductPage'
+import VerifyPage from './pages/VerifyPage'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/product" element={<ProductPage />}></Route>
+        <Route path="/verify" element={<VerifyPage />}></Route>
       </Routes>
     </div>
   )

@@ -7,27 +7,27 @@ module.exports = {
       'Categories',
       [
         {
-          name: 'Chairs',
+          name: 'CHAIRS',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          name: 'Sofas',
+          name: 'SOFAS',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          name: 'Table',
+          name: 'TABLE',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          name: 'Wardrobe',
+          name: 'WARDROBE',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          name: 'Bed',
+          name: 'BED',
           createdAt: new Date(),
           updatedAt: new Date()
         }
