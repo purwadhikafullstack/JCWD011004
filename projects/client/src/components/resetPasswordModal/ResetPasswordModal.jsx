@@ -21,7 +21,7 @@ const ResetPasswordModal = ({ isOpen, onClose, onOpenLogin }) => {
     onSubmit: async (values) => {
       try {
         const response = await axios.post(
-          'http://localhost:8000/api/reset-password',
+          'http://localhost:8000/api/auth/reset-password',
           values
         )
         if (response.status === 200) {

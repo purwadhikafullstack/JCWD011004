@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -21,11 +21,11 @@ function RequestResetPass() {
   const { token } = useParams()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-
+  const nav = useNavigate()
   const handleSubmit = async (values) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8000/api/reset-password`,
+        `http://localhost:8000/api/auth/reset-password`,
         values,
         {
           headers: { Authorization: `Bearer ${token}` }
@@ -36,6 +36,7 @@ function RequestResetPass() {
         toast.success('Reset Password Berhasil Silahkan login', {
           position: toast.POSITION.TOP_CENTER
         })
+        nav('/')
       }
     } catch (error) {
       console.error(error)
