@@ -1,11 +1,14 @@
 "use strict";
 
+const { Transaction_Item } = require("../models"); // Sesuaikan dengan path dan nama model yang sesuai
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert("Transaction_Items", [
+    // Data transaksi item yang akan diisi ke dalam tabel 'Transaction_Items'
+    const transactionItemsData = [
       {
-        productId: 1,
-        transactionId: 1,
+        productId: 1, // Ganti dengan productId yang sesuai
+        transactionId: 5, // Ganti dengan transactionId yang sesuai
         productPrice: 100,
         quantity: 2,
         totalPrice: 200,
@@ -13,72 +16,40 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        productId: 2,
-        transactionId: 1,
-        productPrice: 75,
+        productId: 2, // Ganti dengan productId yang sesuai
+        transactionId: 6, // Ganti dengan transactionId yang sesuai
+        productPrice: 200,
         quantity: 3,
-        totalPrice: 225,
+        totalPrice: 600,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        productId: 3,
-        transactionId: 2,
-        productPrice: 50,
-        quantity: 5,
-        totalPrice: 250,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        productId: 4,
-        transactionId: 2,
-        productPrice: 60,
-        quantity: 4,
-        totalPrice: 240,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        productId: 5,
-        transactionId: 3,
-        productPrice: 120,
+        productId: 3, // Ganti dengan productId yang sesuai
+        transactionId: 7, // Ganti dengan transactionId yang sesuai
+        productPrice: 300,
         quantity: 1,
-        totalPrice: 120,
+        totalPrice: 300,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        productId: 6,
-        transactionId: 3,
-        productPrice: 90,
-        quantity: 2,
-        totalPrice: 180,
+        productId: 4, // Ganti dengan productId yang sesuai
+        transactionId: 8, // Ganti dengan transactionId yang sesuai
+        productPrice: 400,
+        quantity: 4,
+        totalPrice: 1600,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      {
-        productId: 7,
-        transactionId: 4,
-        productPrice: 30,
-        quantity: 6,
-        totalPrice: 180,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        productId: 8,
-        transactionId: 4,
-        productPrice: 40,
-        quantity: 5,
-        totalPrice: 200,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ]);
+    ];
+
+    // Masukkan data transaksi item ke dalam tabel 'Transaction_Items'
+    await Transaction_Item.bulkCreate(transactionItemsData);
   },
 
   down: async (queryInterface, Sequelize) => {
+    // Hapus semua data yang telah dimasukkan sebelumnya
     await queryInterface.bulkDelete("Transaction_Items", null, {});
   },
 };
