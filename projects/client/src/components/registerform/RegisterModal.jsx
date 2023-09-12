@@ -21,7 +21,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
     onSubmit: async (values) => {
       try {
         const response = await axios.post(
-          'http://localhost:8000/api/register',
+          'http://localhost:8000/api/auth/register',
           values
         )
         if (response.status === 200) {
