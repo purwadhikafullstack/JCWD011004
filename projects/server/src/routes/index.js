@@ -1,8 +1,6 @@
 // routes/index.js
-const register = require('./register')
-const resetPass = require('./resetPass')
+const authRouter = require('./authRouter')
 
 module.exports = {
-  register,
-  resetPass
+  authRouter
 }

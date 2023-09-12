@@ -32,7 +32,7 @@ async function registerUser(req, res) {
     const token = generateToken(newUser.id)
     const emailResponse = await sendEmail(email, token)
     if (emailResponse.status === 500) {
-      throw new Error(emailResponse.message) 
+      throw new Error(emailResponse.message)
     }
     res.status(200).json({ message: emailResponse.message })
   } catch (error) {
