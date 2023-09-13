@@ -18,8 +18,8 @@ app.use(
 )
 
 app.use(express.json())
-// const db = require('../models')
-// db.sequelize.sync({ alter: true })
+// const db = require('../models');
+// db.sequelize.sync({alter: true});
 
 //#region API ROUTES
 

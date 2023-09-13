@@ -6,7 +6,7 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
+const ResetPasswordModal = ({ isOpen, onClose, onOpenLogin }) => {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email('Invalid email address')
@@ -21,11 +21,11 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
     onSubmit: async (values) => {
       try {
         const response = await axios.post(
-          'http://localhost:8000/api/auth/register',
+          'http://localhost:8000/api/auth/reset-password',
           values
         )
         if (response.status === 200) {
-          toast.success('Register Berhasil', {
+          toast.success('Silahkan check email untuk reset password', {
             position: toast.POSITION.TOP_CENTER
           })
         }
@@ -37,7 +37,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
     }
   })
 
-  RegisterModal.propTypes = {
+  ResetPasswordModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     onOpenLogin: PropTypes.func.isRequired
@@ -56,7 +56,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
         >
           <span className="text-2xl font-bold cursor-pointer">×</span>
         </button>
-        <h2 className="text-2xl font-semibold mb-4 jus">Register</h2>
+        <h2 className="text-2xl font-semibold mb-4 jus">Reset Password</h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-600 font-medium">
@@ -81,7 +81,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
               type="submit"
               className="bg-blue-500 text-white rounded-full py-2 px-10 hover:bg-blue-600 focus:outline-none"
             >
-              Register
+              Reset Password
             </button>
           </div>
         </form>
@@ -102,4 +102,4 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
   )
 }
 
-export default RegisterModal
+export default ResetPasswordModal

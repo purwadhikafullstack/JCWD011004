@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import ProductPage from './pages/ProductPage'
 import VerifyPage from './pages/VerifyPage'
+import RequestResetPass from './pages/RequestResetPass'
 
 function App() {
   return (
@@ -11,6 +12,10 @@ function App() {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/product" element={<ProductPage />}></Route>
         <Route path="/verify:token" element={<VerifyPage />}></Route>
+        <Route
+          path="/reset-password/:token"
+          element={<RequestResetPass />}
+        ></Route>
       </Routes>
     </div>
   )
