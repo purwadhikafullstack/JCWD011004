@@ -1,23 +1,22 @@
 "use strict";
-const { User } = require("../models/user"); // Sesuaikan dengan path ke model User Anda
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     // Gantilah dengan data seeder yang sesuai
     const users = [
       {
-        roleId: 1,
+        roleId: 2,
         username: "user1",
         email: "user1@example.com",
         profileImage: "user1.jpg",
         firstName: "John",
         lastName: "Doe",
-        phoneNumber: "1234567890",
+        phoneNumber: "123456789890",
         password: "hashed_password_1",
         twitter: "user1_twitter",
         facebook: "user1_facebook",
         google: "user1_google",
-        isVerified: true,
+        isVerified: false,
         isActive: true,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -29,12 +28,12 @@ module.exports = {
         profileImage: "user2.jpg",
         firstName: "Jane",
         lastName: "Smith",
-        phoneNumber: "9876543210",
+        phoneNumber: "0857675656567",
         password: "hashed_password_2",
         twitter: "user2_twitter",
         facebook: "user2_facebook",
         google: "user2_google",
-        isVerified: true,
+        isVerified: false,
         isActive: true,
         createdAt: new Date(),
         updatedAt: new Date(),

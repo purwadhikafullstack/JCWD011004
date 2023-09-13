@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import LoginModal from '../components/loginModal/loginModal'
-import RegisterModal from '../components/registerform/RegisterModal'
-import ResetPasswordModal from '../components/resetPasswordModal/ResetPasswordModal'
-const LoginPage = () => {
+import LoginModal from '../loginModal/loginModal'
+import RegisterModal from '../registerform/RegisterModal'
+import ResetPasswordModal from '../resetPasswordModal/ResetPasswordModal'
+const ButtonLoginRegister = () => {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false)
   const [isRegisterModalOpen, setRegisterModalOpen] = useState(false)
   const [isResetPasswordModalOpen, setResetPasswordModalOpen] = useState(false)
@@ -36,13 +36,19 @@ const LoginPage = () => {
   }
 
   return (
-    <div>
-      <h1>Contoh Aplikasi React</h1>
+    <div className="flex items-center">
       <button
-        className="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 focus:outline-none"
+        className="bg-transparent text-white hover:bg-orange-300 hover:text-white rounded-full py-1 px-2 focus:outline-none"
         onClick={handleOpenLoginModal}
       >
-        Buka Modal Login
+        Login
+      </button>
+      <p>/</p>
+      <button
+        className="bg-transparent text-white hover:bg-orange-300 hover:text-white rounded-full py-1 px-2 focus:outline-none"
+        onClick={handleopenRegisterModal}
+      >
+        Register
       </button>
       <button
         className="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 focus:outline-none"
@@ -69,4 +75,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default ButtonLoginRegister

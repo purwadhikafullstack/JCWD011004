@@ -3,6 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const { join } = require('path')
 const { authRouter } = require('./routes')
+const {productRouter} = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
 
@@ -15,7 +16,7 @@ app.use(
   })
 )
 
-app.use(express.json())
+app.use(express.json());
 // const db = require('../models');
 // db.sequelize.sync({alter: true});
 
@@ -24,6 +25,7 @@ app.use(express.json())
 // ===========================
 // NOTE : Add your routes here
 app.use('/api/auth', authRouter)
+app.use('/api/product', productRouter)
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`)
