@@ -24,6 +24,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Mutation, {
         foreignKey: "productId",
       });
+      this.hasMany(models.Transaction_Item, {
+        foreignKey: 'productId',
+      })
     }
   }
   Product.init(
