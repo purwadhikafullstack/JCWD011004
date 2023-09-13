@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import LoginModal from '../components/loginModal/loginModal'
-import RegisterModal from '../components/registerform/RegisterModal'
-import ResetPasswordModal from '../components/resetPasswordModal/ResetPasswordModal'
+import LoginModal from '../loginModal/loginModal'
+import RegisterModal from '../registerform/RegisterModal'
+import ResetPasswordModal from '../resetPasswordModal/ResetPasswordModal'
 const LoginPage = () => {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false)
   const [isRegisterModalOpen, setRegisterModalOpen] = useState(false)
@@ -10,6 +10,7 @@ const LoginPage = () => {
   const handleOpenLoginModal = () => {
     setLoginModalOpen(true)
     setRegisterModalOpen(false)
+    setResetPasswordModalOpen(false)
   }
 
   const handleCloseLoginModal = () => {
@@ -19,6 +20,7 @@ const LoginPage = () => {
   const handleopenRegisterModal = () => {
     setLoginModalOpen(false)
     setRegisterModalOpen(true)
+    setResetPasswordModalOpen(false)
   }
 
   const handlecloseRegisterModal = () => {
@@ -26,9 +28,9 @@ const LoginPage = () => {
   }
 
   const handleOpenResetModalOpen = () => {
+    setLoginModalOpen(false)
+    setRegisterModalOpen(false)
     setResetPasswordModalOpen(true)
-    setRegisterModalOpen(false)
-    setRegisterModalOpen(false)
   }
 
   const handleCloseResetModalOpen = () => {
@@ -50,17 +52,12 @@ const LoginPage = () => {
       >
         Register
       </button>
-      <button
-        className="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 focus:outline-none"
-        onClick={handleOpenResetModalOpen}
-      >
-        Buka modal reset password
-      </button>
 
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={handleCloseLoginModal}
         onOpenRegister={handleopenRegisterModal}
+        onOpenResetPass={handleOpenResetModalOpen}
       />
       <RegisterModal
         isOpen={isRegisterModalOpen}
@@ -70,6 +67,7 @@ const LoginPage = () => {
       <ResetPasswordModal
         isOpen={isResetPasswordModalOpen}
         onClose={handleCloseResetModalOpen}
+        onOpenLogin={handleOpenLoginModal}
       />
     </div>
   )

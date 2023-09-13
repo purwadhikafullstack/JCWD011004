@@ -59,7 +59,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
         <h2 className="text-2xl font-semibold mb-4 jus">Register</h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-600 font-medium">
+            <label htmlFor="email" className=" text-gray-600 font-medium flex">
               Email
             </label>
             <input
@@ -79,7 +79,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-blue-500 text-white rounded-full py-2 px-10 hover:bg-blue-600 focus:outline-none"
+              className="px-7 py-2 bg-orange-300 text-white rounded-full hover:bg-orange-400 focus:outline-none"
             >
               Register
             </button>

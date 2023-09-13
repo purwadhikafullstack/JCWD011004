@@ -5,7 +5,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
-const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
+const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -56,7 +56,8 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
   LoginModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    onOpenRegister: PropTypes.func.isRequired
+    onOpenRegister: PropTypes.func.isRequired,
+    onOpenResetPass: PropTypes.func.isRequired
   }
 
   return (
@@ -113,7 +114,12 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
           </div>
         </div>
         <div className="mb-3 mt-[-0.25rem] flex justify-end text-blue-700 text-sm cursor-pointer hover:underline">
-          <span>Forgot Password?</span>
+          <span
+            className="text-blue-500 cursor-pointer hover:underline"
+            onClick={onOpenResetPass}
+          >
+            Forgot Password?
+          </span>
         </div>
         <div className="flex justify-center">
           <button
