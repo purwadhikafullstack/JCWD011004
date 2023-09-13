@@ -1,7 +1,6 @@
 const db = require('../../../models')
 const Product = db.Product
 const Transaction_Item = db.Transaction_Item
-const Category = db.Category;
 const { Op } = require('sequelize')
 
 async function getAllProduct(req, res) {
@@ -13,13 +12,17 @@ async function getAllProduct(req, res) {
         [Op.like]: `%${name}%`
       }
     }
-    if (categoryId) { whereCondition.categoryId = categoryId}
+    if (categoryId) {
+      whereCondition.categoryId = categoryId
+    }
     let order
     if (sort === '1') {
       order = [['price', 'ASC']]
-    } if (sort === '2') {
+    }
+    if (sort === '2') {
       order = [['price', 'DESC']]
-    } if (sort === '3') {
+    }
+    if (sort === '3') {
       order = [['createdAt', 'ASC']]
     }
 
@@ -30,7 +33,7 @@ async function getAllProduct(req, res) {
       where: whereCondition,
       limit: size,
       offset: offset,
-      order: order,
+      order: order
     })
     const totalCount = await Product.count({
       where: whereCondition
@@ -50,25 +53,42 @@ async function getAllProduct(req, res) {
   }
 }
 
-async function mostSales(req, res){
+async function mostSales(req, res) {
   try {
+    const { page, limit = 12 } = req.body
+    const pageNumber = parseInt(page, 10)
+
     const salesMost = await Transaction_Item.findAll({
-      attributes: ['productId', [db.sequelize.fn('SUM', db.sequelize.col('quantity')), 'totalSales']],
+      attributes: [
+        'productId',
+        [db.sequelize.fn('SUM', db.sequelize.col('quantity')), 'totalSales']
+      ],
       group: ['productId'],
       order: [['totalSales', 'DESC']],
-      limit: 5,
-      include: [{
+      limit: limit,
+      offset: (pageNumber - 1) * limit,
+      include: {
         model: Product
-      }]
+      }
     })
+    const totalCount = await Transaction_Item.count({
+      distinct: true,
+      col: 'productId'
+    })
+    const totalPages = Math.ceil(totalCount / limit)
+    const response = {
+      totalProducts: totalCount,
+      totalPages: totalPages,
+      currentPage: pageNumber,
+      salesMost: salesMost
+    }
 
-    res.status(200).json(salesMost);
-  } catch(error) {
-    console.log(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(200).json(response)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Internal Server Error' })
   }
 }
-
 
 module.exports = {
   getAllProduct,
