@@ -55,9 +55,9 @@ async function getAllProduct(req, res) {
 
 async function mostSales(req, res) {
   try {
-    const { limit, page } = req.query;
-    const size = limit ? parseInt(limit) : 12;
-    const offset = page ? (parseInt(page) - 1) * size : 0;
+    const { limit, page } = req.query
+    const size = limit ? parseInt(limit) : 12
+    const offset = page ? (parseInt(page) - 1) * size : 0
 
     const salesMost = await Transaction_Item.findAll({
       attributes: [
@@ -71,25 +71,26 @@ async function mostSales(req, res) {
       include: {
         model: Product
       }
-    });
+    })
 
     const totalCount = await Transaction_Item.count({
       distinct: true,
       col: 'productId'
-    });
-    const totalPages = Math.ceil(totalCount / size);
+    })
+    const totalPages = Math.ceil(totalCount / size)
+    const currentPage = page ? parseInt(page) : 1
 
     const response = {
       totalProducts: totalCount,
       totalPages: totalPages,
-      currentPage: page,
-      salesMost: salesMost
-    };
+      currentPage: currentPage,
+      products: salesMost
+    }
 
-    res.status(200).json(response);
+    res.status(200).json(response)
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    console.log(error)
+    res.status(500).json({ message: 'Internal Server Error' })
   }
 }
 
