@@ -1,13 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const Login = require('../controller/auth/login')
+const {login} = require('../controller/auth/login')
 const { validateEmail } = require('../middleware/emailValidator')
 const { registerUser } = require('../controller/auth/register')
 const passwordValidationRules = require('../middleware/passwordValidation')
-const { requestResetPassword, resetPassword } = require('../controller/auth')
+const requestResetPassword = require('../controller/auth/requestResetPassword')
+const resetPassword  = require('../controller/auth/resetPassword')
 
 router.post('/register', validateEmail, registerUser)
-router.post('/login', Login.login)
+router.post('/login', login)
 router.post('/reset-password', validateEmail, requestResetPassword)
 router.patch('/reset-password', passwordValidationRules(), resetPassword)
+
 module.exports = router
