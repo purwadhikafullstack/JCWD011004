@@ -59,7 +59,7 @@ async function mostSales(req, res) {
     const size = limit ? parseInt(limit) : 12;
     const offset = page ? (parseInt(page) - 1) * size : 0;
 
-    const salesMost = await Transaction_Item.findAll({
+    const products = await Transaction_Item.findAll({
       attributes: [
         'productId',
         [db.sequelize.fn('SUM', db.sequelize.col('quantity')), 'totalSales']
@@ -78,12 +78,13 @@ async function mostSales(req, res) {
       col: 'productId'
     });
     const totalPages = Math.ceil(totalCount / size);
+    const currentPage = page ? parseInt(page) : 1;
 
     const response = {
       totalProducts: totalCount,
       totalPages: totalPages,
-      currentPage: page,
-      salesMost: salesMost
+      currentPage: currentPage,
+      products: products
     };
 
     res.status(200).json(response);
