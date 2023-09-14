@@ -16,7 +16,7 @@ app.use(
   })
 )
 
-app.use(express.json());
+app.use(express.json())
 // const db = require('../models');
 // db.sequelize.sync({alter: true});
 
@@ -70,7 +70,6 @@ app.get('*', (req, res) => {
 })
 
 //#endregion
-
 
 app.listen(PORT, (err) => {
   if (err) {
