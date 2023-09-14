@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
+import { Carousel } from 'react-responsive-carousel'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 function ProductDetailPage() {
   const [productData, setProductData] = useState(null)
+  const [quantity, setQuantity] = useState(1)
 
   const handleAddToCart = () => {
-    toast.success('Item added to cart!', {
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 2000,
-      hideProgressBar: false
-    })
+    const alertMessage = `${quantity} item${
+      quantity > 1 ? 's' : ''
+    } added to cart!`
+    alert(alertMessage)
   }
 
   useEffect(() => {
@@ -33,21 +33,63 @@ function ProductDetailPage() {
     return <p>Loading...</p>
   }
 
+  const productImages = [
+    'https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/281/0728155_PE736115_S4.webp',
+    'https://putrawahyuantique.com/wp-content/uploads/2020/11/Kursi-Makan-Minimalis-Balero-Jati.png',
+    'https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/724/0872451_PE590608_S4.webp',
+    'https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/532/1053298_PE846888_S4.webp'
+  ]
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="w-full bg-white rounded-lg overflow-y-auto m-3 p-3 shadow-lg">
-        <div className="p-3 justify-center items-center">
-          <img
-            src="https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/281/0728155_PE736115_S4.webp"
-            alt="Product Image"
-            className="mx-auto block w-250 h-250 object-cover rounded-t-lg"
-          />
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="max-w-4xl w-full mx-auto bg-white rounded-lg shadow-lg p-4 md:flex">
+        <div className="md:w-1/2 p-4">
+          <Carousel>
+            {productImages.map((image, index) => (
+              <div key={index}>
+                <img
+                  src={image}
+                  alt={`Product Image ${index}`}
+                  className="w-full h-auto object-cover rounded-lg"
+                />
+              </div>
+            ))}
+          </Carousel>
         </div>
-        <div className="text-left p-3">
-          <h2 className="text-2xl font-semibold">{productData.name}</h2>
-          <p className="mb-4 text-gray-600">{productData.description}</p>
-          <p className="mb-4 text-m font-bold">IDR {productData.price}</p>
-          <div className="mt-4 flex justify-between items-center">
+        <div className="md:w-1/2 p-4">
+          <h2 className="text-2xl font-bold">{productData.name}</h2>
+          <p className="mb-4 text-lg">{productData.description}</p>
+          <p className="mb-4 text-xl font-bold">IDR {productData.price}</p>
+          <div className="flex items-center justify-center mb-4">
+            <button
+              className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
+              onClick={() => {
+                if (quantity > 1) {
+                  setQuantity(quantity - 1)
+                }
+              }}
+            >
+              −
+            </button>
+            <input
+              type="number"
+              className="px-4 py-2 text-center bg-gray-100 rounded-full mx-2"
+              value={quantity}
+              onChange={(e) => {
+                const value = parseInt(e.target.value)
+                if (!isNaN(value) && value >= 1) {
+                  setQuantity(value)
+                }
+              }}
+            />
+            <button
+              className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
+              onClick={() => setQuantity(quantity + 1)}
+            >
+              +
+            </button>
+          </div>
+          <div className="mt-4">
             <button
               className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
               onClick={handleAddToCart}
