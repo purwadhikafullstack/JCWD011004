@@ -55,9 +55,18 @@ async function getAllProduct(req, res) {
 
 async function mostSales(req, res) {
   try {
-    const { limit, page } = req.query;
+    const { limit, page, categoryId } = req.query;
     const size = limit ? parseInt(limit) : 12;
     const offset = page ? (parseInt(page) - 1) * size : 0;
+
+    const includeOptions = {
+      model: Product,
+    };
+
+    // Jika categoryId tersedia, tambahkan filter berdasarkan kategori
+    if (categoryId) {
+      includeOptions.where = { categoryId: categoryId };
+    }
 
     const products = await Transaction_Item.findAll({
       attributes: [
@@ -68,9 +77,7 @@ async function mostSales(req, res) {
       order: [['totalSales', 'DESC']],
       limit: size,
       offset: offset,
-      include: {
-        model: Product
-      }
+      include: includeOptions, // Gunakan opsi include yang telah dibuat
     });
 
     const totalCount = await Transaction_Item.count({
