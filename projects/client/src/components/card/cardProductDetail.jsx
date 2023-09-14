@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 
-function ProductDetailPage({ id }) {
+function ProductDetailPage() {
   const [productData, setProductData] = useState(null)
 
   const handleAddToCart = () => {
@@ -27,7 +27,7 @@ function ProductDetailPage({ id }) {
     }
 
     fetchData()
-  }, [id])
+  }, [])
 
   if (!productData) {
     return <p>Loading...</p>
