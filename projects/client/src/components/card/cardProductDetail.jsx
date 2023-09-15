@@ -32,13 +32,9 @@ function ProductDetailPage() {
   if (!productData) {
     return <p>Loading...</p>
   }
-
-  const productImages = [
-    'https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/281/0728155_PE736115_S4.webp',
-    'https://putrawahyuantique.com/wp-content/uploads/2020/11/Kursi-Makan-Minimalis-Balero-Jati.png',
-    'https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/724/0872451_PE590608_S4.webp',
-    'https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/532/1053298_PE846888_S4.webp'
-  ]
+  const productImages = productData.Product_Images.map(
+    (imageObj) => imageObj.image
+  )
 
   return (
     <div className="flex items-center justify-center min-h-screen">
