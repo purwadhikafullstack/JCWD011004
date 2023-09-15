@@ -32,7 +32,6 @@ async function getAllProduct(req, res) {
     const imageOptions = {
       model: Product_Image,
     }
-
     const products = await Product.findAll({
       where: whereCondition,
       limit: size,
@@ -63,7 +62,6 @@ async function mostSales(req, res) {
     const { limit, page, categoryId } = req.query;
     const size = limit ? parseInt(limit) : 12;
     const offset = page ? (parseInt(page) - 1) * size : 0;
-
     const includeOptions = [
       {
         model: Product,
@@ -111,8 +109,6 @@ async function mostSales(req, res) {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }
-
-
 module.exports = {
   getAllProduct,
   mostSales
