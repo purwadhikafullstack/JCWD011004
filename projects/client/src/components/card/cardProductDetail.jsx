@@ -15,7 +15,7 @@ function ProductDetailPage() {
   }
 
   useEffect(() => {
-    const apiurl = `http://localhost:8000/api/product/2`
+    const apiurl = `http://localhost:8000/api/product/1`
 
     const fetchData = async () => {
       try {
