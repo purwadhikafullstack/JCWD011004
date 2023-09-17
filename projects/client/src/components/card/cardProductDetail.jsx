@@ -7,20 +7,53 @@ function ProductDetailPage() {
   const [productData, setProductData] = useState(null)
   const [quantity, setQuantity] = useState(1)
 
-  const handleAddToCart = () => {
-    const alertMessage = `${quantity} item${
-      quantity > 1 ? 's' : ''
-    } added to cart!`
-    alert(alertMessage)
+  const handleAddToCart = async () => {
+    try {
+      // Lakukan penambahan produk ke keranjang di sini
+      const response = await axios.post(
+        'http://localhost:8000/api/cart/addItem',
+        {
+          cartId: 5,
+          productId: 1,
+          quantity
+        }
+      )
+      const alertMessage = `${quantity} item${
+        quantity > 1 ? 's' : ''
+      } added to cart!`
+      alert(alertMessage)
+    } catch (error) {
+      console.log('Error adding item to cart:', error)
+    }
+  }
+
+  const handleRemoveFromCart = async () => {
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/api/cart/removeItem',
+        {
+          cartId: 5,
+          productId: 1,
+          quantity
+        }
+      )
+      const alertMessage = `${quantity} item${
+        quantity > 1 ? 's' : ''
+      } removed from cart!`
+      alert(alertMessage)
+    } catch (error) {
+      console.log('Error removing item from cart:', error)
+    }
   }
 
   useEffect(() => {
-    const apiurl = `http://localhost:8000/api/product/1`
+    const apiurl = `http://localhost:8000/api/product/2`
 
     const fetchData = async () => {
       try {
         const response = await axios.get(apiurl)
         setProductData(response.data)
+        setQuantity(1)
       } catch (error) {
         console.error('Error fetching product data:', error)
       }
@@ -32,6 +65,7 @@ function ProductDetailPage() {
   if (!productData) {
     return <p>Loading...</p>
   }
+
   const productImages = productData.Product_Images.map(
     (imageObj) => imageObj.image
   )
@@ -59,11 +93,7 @@ function ProductDetailPage() {
           <div className="flex items-center justify-center mb-4">
             <button
               className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
-              onClick={() => {
-                if (quantity > 1) {
-                  setQuantity(quantity - 1)
-                }
-              }}
+              onClick={handleRemoveFromCart}
             >
               −
             </button>
@@ -77,10 +107,11 @@ function ProductDetailPage() {
                   setQuantity(value)
                 }
               }}
+              readOnly
             />
             <button
               className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
-              onClick={() => setQuantity(quantity + 1)}
+              onClick={handleAddToCart}
             >
               +
             </button>
@@ -93,6 +124,10 @@ function ProductDetailPage() {
               Add to Cart
             </button>
           </div>
+          <p className="mb-4 text-xl font-bold">
+            {' '}
+            Total Harga: {productData.totalPrice}
+          </p>
         </div>
       </div>
     </div>

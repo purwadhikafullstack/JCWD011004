@@ -31,28 +31,29 @@ async function addItem(req, res) {
   }
 }
 
-async function removeItem(req, res){
+async function removeItem(req, res) {
     try {
-        const itemCart = await Cart_Item.findByPk(cartId);
-      
-        if (!itemCart) {
-          return res.status(404).json({ error: 'Item tidak ditemukan di keranjang' });
-        }
-      
-        if (itemCart.quantity <= quantity) {
-          await itemCart.destroy();
-        } else {
-          itemCart.quantity -= quantity;
-          itemCart.totalPrice -= totalPrice;
-          await itemCart.save();
-        }
-      
-        res.status(200).json({ message: 'Item berhasil dihapus dari keranjang' });
-      } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Terjadi kesalahan saat menghapus item dari keranjang' });
+      const { cartId, quantity, totalPrice } = req.body;
+      const itemCart = await Cart_Item.findByPk(cartId);
+  
+      if (!itemCart) {
+        return res.status(404).json({ error: 'Item tidak ditemukan di keranjang' });
       }
-}
+  
+      if (itemCart.quantity <= quantity) {
+        await itemCart.destroy();
+      } else {
+        itemCart.quantity -= quantity;
+        itemCart.totalPrice -= quantity * totalPrice;
+        await itemCart.save();
+      }
+  
+      res.status(200).json({ message: 'Item berhasil dihapus dari keranjang' });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Terjadi kesalahan saat menghapus item dari keranjang' });
+    }
+  }
 
 
 module.exports = {
