@@ -25,8 +25,7 @@ export const ProductReducer = createSlice({
 export const getAllProducts = (paramUrl) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${baseUrl}${paramUrl}`)
-      console.log(data)
+      const { data } = await axios.get(`${baseUrl}api/product/${paramUrl}`)
       dispatch(allDataProduct(data))
     } catch (err) {
       console.log(err)

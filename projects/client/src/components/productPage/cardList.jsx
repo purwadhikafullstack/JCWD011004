@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from '../card/cardProduct'
-import Dropdown from '../dropdownSort/dropdown'
-import DropdownCategory from './dropdownCategory'
+import Dropdown from '../dropdown/dropdownSort'
+import DropdownCategory from '../dropdown/dropdownCategory'
 
 function CardList() {
   return (

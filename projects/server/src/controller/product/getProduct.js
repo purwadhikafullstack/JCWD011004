@@ -24,7 +24,7 @@ async function getAllProduct(req, res) {
       order = [['price', 'DESC']]
     }
     if (sort === '3') {
-      order = [['createdAt', 'ASC']]
+      order = [['createdAt', 'DESC']]
     }
 
     const size = limit ? parseInt(limit) : 12
