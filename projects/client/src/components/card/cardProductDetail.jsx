@@ -7,15 +7,41 @@ function ProductDetailPage() {
   const [productData, setProductData] = useState(null)
   const [quantity, setQuantity] = useState(1)
 
-  const handleAddToCart = () => {
-    const alertMessage = `${quantity} item${
-      quantity > 1 ? 's' : ''
-    } added to cart!`
-    alert(alertMessage)
+  const handleAddToCart = async () => {
+    try {
+      const apiUrl = 'http://localhost:8000/api/cart/addItem'
+      const data = {
+        cartId: 5,
+        productId: 1,
+        quantity
+      }
+
+      const response = await axios.post(apiUrl, data)
+      alert(`${quantity} item${quantity > 1 ? 's' : ''} added to cart!`)
+    } catch (error) {
+      console.error('Error adding item to cart:', error)
+    }
+  }
+
+  const handleRemoveFromCart = async () => {
+    try {
+      const apiUrl = 'http://localhost:8000/api/cart/removeItem'
+
+      const data = {
+        cartId: 5,
+        productId: 1,
+        quantity
+      }
+
+      const response = await axios.put(apiUrl, data)
+      alert(`${quantity} item${quantity > 1 ? 's' : ''} removed from cart!`)
+    } catch (error) {
+      console.error('Error removing item from cart:', error)
+    }
   }
 
   useEffect(() => {
-    const apiurl = `http://localhost:8000/api/product/1`
+    const apiurl = `http://localhost:8000/api/product/2`
 
     const fetchData = async () => {
       try {
@@ -32,6 +58,7 @@ function ProductDetailPage() {
   if (!productData) {
     return <p>Loading...</p>
   }
+
   const productImages = productData.Product_Images.map(
     (imageObj) => imageObj.image
   )
@@ -91,6 +118,14 @@ function ProductDetailPage() {
               onClick={handleAddToCart}
             >
               Add to Cart
+            </button>
+          </div>
+          <div className="mt-4">
+            <button
+              className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
+              onClick={handleRemoveFromCart}
+            >
+              Remove Cart
             </button>
           </div>
         </div>
