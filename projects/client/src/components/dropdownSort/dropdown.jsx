@@ -14,6 +14,7 @@ export default function Dropdown() {
 
   const handleChange = (index) => {
     setSelected(sortData[index])
+    console.log(index)
   }
 
   return (
