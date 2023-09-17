@@ -1,6 +1,8 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { FaCheck, FaChevronDown } from 'react-icons/fa'
+import { getSortIdx } from '../../services/reducer/productReducer'
+import { useDispatch } from 'react-redux'
 
 const sortData = [
   { sort: 'Best Sellers' },
@@ -11,10 +13,11 @@ const sortData = [
 
 export default function Dropdown() {
   const [selected, setSelected] = useState(sortData[0])
+  const dispatch = useDispatch()
 
   const handleChange = (index) => {
     setSelected(sortData[index])
-    console.log(index)
+    dispatch(getSortIdx(index))
   }
 
   return (

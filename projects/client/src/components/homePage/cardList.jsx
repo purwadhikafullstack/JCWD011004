@@ -6,12 +6,16 @@ import { getAllProducts } from '../../services/reducer/productReducer'
 
 function CardList() {
   const dispatch = useDispatch()
-  const result = useSelector((state) => state.dataProduct.allProducts.products)
-
-  console.log(result)
+  const products = useSelector(
+    (state) => state.dataProduct.allProducts.products
+  )
+  const sortIdx = useSelector((state) => state.dataProduct.sortIdx)
 
   useEffect(() => {
-    dispatch(getAllProducts())
+    console.log(sortIdx)
+    if (sortIdx === 0) {
+      dispatch(getAllProducts('api/product/all'))
+    }
   }, [dispatch])
 
   return (
@@ -37,8 +41,8 @@ function CardList() {
         <Dropdown />
       </div>
       <div className="grid grid-cols-2 xl:grid-cols-4">
-        {result
-          ? result.map((data, index) => <Card key={index} product={data} />)
+        {products
+          ? products.map((data, index) => <Card key={index} product={data} />)
           : ''}
       </div>
     </>

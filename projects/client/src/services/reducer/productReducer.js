@@ -4,7 +4,9 @@ import axios from 'axios'
 const baseUrl = 'http://localhost:8000/'
 
 const initialState = {
-  allProducts: {}
+  allProducts: {},
+  sortIdx: 0,
+  categoryIdx: 0
 }
 
 export const ProductReducer = createSlice({
@@ -13,14 +15,17 @@ export const ProductReducer = createSlice({
   reducers: {
     allDataProduct: (state, action) => {
       state.allProducts = action.payload
+    },
+    getSortIdx: (state, action) => {
+      state.sortIdx = action.payload
     }
   }
 })
 
-export const getAllProducts = () => {
+export const getAllProducts = (paramUrl) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${baseUrl}api/product/all`)
+      const { data } = await axios.get(`${baseUrl}${paramUrl}`)
       console.log(data)
       dispatch(allDataProduct(data))
     } catch (err) {
@@ -29,5 +34,5 @@ export const getAllProducts = () => {
   }
 }
 
-export const { allDataProduct } = ProductReducer.actions
+export const { allDataProduct, getSortIdx } = ProductReducer.actions
 export default ProductReducer.reducer
