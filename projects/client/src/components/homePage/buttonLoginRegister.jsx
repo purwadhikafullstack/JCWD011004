@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import LoginModal from '../loginModal/loginModal'
 import RegisterModal from '../registerform/RegisterModal'
+import ResetPasswordModal from '../resetPasswordModal/ResetPasswordModal'
 const ButtonLoginRegister = () => {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false)
   const [isRegisterModalOpen, setRegisterModalOpen] = useState(false)
+  const [isResetPasswordModalOpen, setResetPasswordModalOpen] = useState(false)
 
   const handleOpenLoginModal = () => {
     setLoginModalOpen(true)
@@ -23,6 +25,16 @@ const ButtonLoginRegister = () => {
     setRegisterModalOpen(false)
   }
 
+  const handleOpenResetModalOpen = () => {
+    setResetPasswordModalOpen(true)
+    setRegisterModalOpen(false)
+    setRegisterModalOpen(false)
+  }
+
+  const handleCloseResetModalOpen = () => {
+    setResetPasswordModalOpen(false)
+  }
+
   return (
     <div className="flex items-center">
       <button
@@ -38,6 +50,12 @@ const ButtonLoginRegister = () => {
       >
         Register
       </button>
+      <button
+        className="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 focus:outline-none"
+        onClick={handleOpenResetModalOpen}
+      >
+        Buka modal reset password
+      </button>
 
       <LoginModal
         isOpen={isLoginModalOpen}
@@ -48,6 +66,10 @@ const ButtonLoginRegister = () => {
         isOpen={isRegisterModalOpen}
         onClose={handlecloseRegisterModal}
         onOpenLogin={handleOpenLoginModal}
+      />
+      <ResetPasswordModal
+        isOpen={isResetPasswordModalOpen}
+        onClose={handleCloseResetModalOpen}
       />
     </div>
   )

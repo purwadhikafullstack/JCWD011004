@@ -1,6 +1,7 @@
 const db = require('../../../models')
 const Product = db.Product
 const Transaction_Item = db.Transaction_Item
+const Product_Image = db.Product_Image
 const { Op } = require('sequelize')
 
 async function getAllProduct(req, res) {
@@ -28,11 +29,14 @@ async function getAllProduct(req, res) {
 
     const size = limit ? parseInt(limit) : 12
     const offset = page ? (parseInt(page) - 1) * size : 0
-
+    const imageOptions = {
+      model: Product_Image
+    }
     const products = await Product.findAll({
       where: whereCondition,
       limit: size,
       offset: offset,
+      include: imageOptions,
       order: order
     })
     const totalCount = await Product.count({
@@ -55,11 +59,25 @@ async function getAllProduct(req, res) {
 
 async function mostSales(req, res) {
   try {
-    const { limit, page } = req.query
+    const { limit, page, categoryId } = req.query
     const size = limit ? parseInt(limit) : 12
     const offset = page ? (parseInt(page) - 1) * size : 0
+    const includeOptions = [
+      {
+        model: Product,
+        as: 'product'
+      },
+      {
+        model: Product_Image,
+        as: 'productImage'
+      }
+    ]
 
-    const salesMost = await Transaction_Item.findAll({
+    if (categoryId) {
+      includeOptions[0].where = { categoryId: categoryId }
+    }
+
+    const products = await Transaction_Item.findAll({
       attributes: [
         'productId',
         [db.sequelize.fn('SUM', db.sequelize.col('quantity')), 'totalSales']
@@ -68,9 +86,7 @@ async function mostSales(req, res) {
       order: [['totalSales', 'DESC']],
       limit: size,
       offset: offset,
-      include: {
-        model: Product
-      }
+      include: includeOptions
     })
 
     const totalCount = await Transaction_Item.count({
@@ -84,7 +100,7 @@ async function mostSales(req, res) {
       totalProducts: totalCount,
       totalPages: totalPages,
       currentPage: currentPage,
-      products: salesMost
+      products: products
     }
 
     res.status(200).json(response)
@@ -93,7 +109,6 @@ async function mostSales(req, res) {
     res.status(500).json({ message: 'Internal Server Error' })
   }
 }
-
 module.exports = {
   getAllProduct,
   mostSales
