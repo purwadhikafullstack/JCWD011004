@@ -1,6 +1,7 @@
 const db = require('../../../models')
 const Product = db.Product
 const Transaction_Item = db.Transaction_Item
+const Product_Image = db.Product_Image
 const { Op } = require('sequelize')
 
 async function getAllProduct(req, res) {
@@ -28,11 +29,14 @@ async function getAllProduct(req, res) {
 
     const size = limit ? parseInt(limit) : 12
     const offset = page ? (parseInt(page) - 1) * size : 0
-
+    const imageOptions = {
+      model: Product_Image,
+    }
     const products = await Product.findAll({
       where: whereCondition,
       limit: size,
       offset: offset,
+      include: imageOptions,
       order: order
     })
     const totalCount = await Product.count({
@@ -58,14 +62,19 @@ async function mostSales(req, res) {
     const { limit, page, categoryId } = req.query;
     const size = limit ? parseInt(limit) : 12;
     const offset = page ? (parseInt(page) - 1) * size : 0;
+    const includeOptions = [
+      {
+        model: Product,
+        as: "product", 
+      },
+      {
+        model: Product_Image,
+        as: "productImage", 
+      },
+    ];
 
-    const includeOptions = {
-      model: Product,
-    };
-
-    // Jika categoryId tersedia, tambahkan filter berdasarkan kategori
     if (categoryId) {
-      includeOptions.where = { categoryId: categoryId };
+      includeOptions[0].where = { categoryId: categoryId };
     }
 
     const products = await Transaction_Item.findAll({
@@ -77,7 +86,7 @@ async function mostSales(req, res) {
       order: [['totalSales', 'DESC']],
       limit: size,
       offset: offset,
-      include: includeOptions, // Gunakan opsi include yang telah dibuat
+      include: includeOptions,
     });
 
     const totalCount = await Transaction_Item.count({
@@ -100,7 +109,6 @@ async function mostSales(req, res) {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }
-
 module.exports = {
   getAllProduct,
   mostSales
