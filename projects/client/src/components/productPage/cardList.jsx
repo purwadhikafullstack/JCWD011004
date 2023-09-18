@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom'
 
 function CardList() {
   const { category } = useParams()
+  const categoryNumber = parseInt(category)
   const dispatch = useDispatch()
   const dataProduct = useSelector((state) => state.dataProduct.allProducts)
   const sortIdx = useSelector((state) => state.dataProduct.sortIdx)
@@ -21,7 +22,7 @@ function CardList() {
   const totalPage = dataProduct.totalPages
 
   useEffect(() => {
-    dispatch(getCategoryIdx(category))
+    dispatch(getCategoryIdx(categoryNumber))
   }, [dispatch, category])
 
   useEffect(() => {
