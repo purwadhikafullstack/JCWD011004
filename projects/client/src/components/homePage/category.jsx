@@ -28,7 +28,7 @@ function CategoryList() {
               key={index}
               className="text-lg font-semibold hover:text-gray-400 transition duration-300 ease-in-out"
             >
-              <a href="/product">{category.name}</a>
+              <a href={`/product/${index + 1}`}>{category.name}</a>
             </li>
           ))}
         </ul>

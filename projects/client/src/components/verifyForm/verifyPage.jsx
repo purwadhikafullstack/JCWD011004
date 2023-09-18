@@ -49,7 +49,6 @@ const RegisterModal = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      console.log(values)
       try {
         const response = await axios.post(
           'http://localhost:8000/api/register',

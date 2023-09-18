@@ -40,7 +40,7 @@ function CardList() {
     <>
       <div className="my-2 pl-5 hover:text-orange-400 transition duration-300 ease-in-out border-t border-gray-500 border-b text-left">
         <a href="/product" className="text-lg font-bold">
-          ALL PRODUCT
+          ALL PRODUCTS
         </a>
       </div>
       <div className="flex items-center justify-end mr-4 my-2">

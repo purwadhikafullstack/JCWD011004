@@ -18,6 +18,9 @@ export const ProductReducer = createSlice({
     },
     getSortIdx: (state, action) => {
       state.sortIdx = action.payload
+    },
+    getCategoryIdx: (state, action) => {
+      state.categoryIdx = action.payload
     }
   }
 })
@@ -33,5 +36,6 @@ export const getAllProducts = (paramUrl) => {
   }
 }
 
-export const { allDataProduct, getSortIdx } = ProductReducer.actions
+export const { allDataProduct, getSortIdx, getCategoryIdx } =
+  ProductReducer.actions
 export default ProductReducer.reducer
