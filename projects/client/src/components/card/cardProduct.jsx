@@ -1,8 +1,6 @@
-// AddToCartCard.js
-
 import React from 'react'
 
-function Card() {
+function Card({ product }) {
   return (
     <>
       <div className="flex items-center justify-center">
@@ -16,12 +14,17 @@ function Card() {
               />
             </div>
             <div className="text-center">
-              <h2 className="mb-4 text-xl font-semibold">Product Title</h2>
+              <h2 className="mb-4 text-xl font-semibold">
+                {product.name ? product.name : product.product.name}
+              </h2>
               <p className="mb-4 text-gray-600 truncate">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-                reiciendis ullam.
+                {product.description
+                  ? product.description
+                  : product.product.description}
               </p>
-              <p className="mb-4 text-m font-bold">IDR 300.000</p>
+              <p className="mb-4 text-m font-bold">
+                IDR {product.price ? product.price : product.product.price}
+              </p>
             </div>
           </a>
           <div className="pb-3 text-center">

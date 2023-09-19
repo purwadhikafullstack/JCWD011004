@@ -1,11 +1,11 @@
 import React from 'react'
-import Navbar from '../components/homePage/navbar'
+import Navbar from '../components/navbar/navbar'
 import Banner from '../components/homePage/banner'
 import CardList from '../components/homePage/cardList'
 import Category from '../components/homePage/category'
 import Footer from '../components/homePage/footer'
 
-function App() {
+function HomePage() {
   return (
     <div className="container mx-auto max-w-screen-lg">
       <Navbar />
@@ -17,4 +17,4 @@ function App() {
   )
 }
 
-export default App
+export default HomePage

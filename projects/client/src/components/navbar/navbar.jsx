@@ -2,7 +2,7 @@ import React from 'react'
 import { FiShoppingCart } from 'react-icons/fi'
 import { RxAvatar } from 'react-icons/rx'
 import { AiOutlineHeart } from 'react-icons/ai'
-import ButtonLoginRegister from './buttonLoginRegister'
+import ButtonLoginRegister from '../homePage/buttonLoginRegister'
 
 function Navbar() {
   const token = localStorage.getItem('token')
@@ -11,11 +11,13 @@ function Navbar() {
       <nav>
         <div className="container mx-auto">
           <div className="flex justify-between items-center">
-            <div className="text-3xl font-bold">AKUI</div>
+            <div className="text-3xl font-bold">
+              <a href="/">AKUI</a>
+            </div>
             <div className="flex space-x-6 items-center">
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Search Product..."
                 className="bg-gray-700 text-white px-3 py-1 rounded-lg focus:outline-none hover:border border-gray-500"
               />
               <ul className="flex space-x-6">
