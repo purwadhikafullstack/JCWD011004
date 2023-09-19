@@ -34,7 +34,7 @@ const verifyToken = async (req, res, next) => {
     }
     if (!verifiedUser.username) {
       dataUser = await User.findOne({
-        where: { email: verifiedUser.email }
+        where: { id: verifiedUser.userId }
       })
     } else {
       dataUser = await User.findOne({

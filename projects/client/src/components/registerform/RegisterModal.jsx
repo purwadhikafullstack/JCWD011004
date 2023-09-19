@@ -28,6 +28,9 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
           toast.success('Register Berhasil', {
             position: toast.POSITION.TOP_CENTER
           })
+          setTimeout(() => {
+            onClose()
+          }, 2000)
         }
       } catch (error) {
         toast.error(error.response.data.message, {
