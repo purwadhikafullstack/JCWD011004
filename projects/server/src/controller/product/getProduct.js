@@ -24,13 +24,13 @@ async function getAllProduct(req, res) {
       order = [['price', 'DESC']]
     }
     if (sort === '3') {
-      order = [['createdAt', 'ASC']]
+      order = [['createdAt', 'DESC']]
     }
 
     const size = limit ? parseInt(limit) : 12
     const offset = page ? (parseInt(page) - 1) * size : 0
     const imageOptions = {
-      model: Product_Image,
+      model: Product_Image
     }
     const products = await Product.findAll({
       where: whereCondition,
@@ -59,22 +59,22 @@ async function getAllProduct(req, res) {
 
 async function mostSales(req, res) {
   try {
-    const { limit, page, categoryId } = req.query;
-    const size = limit ? parseInt(limit) : 12;
-    const offset = page ? (parseInt(page) - 1) * size : 0;
+    const { limit, page, categoryId } = req.query
+    const size = limit ? parseInt(limit) : 12
+    const offset = page ? (parseInt(page) - 1) * size : 0
     const includeOptions = [
       {
         model: Product,
-        as: "product", 
+        as: 'product'
       },
       {
         model: Product_Image,
-        as: "productImage", 
-      },
-    ];
+        as: 'productImage'
+      }
+    ]
 
     if (categoryId) {
-      includeOptions[0].where = { categoryId: categoryId };
+      includeOptions[0].where = { categoryId: categoryId }
     }
 
     const products = await Transaction_Item.findAll({
@@ -86,27 +86,27 @@ async function mostSales(req, res) {
       order: [['totalSales', 'DESC']],
       limit: size,
       offset: offset,
-      include: includeOptions,
-    });
+      include: includeOptions
+    })
 
     const totalCount = await Transaction_Item.count({
       distinct: true,
       col: 'productId'
-    });
-    const totalPages = Math.ceil(totalCount / size);
-    const currentPage = page ? parseInt(page) : 1;
+    })
+    const totalPages = Math.ceil(totalCount / size)
+    const currentPage = page ? parseInt(page) : 1
 
     const response = {
       totalProducts: totalCount,
       totalPages: totalPages,
       currentPage: currentPage,
       products: products
-    };
+    }
 
-    res.status(200).json(response);
+    res.status(200).json(response)
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    console.log(error)
+    res.status(500).json({ message: 'Internal Server Error' })
   }
 }
 module.exports = {

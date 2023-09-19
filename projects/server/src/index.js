@@ -3,7 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const { join } = require('path')
 const { authRouter } = require('./routes')
-const {productRouter} = require('./routes')
+const { productRouter } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
 
@@ -17,8 +17,8 @@ app.use(
 )
 
 app.use(express.json())
-// const db = require('../models');
-// db.sequelize.sync({alter: true});
+// const db = require('../models')
+// db.sequelize.sync({ alter: true })
 
 //#region API ROUTES
 
