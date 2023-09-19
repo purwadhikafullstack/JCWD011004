@@ -90,6 +90,7 @@ async function mostSales(req, res) {
     })
 
     const totalCount = await Transaction_Item.count({
+      include: includeOptions,
       distinct: true,
       col: 'productId'
     })
