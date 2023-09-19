@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import LoginModal from '../loginModal/loginModal'
 import RegisterModal from '../registerform/RegisterModal'
 import ResetPasswordModal from '../resetPasswordModal/ResetPasswordModal'
-const LoginPage = () => {
+const ButtonLoginRegister = () => {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false)
   const [isRegisterModalOpen, setRegisterModalOpen] = useState(false)
   const [isResetPasswordModalOpen, setResetPasswordModalOpen] = useState(false)
@@ -73,4 +73,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default ButtonLoginRegister

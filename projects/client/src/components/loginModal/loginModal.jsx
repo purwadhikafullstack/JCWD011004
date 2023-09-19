@@ -32,13 +32,10 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
         })
         const userRole = response.data.role
         if (userRole === 1) {
+          localStorage.setItem('token', response.data.token)
           setTimeout(() => {
-            window.location.href = '/admin'
-          }, 1000)
-        } else {
-          setTimeout(() => {
-            window.location.href = '/user'
-          }, 1000)
+            onClose()
+          }, 2000)
         }
       } else {
         toast.error('Login Gagal', {

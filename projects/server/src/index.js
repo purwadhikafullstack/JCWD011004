@@ -4,7 +4,6 @@ const cors = require('cors')
 const { join } = require('path')
 const { authRouter } = require('./routes')
 const { productRouter } = require('./routes')
-const { register } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
 
@@ -18,8 +17,8 @@ app.use(
 )
 
 app.use(express.json())
-// const db = require('../models');
-// db.sequelize.sync({alter: true});
+// const db = require('../models')
+// db.sequelize.sync({ alter: true })
 
 //#region API ROUTES
 
@@ -27,7 +26,6 @@ app.use(express.json())
 // NOTE : Add your routes here
 app.use('/api/auth', authRouter)
 app.use('/api/product', productRouter)
-app.use('/api', register)
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`)
