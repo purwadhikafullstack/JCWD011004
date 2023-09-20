@@ -27,6 +27,8 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
       })
 
       if (response.status === 200) {
+        // Save the token to local storage
+        localStorage.setItem('token', response.data.token)
         toast.success('Login Berhasil', {
           position: toast.POSITION.TOP_CENTER
         })

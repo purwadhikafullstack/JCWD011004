@@ -5,9 +5,11 @@ const { validateEmail } = require('../middleware/emailValidator')
 const { registerUser } = require('../controller/auth/register')
 const passwordValidationRules = require('../middleware/passwordValidation')
 const { requestResetPassword, resetPassword } = require('../controller/auth')
+const { getUserInfo } = require('../controller/auth')
 
 router.post('/register', validateEmail, registerUser)
 router.post('/login', Login.login)
 router.post('/reset-password', validateEmail, requestResetPassword)
 router.patch('/reset-password', passwordValidationRules(), resetPassword)
+router.get('/user', getUserInfo)
 module.exports = router

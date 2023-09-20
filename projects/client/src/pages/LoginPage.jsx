@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import LoginModal from '../components/loginModal/loginModal'
 import RegisterModal from '../components/registerform/RegisterModal'
 import ResetPasswordModal from '../components/resetPasswordModal/ResetPasswordModal'
+
+import UserDashboard from '../views/userdashboard/UserDashboard'
 const LoginPage = () => {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false)
   const [isRegisterModalOpen, setRegisterModalOpen] = useState(false)
@@ -65,6 +67,7 @@ const LoginPage = () => {
         isOpen={isResetPasswordModalOpen}
         onClose={handleCloseResetModalOpen}
       />
+      <UserDashboard />
     </div>
   )
 }

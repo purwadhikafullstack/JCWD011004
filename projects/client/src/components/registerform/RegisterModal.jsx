@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -6,12 +6,14 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Email is required')
+})
+
 const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Email is required')
-  })
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -20,6 +22,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
     validationSchema,
     onSubmit: async (values) => {
       try {
+        setIsDisabled(true)
         const response = await axios.post(
           'http://localhost:8000/api/auth/register',
           values
@@ -28,11 +31,13 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
           toast.success('Register Berhasil', {
             position: toast.POSITION.TOP_CENTER
           })
+          setIsDisabled(false)
         }
       } catch (error) {
         toast.error(error.response.data.message, {
           position: toast.POSITION.TOP_CENTER
         })
+        setIsDisabled(false)
       }
     }
   })
@@ -78,8 +83,13 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
           {/* Add other form fields here */}
           <div className="flex justify-center">
             <button
+              disabled={isDisabled}
               type="submit"
-              className="bg-blue-500 text-white rounded-full py-2 px-10 hover:bg-blue-600 focus:outline-none"
+              className={
+                isDisabled
+                  ? 'bg-blue-400 text-white rounded-full py-2 px-10'
+                  : 'bg-blue-500 text-white rounded-full py-2 px-10 active:bg-blue-600 hover:bg-blue-400 focus:outline-none'
+              }
             >
               Register
             </button>
