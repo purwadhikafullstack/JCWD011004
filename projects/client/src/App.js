@@ -18,6 +18,7 @@ function App() {
           path="/reset-password/:token"
           element={<RequestResetPass />}
         ></Route>
+        <Route path="/product/:id" element={<ProductDetailPage />}></Route>
       </Routes>
     </div>
   )

@@ -6,6 +6,7 @@ const Product_Image = db.Product_Image
 async function seeDetailProduct(req, res){
     try{
         const productId = req.params.productId;
+        console.log(productId)
         const product = await Product.findByPk(productId, {
             include: [
                 {model: Category},
