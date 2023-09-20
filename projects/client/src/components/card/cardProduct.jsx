@@ -1,4 +1,5 @@
 import React from 'react'
+import ProductDetailPage from './ProductDetail'
 
 function Card({ product }) {
   return (
@@ -38,6 +39,7 @@ function Card({ product }) {
             </button>
           </div>
         </div>
+        <ProductDetailPage />
       </div>
     </>
   )
