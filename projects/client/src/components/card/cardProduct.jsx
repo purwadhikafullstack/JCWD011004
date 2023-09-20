@@ -1,11 +1,12 @@
 import React from 'react'
-import ProductDetailPage from './ProductDetail'
+import { Link } from 'react-router-dom'
 
 function Card({ product }) {
   return (
     <>
       <div className="flex items-center justify-center">
         <div className="p-3 m-3 bg-white rounded-lg shadow-lg w-40 lg:w-56 h-auto hover:border border-gray-300 transition duration-300 ease-in-out">
+          <Link to="/product/:id" />
           <a href="#">
             <div className="p-3">
               <img
@@ -39,7 +40,6 @@ function Card({ product }) {
             </button>
           </div>
         </div>
-        <ProductDetailPage />
       </div>
     </>
   )
