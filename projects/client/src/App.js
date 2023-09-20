@@ -11,14 +11,17 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
-        <Route path="/product/:id" element={<ProductDetailPage />}></Route>
+
         <Route path="/product/:category" element={<ProductPage />}></Route>
         <Route path="/verify" element={<VerifyPage />}></Route>
         <Route
           path="/reset-password/:token"
           element={<RequestResetPass />}
         ></Route>
-        <Route path="/product/:id" element={<ProductDetailPage />}></Route>
+        <Route
+          path="/product/detail/:id"
+          element={<ProductDetailPage />}
+        ></Route>
       </Routes>
     </div>
   )

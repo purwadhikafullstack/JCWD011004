@@ -3,7 +3,7 @@ import Card from '../card/cardProduct'
 import Dropdown from '../dropdown/dropdownSort'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts } from '../../services/reducer/productReducer'
-
+import { Link } from 'react-router-dom'
 function CardList() {
   const dispatch = useDispatch()
   const dataProduct = useSelector((state) => state.dataProduct.allProducts)
@@ -49,7 +49,11 @@ function CardList() {
       </div>
       <div className="grid grid-cols-2 xl:grid-cols-4">
         {products
-          ? products.map((data, index) => <Card key={index} product={data} />)
+          ? products.map((data, index) => (
+              <Link to={`/product/detail/${data?.product?.id}`} key={index}>
+                <Card key={index} product={data} />
+              </Link>
+            ))
           : ''}
       </div>
       <div className="flex items-center justify-center m-4">

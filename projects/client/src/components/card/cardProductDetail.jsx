@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import { useParams } from 'react-router-dom'
 
 function ProductDetailPage() {
   const [productData, setProductData] = useState(null)
   const [quantity, setQuantity] = useState(1)
+  const { id } = useParams()
 
   const handleAddToCart = async () => {
     try {
@@ -17,6 +19,7 @@ function ProductDetailPage() {
       }
 
       const response = await axios.post(apiUrl, data)
+      console.log(response)
       alert(`${quantity} item${quantity > 1 ? 's' : ''} added to cart!`)
     } catch (error) {
       console.error('Error adding item to cart:', error)
@@ -34,6 +37,7 @@ function ProductDetailPage() {
       }
 
       const response = await axios.put(apiUrl, data)
+      console.log(response)
       alert(`${quantity} item${quantity > 1 ? 's' : ''} removed from cart!`)
     } catch (error) {
       console.error('Error removing item from cart:', error)
@@ -41,7 +45,7 @@ function ProductDetailPage() {
   }
 
   useEffect(() => {
-    const apiurl = `http://localhost:8000/api/product/4`
+    const apiurl = `http://localhost:8000/api/product/${id}`
 
     const fetchData = async () => {
       try {
