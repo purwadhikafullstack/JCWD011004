@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
@@ -11,10 +12,12 @@ module.exports = (sequelize, DataTypes) => {
         through: "Transaction_Item",
         foreignKey: "productId",
       });
-      this.belongsToMany(models.Warehouse, {
-        through: "Warehouse_Product",
-        foreignKey: "productId",
+      
+      // Perubahan yang diperlukan: Mengganti "belongsToMany" menjadi "hasMany" untuk asosiasi dengan Warehouse_Product
+      this.hasMany(models.Warehouse_Product, {
+        foreignKey: 'productId',
       });
+      
       this.belongsTo(models.Category, {
         foreignKey: "categoryId",
       });

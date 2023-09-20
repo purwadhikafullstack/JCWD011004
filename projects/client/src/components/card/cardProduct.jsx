@@ -1,10 +1,16 @@
 import React from 'react'
 
 function Card({ product }) {
+  const isProductActive = product.isActive
+
   return (
     <>
       <div className="flex items-center justify-center">
-        <div className="p-3 m-3 bg-white rounded-lg shadow-lg w-40 lg:w-56 h-auto hover:border border-gray-300 transition duration-300 ease-in-out">
+        <div
+          className={`p-3 m-3 bg-white rounded-lg shadow-lg w-40 lg:w-56 h-auto hover:border border-gray-300 transition duration-300 ease-in-out ${
+            !isProductActive && 'opacity-50'
+          }`}
+        >
           <a href="#">
             <div className="p-3">
               <img
@@ -28,14 +34,23 @@ function Card({ product }) {
             </div>
           </a>
           <div className="pb-3 text-center">
-            <button
-              className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
-              onClick={() => {
-                alert('Item added to cart!')
-              }}
-            >
-              Add to Cart
-            </button>
+            {isProductActive ? (
+              <button
+                className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
+                onClick={() => {
+                  alert('Item added to cart!')
+                }}
+              >
+                Add to Cart
+              </button>
+            ) : (
+              <button
+                className="px-4 py-2 bg-gray-300 text-gray-600 rounded-full cursor-not-allowed"
+                disabled
+              >
+                Sold Out
+              </button>
+            )}
           </div>
         </div>
       </div>
