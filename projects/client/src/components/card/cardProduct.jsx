@@ -29,16 +29,6 @@ function Card({ product }) {
               </p>
             </div>
           </a>
-          <div className="pb-3 text-center">
-            <button
-              className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
-              onClick={() => {
-                alert('Item added to cart!')
-              }}
-            >
-              Add to Cart
-            </button>
-          </div>
         </div>
       </div>
     </>
