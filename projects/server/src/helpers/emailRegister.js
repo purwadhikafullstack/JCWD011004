@@ -17,7 +17,7 @@ function createMailOptions(email, token) {
     html: `
       <p>Hello ${email},</p>
       <p>Your account has been created. Please click the link below to set your password:</p>
-      <a href="http://your-website.com/set-password/${token}">Set Password</a>
+      <a href="http://localhost:3000/verify/${token}">Set Password</a>
     `
   }
 }
