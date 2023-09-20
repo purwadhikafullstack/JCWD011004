@@ -32,6 +32,9 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
             position: toast.POSITION.TOP_CENTER
           })
           setIsDisabled(false)
+          setTimeout(() => {
+            onClose()
+          }, 2000)
         }
       } catch (error) {
         toast.error(error.response.data.message, {
@@ -61,16 +64,19 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
         >
           <span className="text-2xl font-bold cursor-pointer">×</span>
         </button>
-        <h2 className="text-2xl font-semibold mb-4 jus">Register</h2>
+        <h2 className="text-2xl text-gray-600 font-semibold mb-4 jus">
+          Register
+        </h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-600 font-medium">
+            <label htmlFor="email" className="flex text-gray-600 font-medium">
               Email
             </label>
             <input
               type="text"
               id="email"
               name="email"
+              placeholder="Email"
               className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
               value={formik.values.email}
               onChange={formik.handleChange}
@@ -96,7 +102,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
           </div>
         </form>
         <div className="mt-4 text-center text-sm">
-          <p className="text-black-500">
+          <p className="text-gray-400">
             Already have an account?{' '}
             <span
               className="text-blue-500 cursor-pointer hover:underline"

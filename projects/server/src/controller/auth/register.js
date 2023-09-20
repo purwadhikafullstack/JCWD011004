@@ -1,5 +1,3 @@
-// controllers/auth/register.js
-
 const jwt = require('jsonwebtoken')
 const db = require('../../../models')
 const User = db.User

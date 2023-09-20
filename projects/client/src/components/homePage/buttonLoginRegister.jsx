@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import LoginModal from '../components/loginModal/loginModal'
-import RegisterModal from '../components/registerform/RegisterModal'
-import ResetPasswordModal from '../components/resetPasswordModal/ResetPasswordModal'
-
-import UserDashboard from '../views/userdashboard/UserDashboard'
-const LoginPage = () => {
+import LoginModal from '../loginModal/loginModal'
+import RegisterModal from '../registerform/RegisterModal'
+import ResetPasswordModal from '../resetPasswordModal/ResetPasswordModal'
+const ButtonLoginRegister = () => {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false)
   const [isRegisterModalOpen, setRegisterModalOpen] = useState(false)
   const [isResetPasswordModalOpen, setResetPasswordModalOpen] = useState(false)
@@ -12,6 +10,7 @@ const LoginPage = () => {
   const handleOpenLoginModal = () => {
     setLoginModalOpen(true)
     setRegisterModalOpen(false)
+    setResetPasswordModalOpen(false)
   }
 
   const handleCloseLoginModal = () => {
@@ -21,6 +20,7 @@ const LoginPage = () => {
   const handleopenRegisterModal = () => {
     setLoginModalOpen(false)
     setRegisterModalOpen(true)
+    setResetPasswordModalOpen(false)
   }
 
   const handlecloseRegisterModal = () => {
@@ -28,9 +28,9 @@ const LoginPage = () => {
   }
 
   const handleOpenResetModalOpen = () => {
+    setLoginModalOpen(false)
+    setRegisterModalOpen(false)
     setResetPasswordModalOpen(true)
-    setRegisterModalOpen(false)
-    setRegisterModalOpen(false)
   }
 
   const handleCloseResetModalOpen = () => {
@@ -38,25 +38,26 @@ const LoginPage = () => {
   }
 
   return (
-    <div>
-      <h1>Contoh Aplikasi React</h1>
+    <div className="flex items-center">
       <button
-        className="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 focus:outline-none"
+        className="bg-transparent text-white hover:bg-orange-300 hover:text-white rounded-full py-1 px-2 focus:outline-none"
         onClick={handleOpenLoginModal}
       >
-        Buka Modal Login
+        Login
       </button>
+      <p>/</p>
       <button
-        className="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 focus:outline-none"
-        onClick={handleOpenResetModalOpen}
+        className="bg-transparent text-white hover:bg-orange-300 hover:text-white rounded-full py-1 px-2 focus:outline-none"
+        onClick={handleopenRegisterModal}
       >
-        Buka modal reset password
+        Register
       </button>
 
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={handleCloseLoginModal}
         onOpenRegister={handleopenRegisterModal}
+        onOpenResetPass={handleOpenResetModalOpen}
       />
       <RegisterModal
         isOpen={isRegisterModalOpen}
@@ -66,10 +67,10 @@ const LoginPage = () => {
       <ResetPasswordModal
         isOpen={isResetPasswordModalOpen}
         onClose={handleCloseResetModalOpen}
+        onOpenLogin={handleOpenLoginModal}
       />
-      <UserDashboard />
     </div>
   )
 }
 
-export default LoginPage
+export default ButtonLoginRegister

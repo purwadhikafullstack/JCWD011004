@@ -4,8 +4,11 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
+import { isLogin } from '../../services/reducer/productReducer'
 
-const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
+const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
+  const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -33,14 +36,19 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
           position: toast.POSITION.TOP_CENTER
         })
         const userRole = response.data.role
-        if (userRole === 1) {
+        if (userRole === 3) {
+          toast.success('Login Berhasil', {
+            position: toast.POSITION.TOP_CENTER
+          })
+          localStorage.setItem('token', response.data.token)
           setTimeout(() => {
-            window.location.href = '/admin'
-          }, 1000)
+            onClose()
+            dispatch(isLogin(response.data.token))
+          }, 2000)
         } else {
-          setTimeout(() => {
-            window.location.href = '/user'
-          }, 1000)
+          toast.error('Wrong User', {
+            position: toast.POSITION.TOP_CENTER
+          })
         }
       } else {
         toast.error('Login Gagal', {
@@ -58,7 +66,8 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
   LoginModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    onOpenRegister: PropTypes.func.isRequired
+    onOpenRegister: PropTypes.func.isRequired,
+    onOpenResetPass: PropTypes.func.isRequired
   }
 
   return (
@@ -74,7 +83,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
         >
           <span className="text-2xl font-bold cursor-pointer">×</span>
         </button>
-        <h2 className="text-2xl font-semibold mb-4">Login</h2>
+        <h2 className="text-2xl text-gray-600 font-semibold mb-4">Login</h2>
         <div className="mb-4">
           <label htmlFor="email" className="text-gray-600 font-medium flex">
             Email
@@ -115,18 +124,23 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
           </div>
         </div>
         <div className="mb-3 mt-[-0.25rem] flex justify-end text-blue-700 text-sm cursor-pointer hover:underline">
-          <span>Forgot Password?</span>
+          <span
+            className="text-blue-500 cursor-pointer hover:underline"
+            onClick={onOpenResetPass}
+          >
+            Forgot Password?
+          </span>
         </div>
         <div className="flex justify-center">
           <button
-            className="bg-blue-500 text-white rounded-full py-2 px-10 hover:bg-blue-600 focus:outline-none"
+            className="px-7 py-2 bg-orange-300 text-white rounded-full hover:bg-orange-400 focus:outline-none"
             onClick={handleLogin}
           >
             Login
           </button>
         </div>
         <div className="mt-4 text-center text-sm">
-          <p className="text-black-500">
+          <p className="text-gray-400">
             Dont have an account?{' '}
             <span
               className="text-blue-500 cursor-pointer hover:underline"
