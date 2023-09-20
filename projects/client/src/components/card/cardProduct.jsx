@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import AddToCartButton from './components/AddToCartButton'
 
 function Card({ product }) {
+  console.log(product)
   return (
     <>
       <div className="flex items-center justify-center">
         <div className="p-3 m-3 bg-white rounded-lg shadow-lg w-40 lg:w-56 h-auto hover:border border-gray-300 transition duration-300 ease-in-out">
-          <Link to="/product/:id" />
-          <a href="#">
+          <Link to={`/product/detail/${product?.productId}`}>
             <div className="p-3">
               <img
                 src="/card/chair.png"
@@ -28,7 +29,8 @@ function Card({ product }) {
                 IDR {product?.price ? product?.price : product?.product?.price}
               </p>
             </div>
-          </a>
+          </Link>
+          <AddToCartButton />
         </div>
       </div>
     </>
