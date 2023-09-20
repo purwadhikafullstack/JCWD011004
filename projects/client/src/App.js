@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import ProductPage from './pages/ProductPage'
 import VerifyPage from './pages/VerifyPage'
 import RequestResetPass from './pages/RequestResetPass'
-import ProductDetailPage from './components/card/ProductDetail'
+import ProductDetailPage from './components/card/cardProductDetail'
 
 function App() {
   return (

@@ -17,9 +17,7 @@ function ProductDetailPage() {
       }
 
       const response = await axios.post(apiUrl, data)
-      response === 200
-        ? alert(`${quantity} item${quantity > 1 ? 's' : ''} added to cart!`)
-        : alert('Error adding item to cart!')
+      alert(`${quantity} item${quantity > 1 ? 's' : ''} added to cart!`)
     } catch (error) {
       console.error('Error adding item to cart:', error)
     }
@@ -36,9 +34,7 @@ function ProductDetailPage() {
       }
 
       const response = await axios.put(apiUrl, data)
-      response === 200
-        ? alert(`${quantity} item${quantity > 1 ? 's' : ''} removed from cart!`)
-        : alert('Error removing item from cart!')
+      alert(`${quantity} item${quantity > 1 ? 's' : ''} removed from cart!`)
     } catch (error) {
       console.error('Error removing item from cart:', error)
     }
