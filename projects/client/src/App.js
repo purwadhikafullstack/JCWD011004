@@ -6,7 +6,7 @@ import VerifyPage from './pages/VerifyPage'
 import RequestResetPass from './pages/RequestResetPass'
 import VerifyEditAccount from './pages/VerifyEditAccount'
 import RequestResendEmail from './pages/RequestResendEmail'
-
+import UserDashboard from './views/userdashboard/UserDashboard'
 function App() {
   return (
     <div className="App">
@@ -26,6 +26,7 @@ function App() {
           path="/verification-page"
           element={<RequestResendEmail />}
         ></Route>
+        <Route path="/user-dashboard" element={<UserDashboard />}></Route>
       </Routes>
     </div>
   )
