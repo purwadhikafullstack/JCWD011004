@@ -1,15 +1,14 @@
-import React from 'react'
-
 function Card({ product }) {
-  const isProductActive = product.isActive
+  const stock = product.Warehouse_Products
+    ? product.Warehouse_Products[0].stock
+    : 0
+  const isProductActive = stock > 0
 
   return (
     <>
       <div className="flex items-center justify-center">
         <div
-          className={`p-3 m-3 bg-white rounded-lg shadow-lg w-40 lg:w-56 h-auto hover:border border-gray-300 transition duration-300 ease-in-out ${
-            !isProductActive && 'opacity-50'
-          }`}
+          className={`p-3 m-3 bg-white rounded-lg shadow-lg w-40 lg:w-56 h-auto border border-gray-300 transition duration-300 ease-in-out`}
         >
           <a href="#">
             <div className="p-3">
@@ -34,23 +33,23 @@ function Card({ product }) {
             </div>
           </a>
           <div className="pb-3 text-center">
-            {isProductActive ? (
-              <button
-                className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
-                onClick={() => {
+            <button
+              className={`px-4 py-2 rounded-full focus:outline-none ${
+                isProductActive
+                  ? 'bg-orange-300 text-black hover:bg-orange-400'
+                  : 'bg-gray-300 text-gray-600 cursor-not-allowed'
+              }`}
+              disabled={!isProductActive}
+              onClick={() => {
+                if (isProductActive) {
                   alert('Item added to cart!')
-                }}
-              >
-                Add to Cart
-              </button>
-            ) : (
-              <button
-                className="px-4 py-2 bg-gray-300 text-gray-600 rounded-full cursor-not-allowed"
-                disabled
-              >
-                Sold Out
-              </button>
-            )}
+                } else {
+                  alert('This item is Sold Out')
+                }
+              }}
+            >
+              {isProductActive ? 'Add to Cart' : 'Sold Out'}
+            </button>
           </div>
         </div>
       </div>
