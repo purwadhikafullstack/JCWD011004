@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import ProductPage from './pages/ProductPage'
 import VerifyPage from './pages/VerifyPage'
 import RequestResetPass from './pages/RequestResetPass'
+import ProductDetail from './pages/ProductDetail'
 import VerifyEditAccount from './pages/VerifyEditAccount'
 import RequestResendEmail from './pages/RequestResendEmail'
 import VerifyUpdatePassword from './pages/VerifyUpdatePassword'
@@ -13,12 +14,14 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
+
         <Route path="/product/:category" element={<ProductPage />}></Route>
         <Route path="/verify/:token" element={<VerifyPage />}></Route>
         <Route
           path="/reset-password/:token"
           element={<RequestResetPass />}
         ></Route>
+        <Route path="/product/detail/:id" element={<ProductDetail />}></Route>
         <Route
           path="/verify-updates/:token"
           element={<VerifyEditAccount />}
