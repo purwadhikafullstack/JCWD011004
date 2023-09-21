@@ -1,17 +1,26 @@
-db = require('../../../models')
-const Transaction = db.Transaction
+const db = require('../../../models');
+const Transaction = db.Transaction;
+const { validationResult } = require('express-validator');
+const fs = require('fs');
 
-
-async function uploadReceipt(req, res){
-    try {
-        const trasactionId = req.params
-        const {file} = req
-        return res.status(200).json({file})
-    } catch (error) {
-        return res.status(500).json(error)
-    }
-}
+const uploadPaymentProofController = async (req, res) => {
+  try {
+    const { invoiceNo, userId } = req.body;
+    const fileName = Date.now() + '-' + req.file.originalname;
+    await Transaction.create({
+      userId,
+      invoiceNo,
+      paymentMethod,
+      paymentProof: fileName, 
+      paymentStatus,
+    });
+    res.status(200).json({ message: 'Bukti bayar berhasil diupload' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat mengupload bukti bayar' });
+  }
+};
 
 module.exports = {
-    uploadReceipt
-}
+  uploadPaymentProofController,
+};
