@@ -38,7 +38,7 @@ function UserDashboard() {
   useEffect(handleUserdata, [])
 
   return (
-    <div className="section-dashboard gap-10 min-[1980px]:px-96  min-[1536px]:px-48 ">
+    <div className="section-dashboard gap-10 px-2 mb-24">
       <h1 className="mb-8 text-3xl font-bold flex max-[1200px]:justify-center ">
         User Dashboard
       </h1>
