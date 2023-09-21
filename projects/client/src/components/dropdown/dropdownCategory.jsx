@@ -28,6 +28,9 @@ export default function Dropdown() {
 
   useEffect(() => {
     getCategory()
+  }, [])
+
+  useEffect(() => {
     setSelected(sortData[categoryIdx])
   }, [sortData])
 
