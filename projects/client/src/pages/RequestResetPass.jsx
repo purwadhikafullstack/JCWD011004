@@ -11,7 +11,10 @@ const validationSchema = Yup.object().shape({
     .required('Password is required')
     .min(6, 'Password must be at least 6 characters')
     .matches(/\d/, 'Password must have at least one number')
-    .matches(/[!@#$%^&*]/, 'Password must have at least one special character'),
+    .matches(
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/,
+      'Password must have at least one special character'
+    ),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
     .required('Confirm Password is required')
@@ -40,6 +43,9 @@ function RequestResetPass() {
       }
     } catch (error) {
       console.error(error)
+      toast.error('terjadi kesalahan', {
+        position: toast.POSITION.TOP_CENTER
+      })
     }
   }
 

@@ -10,6 +10,7 @@ const ButtonLoginRegister = () => {
   const handleOpenLoginModal = () => {
     setLoginModalOpen(true)
     setRegisterModalOpen(false)
+    setResetPasswordModalOpen(false)
   }
 
   const handleCloseLoginModal = () => {
@@ -19,6 +20,7 @@ const ButtonLoginRegister = () => {
   const handleopenRegisterModal = () => {
     setLoginModalOpen(false)
     setRegisterModalOpen(true)
+    setResetPasswordModalOpen(false)
   }
 
   const handlecloseRegisterModal = () => {
@@ -26,9 +28,9 @@ const ButtonLoginRegister = () => {
   }
 
   const handleOpenResetModalOpen = () => {
+    setLoginModalOpen(false)
+    setRegisterModalOpen(false)
     setResetPasswordModalOpen(true)
-    setRegisterModalOpen(false)
-    setRegisterModalOpen(false)
   }
 
   const handleCloseResetModalOpen = () => {
@@ -50,17 +52,12 @@ const ButtonLoginRegister = () => {
       >
         Register
       </button>
-      <button
-        className="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 focus:outline-none"
-        onClick={handleOpenResetModalOpen}
-      >
-        Buka modal reset password
-      </button>
 
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={handleCloseLoginModal}
         onOpenRegister={handleopenRegisterModal}
+        onOpenResetPass={handleOpenResetModalOpen}
       />
       <RegisterModal
         isOpen={isRegisterModalOpen}
@@ -70,6 +67,7 @@ const ButtonLoginRegister = () => {
       <ResetPasswordModal
         isOpen={isResetPasswordModalOpen}
         onClose={handleCloseResetModalOpen}
+        onOpenLogin={handleOpenLoginModal}
       />
     </div>
   )
