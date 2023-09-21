@@ -4,12 +4,17 @@ const { login } = require('./auth/login')
 const { getAllCategory } = require('./product/category')
 const { getAllProduct, mostSales } = require('./product/getProduct')
 const { verifyUser } = require('./auth/verify')
-
+const { getUserInfo } = require('./auth/keepLogin')
+const requestResetPassword = require('./auth/requestResetPassword')
+const resetPassword = require('./auth/resetPassword')
 module.exports = {
   registerUser,
   login,
   getAllCategory,
   getAllProduct,
   mostSales,
-  verifyUser
+  verifyUser,
+  getUserInfo,
+  requestResetPassword,
+  resetPassword
 }

@@ -2,10 +2,11 @@ require('dotenv/config')
 const express = require('express')
 const cors = require('cors')
 const { join } = require('path')
-const { authRouter } = require('./routes')
+const { authRouter, userUpdate } = require('./routes')
 const { productRouter } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
+const path = require('path')
 
 app.use(
   cors({
@@ -15,6 +16,7 @@ app.use(
     ]
   })
 )
+app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')))
 
 app.use(express.json())
 // const db = require('../models')
@@ -25,6 +27,7 @@ app.use(express.json())
 // ===========================
 // NOTE : Add your routes here
 app.use('/api/auth', authRouter)
+app.use('/api/update', userUpdate)
 app.use('/api/product', productRouter)
 
 app.get('/api', (req, res) => {

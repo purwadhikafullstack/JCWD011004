@@ -30,6 +30,11 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
       })
 
       if (response.status === 200) {
+        // Save the token to local storage
+        localStorage.setItem('token', response.data.token)
+        toast.success('Login Berhasil', {
+          position: toast.POSITION.TOP_CENTER
+        })
         const userRole = response.data.role
         if (userRole === 3) {
           toast.success('Login Berhasil', {

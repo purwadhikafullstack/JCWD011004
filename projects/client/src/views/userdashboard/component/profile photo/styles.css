@@ -1,0 +1,14 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.section-profile-photo {
+  width: 200px;
+  background-color: #f6f8fb;
+  border-radius: 10px;
+  height: 300px;
+  width: 408px;
+  padding: 32px;
+}

@@ -4,5 +4,19 @@ module.exports = {
   theme: {
     extend: {}
   },
-  plugins: []
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.number-input::-webkit-inner-spin-button, .number-input::-webkit-outer-spin-button':
+          {
+            '-webkit-appearance': 'none',
+            margin: '0'
+          },
+        '.number-input': {
+          '-moz-appearance': 'textfield'
+        }
+      }
+      addUtilities(newUtilities, ['responsive', 'hover'])
+    }
+  ]
 }
