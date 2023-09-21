@@ -19,14 +19,8 @@ function EditUserData({ handleShowEdit, userData }) {
     validationSchema: Yup.object({
       email: Yup.string().email('Invalid email address'),
       phoneNumber: Yup.string()
-        .matches(/^0?\d{9}$/, 'Phone number must be 10 digits')
-        .matches(
-          'Digits only',
-          'Phone number should only contain digits',
-          (value) => {
-            return /^\d+$/.test(value)
-          }
-        )
+        .matches(/^0?\d{8,11}$/, 'Phone number must be between 9 and 12 digits')
+        .matches(/^\d+$/, 'Phone number should only contain digits')
     }),
 
     onSubmit: (values) => {
