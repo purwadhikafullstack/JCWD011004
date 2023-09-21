@@ -97,7 +97,7 @@ const ImageUpload = () => {
   }, [])
 
   return (
-    <div className="section-profile-photo ">
+    <div className="section-profile-photo  ">
       <input
         type="file"
         className="hidden"
