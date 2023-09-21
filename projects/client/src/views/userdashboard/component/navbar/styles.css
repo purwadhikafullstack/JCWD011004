@@ -1,0 +1,16 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  font-weight: 400;
+}
+.navbar {
+  background-color: #f6f8fb;
+  height: 300px;
+  width: 408px;
+  padding: 32px;
+}

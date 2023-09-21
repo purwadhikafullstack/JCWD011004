@@ -4,8 +4,11 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
+import { isLogin } from '../../services/reducer/productReducer'
 
-const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
+const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
+  const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -27,15 +30,25 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
       })
 
       if (response.status === 200) {
+        // Save the token to local storage
+        localStorage.setItem('token', response.data.token)
         toast.success('Login Berhasil', {
           position: toast.POSITION.TOP_CENTER
         })
         const userRole = response.data.role
-        if (userRole === 1) {
+        if (userRole === 3) {
+          toast.success('Login Berhasil', {
+            position: toast.POSITION.TOP_CENTER
+          })
           localStorage.setItem('token', response.data.token)
           setTimeout(() => {
             onClose()
+            dispatch(isLogin(response.data.token))
           }, 2000)
+        } else {
+          toast.error('Wrong User', {
+            position: toast.POSITION.TOP_CENTER
+          })
         }
       } else {
         toast.error('Login Gagal', {
@@ -53,7 +66,8 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
   LoginModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    onOpenRegister: PropTypes.func.isRequired
+    onOpenRegister: PropTypes.func.isRequired,
+    onOpenResetPass: PropTypes.func.isRequired
   }
 
   return (
@@ -110,7 +124,12 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister }) => {
           </div>
         </div>
         <div className="mb-3 mt-[-0.25rem] flex justify-end text-blue-700 text-sm cursor-pointer hover:underline">
-          <span>Forgot Password?</span>
+          <span
+            className="text-blue-500 cursor-pointer hover:underline"
+            onClick={onOpenResetPass}
+          >
+            Forgot Password?
+          </span>
         </div>
         <div className="flex justify-center">
           <button

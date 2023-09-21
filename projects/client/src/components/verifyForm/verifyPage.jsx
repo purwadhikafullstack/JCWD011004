@@ -5,10 +5,13 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const phoneRegExp = /^(\+62|62|0)8[1-9][0-9]/
 
 const RegisterModal = () => {
+  const { token } = useParams()
+  const navigate = useNavigate()
   const [passwordVisible, setPasswordVisible] = useState(false)
   const [confirmPassVisible, setConfirmPassVisible] = useState(false)
 
@@ -51,16 +54,25 @@ const RegisterModal = () => {
     onSubmit: async (values) => {
       try {
         const response = await axios.post(
-          'http://localhost:8000/api/register',
-          values
+          'http://localhost:8000/api/auth/verify ',
+          values,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
         )
         if (response.status === 200) {
-          toast.success('Register Berhasil', {
+          toast.success('Verification Berhasil', {
             position: toast.POSITION.TOP_CENTER
           })
+          setTimeout(() => {
+            navigate('/')
+          }, 2000)
         }
       } catch (error) {
-        toast.error(error.response.data.message, {
+        console.log(error.message)
+        toast.error(error.response.data.error, {
           position: toast.POSITION.TOP_CENTER
         })
       }
@@ -87,6 +99,7 @@ const RegisterModal = () => {
               type="text"
               id="username"
               name="username"
+              placeholder="Username"
               className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
               value={formik.values.username}
               onChange={formik.handleChange}
@@ -104,6 +117,7 @@ const RegisterModal = () => {
               type="text"
               id="phone"
               name="phone"
+              placeholder="Phone"
               className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
               value={formik.values.phone}
               onChange={formik.handleChange}
@@ -125,6 +139,7 @@ const RegisterModal = () => {
                 type={passwordVisible ? 'text' : 'password'}
                 id="password"
                 name="password"
+                placeholder="Password"
                 className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500 "
                 value={formik.values.password}
                 onChange={formik.handleChange}
@@ -153,6 +168,7 @@ const RegisterModal = () => {
                 type={confirmPassVisible ? 'text' : 'password'}
                 id="confirmPassword"
                 name="confirmPassword"
+                placeholder="Confirm Password"
                 className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
                 value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
