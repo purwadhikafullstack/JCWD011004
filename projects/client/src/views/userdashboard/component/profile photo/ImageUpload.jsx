@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css'
 const ImageUpload = () => {
   const [photoPreview, setPhotoPreview] = useState(null)
   const [avatar, setAvatar] = useState(null)
-  console.log(avatar)
   const [isDisabled, setIsDisabled] = useState(true)
 
   const photoRef = useRef()
