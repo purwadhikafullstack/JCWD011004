@@ -2,6 +2,7 @@ const db = require('../../../models')
 const Product = db.Product
 const Transaction_Item = db.Transaction_Item
 const Product_Image = db.Product_Image
+const Warehouse_Product = db.Warehouse_Product
 const { Op } = require('sequelize')
 
 async function getAllProduct(req, res) {
@@ -32,11 +33,17 @@ async function getAllProduct(req, res) {
     const imageOptions = {
       model: Product_Image
     }
+    const stockOptions = {
+      model: Warehouse_Product
+    }
     const products = await Product.findAll({
       where: whereCondition,
       limit: size,
       offset: offset,
-      include: imageOptions,
+      include: [
+        imageOptions,
+        stockOptions
+      ],
       order: order
     })
     const totalCount = await Product.count({
@@ -70,7 +77,7 @@ async function mostSales(req, res) {
       {
         model: Product_Image,
         as: 'productImage'
-      }
+      },
     ]
 
     if (categoryId) {
@@ -110,6 +117,7 @@ async function mostSales(req, res) {
     res.status(500).json({ message: 'Internal Server Error' })
   }
 }
+
 module.exports = {
   getAllProduct,
   mostSales

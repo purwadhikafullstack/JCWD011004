@@ -5,7 +5,6 @@ import { getSortIdx } from '../../services/reducer/productReducer'
 import { useDispatch } from 'react-redux'
 
 const sortData = [
-  { sort: 'Best Sellers' },
   { sort: 'Price : Low to High' },
   { sort: 'Price : High to Low ' },
   { sort: 'Newest Arrivals' }
