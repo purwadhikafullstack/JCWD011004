@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import './styles.css'
+import { GiHamburgerMenu } from 'react-icons/gi'
+import { RxHamburgerMenu } from 'react-icons/rx'
 function UserDashboardNavbar({ openAccountData, openAlamat, menu }) {
   const [isOpen, setIsOpen] = useState(true)
 
@@ -11,7 +13,7 @@ function UserDashboardNavbar({ openAccountData, openAlamat, menu }) {
           className="ml-auto min-[1200px]:hidden"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? 'Close' : 'Menu'}
+          {isOpen ? <RxHamburgerMenu /> : <GiHamburgerMenu />}
         </button>
       </header>
       <section

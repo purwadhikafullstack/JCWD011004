@@ -6,7 +6,8 @@ import VerifyPage from './pages/VerifyPage'
 import RequestResetPass from './pages/RequestResetPass'
 import VerifyEditAccount from './pages/VerifyEditAccount'
 import RequestResendEmail from './pages/RequestResendEmail'
-import UserDashboard from './views/userdashboard/UserDashboard'
+import VerifyUpdatePassword from './pages/VerifyUpdatePassword'
+import UserDashboardPage from './pages/UserDashboardPage'
 function App() {
   return (
     <div className="App">
@@ -23,10 +24,14 @@ function App() {
           element={<VerifyEditAccount />}
         ></Route>
         <Route
+          path="/verify-password-changes/:token"
+          element={<VerifyUpdatePassword />}
+        ></Route>
+        <Route
           path="/verification-page"
           element={<RequestResendEmail />}
         ></Route>
-        <Route path="/user-dashboard" element={<UserDashboard />}></Route>
+        <Route path="/user-dashboard" element={<UserDashboardPage />}></Route>
       </Routes>
     </div>
   )
