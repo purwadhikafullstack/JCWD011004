@@ -15,10 +15,9 @@ function CardList() {
 
   useEffect(() => {
     const sortEndpoints = {
-      0: `most-sales?limit=12&page=${currentPage}`,
-      1: `all?limit=12&sort=1&page=${currentPage}`,
-      2: `all?limit=12&sort=2&page=${currentPage}`,
-      3: `all?limit=12&sort=3&page=${currentPage}`
+      0: `all?limit=12&sort=1&page=${currentPage}`,
+      1: `all?limit=12&sort=2&page=${currentPage}`,
+      2: `all?limit=12&sort=3&page=${currentPage}`
     }
     const endpoint = sortEndpoints[sortIdx]
     if (endpoint) {
