@@ -27,7 +27,7 @@ function CardList() {
 
   useEffect(() => {
     const sortEndpoints = {
-      0: `most-sales?categoryId=${
+      0: `most-all?categoryId=${
         categoryIdx === 0 ? '' : categoryIdx
       }&limit=12&page=${currentPage}`,
       1: `all?categoryId=${

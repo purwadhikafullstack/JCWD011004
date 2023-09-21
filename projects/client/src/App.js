@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import ProductPage from './pages/ProductPage'
 import VerifyPage from './pages/VerifyPage'
 import RequestResetPass from './pages/RequestResetPass'
-import ProductDetailPage from './components/card/cardProductDetail'
+import ProductDetail from './pages/ProductDetail'
 
 function App() {
   return (
@@ -18,10 +18,7 @@ function App() {
           path="/reset-password/:token"
           element={<RequestResetPass />}
         ></Route>
-        <Route
-          path="/product/detail/:id"
-          element={<ProductDetailPage />}
-        ></Route>
+        <Route path="/product/detail/:id" element={<ProductDetail />}></Route>
       </Routes>
     </div>
   )
