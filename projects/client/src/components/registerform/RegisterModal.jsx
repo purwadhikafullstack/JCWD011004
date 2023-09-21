@@ -93,8 +93,8 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
               type="submit"
               className={
                 isDisabled
-                  ? 'bg-blue-400 text-white rounded-full py-2 px-10'
-                  : 'bg-blue-500 text-white rounded-full py-2 px-10 active:bg-blue-600 hover:bg-blue-400 focus:outline-none'
+                  ? 'bg-orange-200 text-white rounded-full py-2 px-10'
+                  : 'bg-orange-300 text-white rounded-full py-2 px-10 active:bg-orange-300 hover:bg-orange-400 focus:outline-none'
               }
             >
               Register
