@@ -21,6 +21,7 @@ function SocialLogin() {
       // Simpan token ke localStorage
       localStorage.setItem('token', response.data.token)
       toast.success('Login berhasil', { position: toast.POSITION.TOP_CENTER })
+      window.location.reload()
     } catch (error) {
       // Terjadi error saat login
       toast.error(error?.response?.data?.message, {

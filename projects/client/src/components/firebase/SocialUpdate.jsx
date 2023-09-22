@@ -20,6 +20,7 @@ function UpdateButton() {
         toast.success('Sync Google Auth berhasil', {
           position: toast.POSITION.TOP_CENTER
         })
+        window.location.reload()
       }
     } catch (error) {
       toast.error(error?.response?.data?.message, {

@@ -22,6 +22,7 @@ function SocialRegister() {
       toast.success('Registrasi berhasil', {
         position: toast.POSITION.TOP_CENTER
       })
+      window.location.reload()
     } catch (error) {
       // Terjadi error saat registrasi
       toast.error(error?.response?.data?.message, {
