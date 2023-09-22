@@ -22,7 +22,7 @@ function ViewUserData({ userData, handleShowEditPassword }) {
         </p>
       </div>
       <div className="flex  gap-2">
-        <label>Phone:</label>
+        <label>Phone :</label>
         <p className="font-bold">
           {userData?.phoneNumber ? userData?.phoneNumber : 'kosong'}
         </p>
