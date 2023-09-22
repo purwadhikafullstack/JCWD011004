@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Card({ product }) {
   const stock = product.Warehouse_Products
-    ? product.Warehouse_Products[0].stock
+    ? product.Warehouse_Products[0]?.stock
     : 0
   const isProductActive = stock > 0
   return (
