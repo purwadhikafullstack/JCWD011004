@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "transactionId",
       });
       this.belongsTo(models.Transaction_Status, {
-        foreignKey: "transaction_StatusId",
+        foreignKey: "transactionStatusId",
       });
     }
   }
@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      transactionStatusId: {
+      transactionStatus: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
