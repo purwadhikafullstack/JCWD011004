@@ -8,7 +8,7 @@ async function uploadPaymentProof(id, file) {
   try {
     const { path } = file;
     await Transaction.update(
-      { paymentProof: path, paymentStatus: true, transactionStatus: 1 }, 
+      { paymentProof: path, paymentStatus: true, transactionStatus: Transaction_Status.code[1]}, 
       { where: { id }, transaction: t }
     );
     await t.commit();  
