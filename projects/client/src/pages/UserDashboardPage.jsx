@@ -5,7 +5,7 @@ import UserDashboard from '../views/userdashboard/UserDashboard'
 
 function UserDashboardPage() {
   return (
-    <div className="container mx-auto max-w-screen-lg">
+    <div className="container mx-auto max-w-screen-lg flex flex-col">
       <Navbar />
       <UserDashboard />
       <Footer />

@@ -52,7 +52,7 @@ function EditUserData({ handleShowEdit, userData }) {
   })
   return (
     <form onSubmit={editInformation.handleSubmit}>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-2">
           <label className="flex">First Name</label>
           <input
