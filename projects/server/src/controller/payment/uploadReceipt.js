@@ -1,14 +1,16 @@
+const paymentService = require('../../service/paymentService'); 
 
-async function UploadReceipt(req, res) {
+async function uploadReceipt(req, res) {
   try {
-    const transactionId = req.params.transactionId;
+    const id = req.params.id;
     const { file } = req;
-    const UploadedReceipt = await transactionService.UploadReceipt(
-      transactionId,
-      file
-    );
+    const UploadedReceipt = await paymentService.uploadPaymentProof(id, file);
     return res.status(200).json(UploadedReceipt);
   } catch (error) {
     return res.status(500).json(error.message);
   }
 }
+
+module.exports = {
+  uploadReceipt
+};

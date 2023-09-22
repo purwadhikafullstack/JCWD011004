@@ -4,6 +4,7 @@ const cors = require('cors')
 const { join } = require('path')
 const { authRouter, userUpdate } = require('./routes')
 const { productRouter } = require('./routes')
+const { paymentRouter } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
 const path = require('path')
@@ -29,6 +30,7 @@ app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api/update', userUpdate)
 app.use('/api/product', productRouter)
+app.use('/api/payment', paymentRouter)
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`)
