@@ -60,25 +60,3 @@ module.exports = {
     addItem,
     removeItem
 }
-
-
-// const db = require('../../../models');
-// const Cart_Item = db.Cart_Item;
-// const Cart = db.Cart;
-// const Product = db.Product;
-
-// async function additem (req, res) {
-//   try {
-
-//     const addProduct = 
-    
-//   } catch (error) {
-    
-//   }
-// }
-
-
-// module.exports =
-// {
-//   additem
-// }
