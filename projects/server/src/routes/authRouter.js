@@ -6,7 +6,9 @@ const {
   requestResetPassword,
   resetPassword,
   getUserInfo,
-  verifyUser
+  verifyUser,
+  firebaseLogin,
+  firebaseRegister
 } = require('../controller')
 const { validateEmail } = require('../middleware/emailValidator')
 
@@ -20,6 +22,8 @@ const { verifyToken } = require('../middleware/auth')
 
 router.post('/register', validateEmail, registerUser)
 router.post('/login', login)
+router.post('/login-social', firebaseLogin)
+router.post('/register-social', firebaseRegister)
 router.post('/reset-password', validateEmail, requestResetPassword)
 router.patch('/reset-password', passwordValidationRules(), resetPassword)
 router.get('/user', getUserInfo)

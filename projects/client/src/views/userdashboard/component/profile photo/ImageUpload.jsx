@@ -78,6 +78,7 @@ const ImageUpload = () => {
         toast.success('Avatar berhasil diubah', {
           position: toast.POSITION.TOP_CENTER
         })
+        window.location.reload()
       } else {
         setIsDisabled(true)
         toast.error('Terjadi Kesalahan', {

@@ -1,8 +1,6 @@
-
 const upload = require('../../middleware/userAvatar')
 const db = require('../../../models')
 const User = db.User
-
 
 function userUploadAvatar(req, res) {
   upload(req, res, (err) => {
@@ -18,7 +16,9 @@ function userUploadAvatar(req, res) {
       } else {
         // Update user's profile image in the database
         User.update(
-          { profileImage: `uploads/${req.file.filename}` },
+          {
+            profileImage: `http://localhost:${process.env.PORT}/uploads/${req.file.filename}`
+          },
           {
             where: {
               id: req.userData.id
@@ -28,7 +28,7 @@ function userUploadAvatar(req, res) {
           .then(() => {
             res.json({
               msg: 'File Uploaded!',
-              file: `uploads/${req.file.filename}`
+              file: `http://localhost:${process.env.PORT}/uploads/${req.file.filename}`
             })
           })
           .catch((err) => {
@@ -42,6 +42,5 @@ function userUploadAvatar(req, res) {
 }
 
 module.exports = {
-
   userUploadAvatar
 }
