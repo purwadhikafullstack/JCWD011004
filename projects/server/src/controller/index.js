@@ -9,6 +9,7 @@ const { getUserInfo } = require('./auth/keepLogin')
 const {uploadReceipt} = require('./payment/uploadReceipt')
 const requestResetPassword = require('./auth/requestResetPassword')
 const resetPassword = require('./auth/resetPassword')
+const {getAllOrderStatus} = require('./transaction/getOrderStatus')
 module.exports = {
   registerUser,
   login,
@@ -20,5 +21,6 @@ module.exports = {
   requestResetPassword,
   resetPassword,
   seeDetailProduct,
-  uploadReceipt
+  uploadReceipt,
+  getAllOrderStatus
 }

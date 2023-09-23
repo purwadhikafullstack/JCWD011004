@@ -3,7 +3,12 @@ const Transaction = db.Transaction;
 
 const getAllOrderStatus = async (req, res) => {
   try {
+    const userId = req.params.userId;
     const allOrderStatus = await Transaction.findAll({
+      where: {
+        userId
+      },
+      include: [{ model: db.Transaction_Status, as: 'statusTransaction' }],
     });
 
     if (!allOrderStatus || allOrderStatus.length === 0) {
@@ -16,7 +21,7 @@ const getAllOrderStatus = async (req, res) => {
       allOrderStatus,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error); // Menggunakan console.error untuk log error
     res.status(500).json({
       message: "Internal Server Error",
     });

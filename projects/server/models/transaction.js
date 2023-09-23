@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.belongsTo(models.Transaction_Status, {
         foreignKey: "transactionStatusId",
+        as: "statusTransaction",
       });
     }
   }
