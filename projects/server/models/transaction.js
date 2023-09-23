@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Transaction extends Model {
     static associate(models) {
@@ -12,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(models.Product, {
         through: "Transaction_Item",
         foreignKey: "transactionId",
+      });
+      this.belongsTo(models.Transaction_Status, {
+        foreignKey: "transactionStatusId",
       });
     }
   }
@@ -52,7 +56,12 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: false,
       },
       transactionStatus: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Transaction_Status",
+          key: "code",
+        },
       },
     },
     {
