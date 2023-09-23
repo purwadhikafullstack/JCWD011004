@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { isLogin } from '../../services/reducer/productReducer'
+import SocialLogin from '../firebase/SocialLogin'
 
 const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
   const dispatch = useDispatch()
@@ -134,7 +135,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
             Login
           </button>
         </div>
-        <div className="mt-4 text-center text-sm">
+        <div className="mt-4 text-center text-sm flex flex-col">
           <p className="text-gray-400">
             Dont have an account?{' '}
             <span
@@ -144,6 +145,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
               Register
             </span>
           </p>
+          <SocialLogin />
         </div>
       </div>
       <ToastContainer />

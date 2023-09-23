@@ -8,6 +8,7 @@ const { verifyUser } = require('./auth/verify')
 const { getUserInfo } = require('./auth/keepLogin')
 const requestResetPassword = require('./auth/requestResetPassword')
 const { addItem, removeItem } = require('./card/addingItems')
+const { firebaseLogin, firebaseRegister } = require('./auth/firebaseLogin')
 const resetPassword = require('./auth/resetPassword')
 module.exports = {
   registerUser,
@@ -21,5 +22,7 @@ module.exports = {
   resetPassword,
   seeDetailProduct,
   addItem,
-  removeItem
+  removeItem,
+  firebaseLogin,
+  firebaseRegister
 }

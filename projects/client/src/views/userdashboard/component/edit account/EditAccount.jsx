@@ -25,7 +25,7 @@ function EditAccount({ userData, loading }) {
         edit
           ? 'section-edit-acount'
           : !changePassword
-          ? 'show-account'
+          ? 'show-account h-auto'
           : 'change-password'
       }
     >
@@ -40,7 +40,7 @@ function EditAccount({ userData, loading }) {
           <EditUserData handleShowEdit={handleShowEdit} userData={userData} />
         </>
       ) : (
-        <div className="flex flex-col gap-4 font-sans">
+        <>
           {!loading ? (
             <>
               <ViewUserData
@@ -58,7 +58,7 @@ function EditAccount({ userData, loading }) {
               />
             </>
           )}
-        </div>
+        </>
       )}
       {changePassword ? (
         <ChangePasswordForm handleShowEditPassword={handleShowEditPassword} />
