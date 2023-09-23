@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css'
 const ImageUpload = () => {
   const [photoPreview, setPhotoPreview] = useState(null)
   const [avatar, setAvatar] = useState(null)
-  console.log(avatar)
   const [isDisabled, setIsDisabled] = useState(true)
 
   const photoRef = useRef()
@@ -79,6 +78,7 @@ const ImageUpload = () => {
         toast.success('Avatar berhasil diubah', {
           position: toast.POSITION.TOP_CENTER
         })
+        window.location.reload()
       } else {
         setIsDisabled(true)
         toast.error('Terjadi Kesalahan', {
@@ -97,7 +97,7 @@ const ImageUpload = () => {
   }, [])
 
   return (
-    <div className="section-profile-photo ">
+    <div className="section-profile-photo  ">
       <input
         type="file"
         className="hidden"

@@ -7,8 +7,8 @@ const { productRouter } = require('./routes')
 const { paymentRouter } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
+const admin = require('./services/firebaseAdmin')
 const path = require('path')
-
 app.use(
   cors({
     origin: [

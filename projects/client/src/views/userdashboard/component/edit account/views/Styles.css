@@ -12,7 +12,7 @@ body {
 .show-account,
 .change-password {
   background-color: #e6effb;
-  height: 500px;
+  height: max-content;
   width: 408px;
   padding: 32px;
   border-radius: 10px;

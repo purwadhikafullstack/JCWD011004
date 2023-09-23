@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import SocialRegister from '../firebase/SocialRegister'
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -93,15 +94,15 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
               type="submit"
               className={
                 isDisabled
-                  ? 'bg-blue-400 text-white rounded-full py-2 px-10'
-                  : 'bg-blue-500 text-white rounded-full py-2 px-10 active:bg-blue-600 hover:bg-blue-400 focus:outline-none'
+                  ? 'bg-orange-200 text-white rounded-full py-2 px-10'
+                  : 'bg-orange-300 text-white rounded-full py-2 px-10 active:bg-orange-300 hover:bg-orange-400 focus:outline-none'
               }
             >
               Register
             </button>
           </div>
         </form>
-        <div className="mt-4 text-center text-sm">
+        <div className="mt-4 text-center text-sm flex flex-col">
           <p className="text-gray-400">
             Already have an account?{' '}
             <span
@@ -111,6 +112,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
               Login
             </span>
           </p>
+          <SocialRegister />
         </div>
       </div>
       <ToastContainer />

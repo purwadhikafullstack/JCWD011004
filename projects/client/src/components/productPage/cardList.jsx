@@ -27,16 +27,13 @@ function CardList() {
 
   useEffect(() => {
     const sortEndpoints = {
-      0: `most-sales?categoryId=${
-        categoryIdx === 0 ? '' : categoryIdx
-      }&limit=12&page=${currentPage}`,
-      1: `all?categoryId=${
+      0: `all?categoryId=${
         categoryIdx === 0 ? '' : categoryIdx
       }&limit=12&sort=1&page=${currentPage}`,
-      2: `all?categoryId=${
+      1: `all?categoryId=${
         categoryIdx === 0 ? '' : categoryIdx
       }&limit=12&sort=2&page=${currentPage}`,
-      3: `all?categoryId=${
+      2: `all?categoryId=${
         categoryIdx === 0 ? '' : categoryIdx
       }&limit=12&sort=3&page=${currentPage}`
     }
