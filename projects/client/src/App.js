@@ -7,6 +7,7 @@ import RequestResetPass from './pages/RequestResetPass'
 import VerifyEditAccount from './pages/VerifyEditAccount'
 import RequestResendEmail from './pages/RequestResendEmail'
 import UserDashboard from './views/userdashboard/UserDashboard'
+import DashboardPemesanan from './components/transactionPage/dashboardPemesanan'
 function App() {
   return (
     <div className="App">
@@ -28,6 +29,10 @@ function App() {
         ></Route>
         <Route path="/user-dashboard" element={<UserDashboard />}></Route>
       </Routes>
+      <Route
+        path="/dashboard-pemesanan"
+        element={<DashboardPemesanan />}
+      ></Route>
     </div>
   )
 }

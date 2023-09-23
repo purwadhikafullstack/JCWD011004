@@ -42,5 +42,4 @@ function Card({ product }) {
     </>
   )
 }
-
 export default Card
