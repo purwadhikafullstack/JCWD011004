@@ -14,7 +14,7 @@ async function uploadPaymentProof(id, file) {
       throw new Error('Status transaksi tidak ditemukan.');
     }
     await Transaction.update(
-      { paymentProof: path, paymentStatus: true, transactionStatus: newTransactionStatus.code },
+      { paymentProof: path, transactionStatus: newTransactionStatus.code },
       { where: { id }, transaction: t }
     );
     await t.commit();
