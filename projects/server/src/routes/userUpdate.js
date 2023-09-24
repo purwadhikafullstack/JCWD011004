@@ -18,5 +18,7 @@ router.patch('/verify-password', verifyPasswordUpdate)
 router.patch('/avatars', authenticate, userUploadAvatar)
 router.patch('/user-google-auth', updateUserForFirebase)
 router.get('/avatars', authenticate, getUserImage)
+router.post('/address', authenticate, getUserImage)
+router.patch('/address', authenticate, getUserImage)
 
 module.exports = router
