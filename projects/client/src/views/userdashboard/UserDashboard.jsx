@@ -29,6 +29,7 @@ function UserDashboard() {
           Authorization: `Bearer ${token}`
         }
       })
+      console.log(res)
       setUserData(res?.data?.userInfo)
       setLoading(false)
     } catch (error) {
@@ -39,7 +40,7 @@ function UserDashboard() {
   useEffect(handleUserdata, [])
 
   return (
-    <div className="section-dashboard gap-10 px-2 mb-24">
+    <div className="section-dashboard gap-10 px-2 mb-24 h-max">
       <h1 className="mb-8 text-3xl font-bold flex max-[1200px]:justify-center ">
         User Dashboard
       </h1>

@@ -4,10 +4,11 @@ const cors = require('cors')
 const { join } = require('path')
 const { authRouter, userUpdate } = require('./routes')
 const { productRouter } = require('./routes')
+const { cardRouter } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
+const admin = require('./services/firebaseAdmin')
 const path = require('path')
-
 app.use(
   cors({
     origin: [
@@ -29,6 +30,7 @@ app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api/update', userUpdate)
 app.use('/api/product', productRouter)
+app.use('/api/card', cardRouter)
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`)
