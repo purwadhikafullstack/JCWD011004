@@ -8,7 +8,7 @@ const getAllOrderStatus = async (req, res) => {
       where: {
         userId
       },
-    //   include: [{ model: db.Transaction_Status, as: 'statusTransaction' }], // ini opsional yak
+      include: [{ model: db.Product }],
     });
 
     if (!allOrderStatus || allOrderStatus.length === 0) {
