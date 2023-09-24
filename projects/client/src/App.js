@@ -7,10 +7,8 @@ import RequestResetPass from './pages/RequestResetPass'
 import ProductDetail from './pages/ProductDetail'
 import VerifyEditAccount from './pages/VerifyEditAccount'
 import RequestResendEmail from './pages/RequestResendEmail'
-// import UserDashboard from './views/userdashboard/UserDashboard'
 import VerifyUpdatePassword from './pages/VerifyUpdatePassword'
 import UserDashboardPage from './pages/UserDashboardPage'
-// import TableDashboardPemesanan from './components/transactionPage/TableDashboardPemesanan'
 import SidebarPemesanan from './components/transactionPage/SidebarPemesanan'
 function App() {
   return (
@@ -38,10 +36,6 @@ function App() {
           element={<RequestResendEmail />}
         ></Route>
         <Route path="/user-dashboard" element={<UserDashboardPage />}></Route>
-        {/* <Route
-          path="/table-dashboard"
-          element={<TableDashboardPemesanan />}
-        ></Route> */}
         <Route path="/sidebar-pemesanan" element={<SidebarPemesanan />}></Route>
       </Routes>
     </div>
