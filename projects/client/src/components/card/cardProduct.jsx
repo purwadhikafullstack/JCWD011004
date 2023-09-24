@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import AddToCartButton from './components/AddToCartButton'
 
 function Card({ product }) {
+  console.log(product)
   const stock = product?.Warehouse_Products
     ? product?.Warehouse_Products[0]?.stock
     : 0
@@ -33,23 +35,10 @@ function Card({ product }) {
             </div>
           </Link>
           <div className="pb-3 text-center">
-            <button
-              className={`px-4 py-2 rounded-full focus:outline-none ${
-                isProductActive
-                  ? 'bg-orange-300 text-black hover:bg-orange-400'
-                  : 'bg-gray-300 text-gray-600 cursor-not-allowed'
-              }`}
-              disabled={!isProductActive}
-              onClick={() => {
-                if (isProductActive) {
-                  alert('Item added to cart!')
-                } else {
-                  alert('This item is Sold Out')
-                }
-              }}
-            >
-              {isProductActive ? 'Add to Cart' : 'Sold Out'}
-            </button>
+            <AddToCartButton
+              isProductActive={isProductActive}
+              productId={product?.id}
+            />
           </div>
         </div>
       </div>
