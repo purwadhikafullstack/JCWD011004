@@ -11,6 +11,8 @@ import RequestResendEmail from './pages/RequestResendEmail'
 import DashboardPemesanan from './components/transactionPage/dashboardPemesanan'
 import VerifyUpdatePassword from './pages/VerifyUpdatePassword'
 import UserDashboardPage from './pages/UserDashboardPage'
+import TableDashboardPemesanan from './components/transactionPage/TableDashboardPemesanan'
+import SidebarPemesanan from './components/transactionPage/SidebarPemesanan'
 function App() {
   return (
     <div className="App">
@@ -41,6 +43,11 @@ function App() {
           path="/dashboard-pemesanan"
           element={<DashboardPemesanan />}
         ></Route>
+        <Route
+          path="/table-dashboard"
+          element={<TableDashboardPemesanan />}
+        ></Route>
+        <Route path="/sidebar-pemesanan" element={<SidebarPemesanan />}></Route>
       </Routes>
     </div>
   )
