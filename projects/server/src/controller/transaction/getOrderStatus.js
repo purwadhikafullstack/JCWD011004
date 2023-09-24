@@ -6,7 +6,8 @@ const getAllOrderStatus = async (req, res) => {
     const userId = req.params.userId;
     const allOrderStatus = await Transaction.findAll({
       where: {
-        userId
+        userId,
+        TransactionStatusId: 0, 
       },
       include: [{ model: db.Product }],
     });
@@ -21,7 +22,7 @@ const getAllOrderStatus = async (req, res) => {
       allOrderStatus,
     });
   } catch (error) {
-    console.error(error); 
+    console.error(error);
     res.status(500).json({
       message: "Internal Server Error",
     });

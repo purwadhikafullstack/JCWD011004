@@ -4,9 +4,6 @@ import TableDashboardPemesanan from './TableDashboardPemesanan'
 export default function SidebarPemesanan() {
   return (
     <div>
-      <div className="flex container justify-center p-4 font-poppins bg-white  border border-neutral-200 w-screen">
-        <h1>Semua Pesanan Saya</h1>
-      </div>
       <div className="flex flex-col container mx-auto max-w-screen-lg">
         <div
           id="view"

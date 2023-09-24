@@ -58,6 +58,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       transactionStatusId: {
         type: DataTypes.INTEGER,
+        defaultValue: 0,
         allowNull: false,
         references: {
           model: 'Transaction_Status',
