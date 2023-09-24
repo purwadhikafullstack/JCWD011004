@@ -1,18 +1,16 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-// import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-// import { useNavigate, useParams } from 'react-router-dom'
 import { openAddAddress } from '../../../../services/reducer/addressReducer'
 import { useDispatch } from 'react-redux'
+import DropdownProvince from './DropdownProvince'
+import DropdownCityRegency from './DropdownCityRegency'
 
 const phoneRegExp = /^(\+62|62|0)8[1-9][0-9]/
 
 export const AddAddress = () => {
-  //   const { token } = useParams()
-  //   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const handleCancel = () => {
@@ -126,35 +124,17 @@ export const AddAddress = () => {
             <div className="text-red-500">{formik.errors.address}</div>
           ) : null}
         </div>
-        <div className="mb-2 flex items-center">
+        <div className="mb-2 flex items-center z-10">
           <label htmlFor="province" className="mr-2 text-black-600 w-20">
             Province
           </label>
-          <input
-            type="province"
-            id="province"
-            name="province"
-            placeholder="Province"
-            className="px-1 border rounded border-gray-300 focus:outline-none focus:border-blue-500 flex-grow"
-            value={formik.values.province}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
+          <DropdownProvince />
         </div>
         <div className="mb-2 flex items-center">
           <label htmlFor="cityregency" className="mr-2 text-black-600 w-20">
             City/Regency
           </label>
-          <input
-            type="text"
-            id="cityregency"
-            name="cityregency"
-            placeholder="City/Regency"
-            className="px-1 border rounded border-gray-300 focus:outline-none focus:border-blue-500 flex-grow"
-            value={formik.values.cityregency}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
+          <DropdownCityRegency />
         </div>
         <div className="mb-2">
           <div className="flex items-center">
