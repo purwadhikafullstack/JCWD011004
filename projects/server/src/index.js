@@ -6,6 +6,7 @@ const { authRouter, userUpdate } = require('./routes')
 const { productRouter } = require('./routes')
 const { paymentRouter } = require('./routes')
 const { transactionRouter } = require('./routes')
+const { cardRouter } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
 const admin = require('./services/firebaseAdmin')
@@ -33,6 +34,7 @@ app.use('/api/update', userUpdate)
 app.use('/api/product', productRouter)
 app.use('/api/payment', paymentRouter)
 app.use('/api/transaction', transactionRouter)
+app.use('/api/card', cardRouter)
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`)
