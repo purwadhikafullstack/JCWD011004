@@ -1,13 +1,15 @@
 import React from 'react'
 import TableDashboardPemesanan from './TableDashboardPemesanan'
-
+import Navbar from '../navbar/navbar'
+import Footer from '../homePage/footer'
 export default function SidebarPemesanan() {
   return (
-    <div>
-      <div className="flex flex-col container mx-auto max-w-screen-lg">
+    <div className="container mx-auto max-w-screen-lg">
+      <Navbar />
+      <div className="flex flex-col container mx-auto max-w-screen-lg mt-20">
         <div
           id="view"
-          className="h-full w-screen flex flex-row shadow-lg bg-white border border-neutral-200"
+          className="h-full w-full flex flex-row shadow-lg bg-white border border-neutral-200"
         >
           <div
             id="sidebar"
@@ -120,6 +122,7 @@ export default function SidebarPemesanan() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

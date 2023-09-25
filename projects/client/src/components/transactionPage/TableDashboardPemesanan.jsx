@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { UploadButton } from '../../components/button/button'
 import axios from 'axios'
+import jwt_decode from 'jwt-decode'
 
 export default function TableDashboardPemesanan() {
   const [data, setData] = useState([])
+  const token = jwt_decode(localStorage.getItem('token')).id
 
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:8000/api/transaction/all-status/2'
+        `http://localhost:8000/api/transaction/all-status/${token}`
       )
       setData(response.data.allOrderStatus)
     } catch (error) {
@@ -21,7 +23,7 @@ export default function TableDashboardPemesanan() {
   }, [])
   return (
     <div className="w-full">
-      <h1 className="text-2xl font-semibold text-h1-mobile lg:text-hr-desktop mb-4">
+      <h1 className="text-2xl lg:text-xl md:text-lg sm:text-sm font-semibold text-h1-mobile lg:text-hr-desktop mb-4">
         Daftar Pemesanan
       </h1>
       <table className="min-w-full divide-y divide-gray-200">
