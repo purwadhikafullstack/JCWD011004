@@ -1,9 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const { addItem, removeItem } = require('../controller')
-const { authenticate } = require('../middleware/userAuth')
+const {
+  addItem,
+  removeItem,
+  getCartItems,
+  getCartItemsSortPagination
+} = require('../controller')
 
-router.post('/additem', authenticate, addItem)
-router.patch('/removeItem', authenticate, removeItem)
+router.post('/additem', addItem)
+router.patch('/removeItem', removeItem)
+router.get('/items', getCartItems)
+router.get('/list-items', getCartItemsSortPagination)
 
 module.exports = router

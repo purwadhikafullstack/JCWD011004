@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import LoginModal from '../../loginModal/loginModal'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { increment } from '../../../services/reducer/cartReducer'
 
 function AddToCartButton({ isProductActive, productId }) {
   const [openLoginModal, setLoginModalOpen] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
   const apiUrl = process.env.REACT_APP_API_BASE_URL
-
+  const dispatch = useDispatch()
   const handleLoginModal = () => {
     setLoginModalOpen(!openLoginModal)
   }
+
   const handleAddToCart = async () => {
     setIsDisabled(true)
     const token = localStorage.getItem('token')
@@ -36,6 +39,7 @@ function AddToCartButton({ isProductActive, productId }) {
             }
           )
           .then(() => {
+            dispatch(increment(productId)) // increment the count in the Redux store
             toast.success('Product ditambahkan di keranjang', {
               position: toast.POSITION.TOP_CENTER
             })
@@ -43,8 +47,15 @@ function AddToCartButton({ isProductActive, productId }) {
           })
           .catch((error) => {
             console.log(error)
+            toast.error('Terjadi masalah saat menambahkan item', {
+              position: toast.POSITION.TOP_CENTER
+            })
           })
   }
+
+  useEffect(() => {
+    isProductActive ? setIsDisabled(false) : setIsDisabled(true)
+  }, [])
 
   return (
     <>
