@@ -28,7 +28,9 @@ export default function SidebarPemesanan() {
                     <path d="M12 2C5.382 2 0 7.382 0 14s5.382 12 12 12 12-5.382 12-12S18.618 2 12 2zm0 21c-5.523 0-10-4.477-10-10S6.477 3 12 3s10 4.477 10 10-4.477 10-10 10z" />
                     <path d="M13 8a1 1 0 0 0-1 1v3a1 1 0 0 0 2 0V9a1 1 0 0 0-1-1z" />
                   </svg>
-                  <span className="">Belum Bayar</span>
+                  <span className="text-pr-mobile font-sm lg:text-pr-desktop">
+                    Belum Bayar
+                  </span>
                 </a>
                 <a
                   href=""
