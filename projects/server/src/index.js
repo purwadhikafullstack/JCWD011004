@@ -8,6 +8,7 @@ const { cardRouter } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
 const admin = require('./services/firebaseAdmin')
+const axios = require('axios')
 const path = require('path')
 app.use(
   cors({
@@ -20,8 +21,8 @@ app.use(
 app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')))
 
 app.use(express.json())
-// const db = require('../models')
-// db.sequelize.sync({ alter: true })
+const db = require('../models')
+db.sequelize.sync({ alter: true })
 
 //#region API ROUTES
 
@@ -31,6 +32,57 @@ app.use('/api/auth', authRouter)
 app.use('/api/update', userUpdate)
 app.use('/api/product', productRouter)
 app.use('/api/card', cardRouter)
+
+app.get('/api/province', async (req, res) => {
+  try {
+    const response = await axios.get(
+      'https://api.rajaongkir.com/starter/province',
+      {
+        headers: {
+          Key: process.env.KEY_RAJAONGKIR
+        }
+      }
+    )
+    res.json(response.data)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
+
+app.get('/api/province', async (req, res) => {
+  try {
+    const response = await axios.get(
+      'https://api.rajaongkir.com/starter/province',
+      {
+        headers: {
+          Key: process.env.KEY_RAJAONGKIR
+        }
+      }
+    )
+    res.json(response.data)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
+
+app.get('/api/city', async (req, res) => {
+  const dataProvince = req.query.province
+  try {
+    const response = await axios.get(
+      `https://api.rajaongkir.com/starter/city?province=${dataProvince}`,
+      {
+        headers: {
+          Key: process.env.KEY_RAJAONGKIR
+        }
+      }
+    )
+    res.json(response.data)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`)

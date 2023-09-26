@@ -10,6 +10,7 @@ const requestResetPassword = require('./auth/requestResetPassword')
 const { addItem, removeItem } = require('./card/addingItems')
 const { firebaseLogin, firebaseRegister } = require('./auth/firebaseLogin')
 const resetPassword = require('./auth/resetPassword')
+const { addAddress } = require('./userUpdate/userAddress')
 module.exports = {
   registerUser,
   login,
@@ -24,5 +25,6 @@ module.exports = {
   addItem,
   removeItem,
   firebaseLogin,
-  firebaseRegister
+  firebaseRegister,
+  addAddress
 }

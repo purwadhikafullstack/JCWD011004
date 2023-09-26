@@ -1,8 +1,7 @@
-const { adminService } = require('../services')
-const db = require('../models')
-const users = db.User
+const db = require('../../../models')
+const addressdb = db.Address
 
-const USerAddress = {
+const userAddress = {
   addAddress: async (req, res) => {
     try {
       const {
@@ -13,20 +12,42 @@ const USerAddress = {
         cityRegency,
         subdistrict,
         postalCode,
-        cityId
+        cityId,
+        longitude,
+        latitude
       } = req.body
-      await adminService.updateSalary(employeeId, monthlySalary)
-      return res.status(200).json({
-        success: 'Update salary succeed',
-        user: { employeeId, monthlySalary }
+
+      const { id } = req.userData
+
+      await db.sequelize.transaction(async (t) => {
+        const userData = await addressdb.create(
+          {
+            userId: id,
+            name,
+            phone,
+            address,
+            province,
+            cityRegency,
+            subdistrict,
+            postalCode,
+            cityId,
+            longitude,
+            latitude
+          },
+          { transaction: t }
+        )
+        return res.status(200).json({
+          success: 'Add address succeed',
+          userData
+        })
       })
     } catch (err) {
       return res.status(500).json({
-        error: 'Update salary failed',
+        error: 'Add address failed',
         message: err.message
       })
     }
   }
 }
 
-module.exports = USerAddress
+module.exports = userAddress
