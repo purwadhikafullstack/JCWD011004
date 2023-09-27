@@ -25,6 +25,8 @@ module.exports = {
   requestResetPassword,
   resetPassword,
   seeDetailProduct,
+  addItem,
+  removeItem,
   firebaseLogin,
   firebaseRegister,
   addItem,
