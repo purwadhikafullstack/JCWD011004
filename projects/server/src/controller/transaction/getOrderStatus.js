@@ -1,14 +1,26 @@
 const db = require("../../../models");
 const Transaction = db.Transaction;
+const { Op } = require("sequelize");
 
 const getAllOrderStatus = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.query.userId;
+    const transactionStatusId = req.query.transactionStatusId;
+
+    let whereClause = {};
+
+    if (userId !== undefined) {
+      whereClause.userId = userId;
+    }
+
+    if (transactionStatusId !== undefined) {
+      whereClause.transactionStatusId = {
+        [Op.eq]: transactionStatusId,
+      };
+    }
+
     const allOrderStatus = await Transaction.findAll({
-      where: {
-        userId,
-        TransactionStatusId: 0, 
-      },
+      where: whereClause,
       include: [{ model: db.Product }],
     });
 

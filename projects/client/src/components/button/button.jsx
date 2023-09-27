@@ -1,22 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
-import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-export function RegularButton({ text, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex items-center justify-center px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
-      style={{ width: '170px' }}
-    >
-      {text}
-    </button>
-  )
-}
-
-export function UploadButton({ productId }) {
+export function UploadButton({ transactionId, userId }) {
   const [isLoading, setIsLoading] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
 
@@ -27,7 +14,7 @@ export function UploadButton({ productId }) {
 
   const handleUpload = async () => {
     if (!selectedFile) {
-      alert('Silakan pilih gambar terlebih dahulu.')
+      alert('Please select an image first.')
       return
     }
 
@@ -38,11 +25,11 @@ export function UploadButton({ productId }) {
       formData.append('receipt', selectedFile)
 
       const response = await axios.post(
-        `http://localhost:8000/api/payment/proof/${productId}`,
+        `http://localhost:8000/api/payment/proof/${transactionId}?userId=${userId}`, // Ini fetchnya pertransaksi id ya bukan produkId
         formData
       )
       console.log('API Response:', response.data)
-      toast.success('Gambar berhasil diunggah!', {
+      toast.success('Image uploaded successfully!', {
         position: 'top-right',
         autoClose: 2000,
         hideProgressBar: false,
@@ -52,6 +39,14 @@ export function UploadButton({ productId }) {
       })
     } catch (error) {
       console.error('Error uploading image:', error)
+      toast.error('Error uploading image. Please try again.', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      })
     } finally {
       setIsLoading(false)
     }
