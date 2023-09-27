@@ -1,29 +1,83 @@
 import React, { useState } from 'react'
-
-function CartCard({ item }) {
-  const [quantity, setQuantity] = useState(2)
-
-  const handleIncrease = () => {
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
+  const [quantity, setQuantity] = useState(item?.quantity)
+  const [formattedPrice, setFormattedPrice] = useState(
+    item?.totalPrice * quantity
+  )
+  const [isDisabled, setIsDisabled] = useState(false)
+  const apiUrl = process.env.REACT_APP_API_BASE_URL
+  const handleIncrease = async () => {
+    setIsDisabled(true)
     setQuantity(quantity + 1)
-  }
-
-  const handleDecrease = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1)
+    setFormattedPrice((quantity + 1) * item?.totalPrice)
+    try {
+      const token = localStorage.getItem('token')
+      const response = await axios.patch(
+        `${apiUrl}/cart/update-item`,
+        { productId: item?.productId, quantity: quantity + 1 },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+      response.status === 200 && setIsDisabled(false)
+    } catch (error) {
+      setIsDisabled(false)
+      toast.error(error?.response?.data?.error, {
+        position: toast.POSITION.TOP_CENTER
+      })
     }
   }
 
-  // Format totalPrice to include a dot every three digits
-  const formattedPrice = item?.totalPrice.toLocaleString('id-ID')
+  const handleDecrease = async () => {
+    if (quantity > 1) {
+      setIsDisabled(true)
+      setQuantity(quantity - 1)
+      setFormattedPrice((quantity - 1) * item?.totalPrice)
+      try {
+        const token = localStorage.getItem('token')
+        const response = await axios.patch(
+          `${apiUrl}/cart/update-item`,
+          { productId: item?.productId, quantity: quantity - 1 },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+        response.status === 200 && setIsDisabled(false)
+      } catch (error) {
+        setIsDisabled(false)
+        toast.error(error?.response?.data?.error, {
+          position: toast.POSITION.TOP_CENTER
+        })
+      }
+    } else {
+      handleOpenShowModalDelete(item?.Product)
+    }
+  }
+
+  const handleCheckList = (event) => {
+    const checkListItem = {
+      productId: item?.productId,
+      totalPrice: item?.totalPrice
+    }
+
+    handleSubTotal(checkListItem, event.target.checked)
+  }
 
   return (
-    <div className="justify-between mb-6 rounded-lg bg-white  p-6 shadow-md sm:flex sm:justify-start">
+    <div className="justify-between  mb-6 max-[640px]:flex-col max-[640px]:gap-4 rounded-lg bg-white p-10 shadow-md sm:flex sm:justify-start overflow-x-scroll relative">
       <img
-        src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        src={item?.Product?.Product_Images[0]?.image}
         alt="product-image"
-        className="w-full rounded-lg sm:w-40"
+        className="w-40 h-40 rounded-lg max-[640px]:content-center inline-block "
       />
-      <div className="gap-5 sm:ml-4 sm:flex sm:w-full sm:justify-between">
+      <div className="gap-10 sm:ml-4 sm:flex sm:w-full sm:justify-between">
         <div className="mt-5 sm:mt-0">
           <h2 className="text-lg font-bold text-gray-900">
             {item?.Product?.name}
@@ -31,49 +85,54 @@ function CartCard({ item }) {
         </div>
         <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
           <div className="flex items-center border-gray-100">
-            <span
+            <button
+              disabled={isDisabled}
               onClick={handleDecrease}
               className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"
             >
               {' '}
               -{' '}
-            </span>
+            </button>
             <input
               className="h-8 w-8 border bg-white text-center text-xs outline-none focus:outline-none"
               type="text"
-              value={item?.quantity}
+              value={quantity}
               min="1"
             />
-            <span
+            <button
+              disabled={isDisabled}
               onClick={handleIncrease}
               className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"
             >
               {' '}
               +{' '}
-            </span>
+            </button>
           </div>
-          <div className="flex items-center space-x-4">
-            <p className="text-sm">Rp {formattedPrice}</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+          <div className="flex items-center w-auto space-x-4">
+            <p className="text-sm">Rp&nbsp;{formattedPrice}</p>
+            <button onClick={() => handleOpenShowModalDelete(item?.Product)}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
           </div>
         </div>
         <label>
-          <input type="checkbox" />
+          <input onChange={handleCheckList} type="checkbox" />
         </label>
       </div>
+      <ToastContainer />
     </div>
   )
 }

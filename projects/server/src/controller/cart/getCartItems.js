@@ -2,6 +2,7 @@ const db = require('../../../models')
 const Cart_Item = db.Cart_Item
 const Cart = db.Cart
 const Product = db.Product
+const Product_Image = db.Product_Image
 const jwt = require('jsonwebtoken')
 
 async function getCartItems(req, res) {
@@ -44,8 +45,11 @@ async function getCartItemsSortPagination(req, res) {
       case 'oldest':
         order = [['createdAt', 'ASC']]
         break
-      case 'price':
+      case 'highest':
         order = [['totalPrice', 'DESC']]
+        break
+      case 'lowest':
+        order = [['totalPrice', 'ASC']]
         break
       default:
         order = [['createdAt', 'DESC']]
@@ -54,17 +58,34 @@ async function getCartItemsSortPagination(req, res) {
     if (!cart) {
       return res.status(404).json({ error: 'Cart not found' })
     }
+
+    // Get the total number of items
+    const totalItems = await Cart_Item.count({
+      where: {
+        cartId: cart.id
+      }
+    })
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(totalItems / size)
+
     let cartItems = await Cart_Item.findAll({
       where: {
         cartId: cart.id
       },
-      include: Product,
+      include: [
+        {
+          model: Product,
+          include: [Product_Image]
+        }
+      ],
       limit: size,
       offset: (page - 1) * size,
       order
     })
 
-    res.status(200).json(cartItems)
+    // Include the total number of pages in the response
+    res.status(200).json({ items: cartItems, totalPages })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Internal Server Error' })

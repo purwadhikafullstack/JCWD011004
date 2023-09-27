@@ -8,7 +8,6 @@ async function firebaseRegister(req, res) {
   const { idToken } = req.body
   try {
     const decodedToken = await admin.auth().verifyIdToken(idToken)
-    console.log(decodedToken)
     const uid = decodedToken.uid
     const email = decodedToken.email
     const displayName = decodedToken.name

@@ -36,7 +36,7 @@ function App() {
           element={<RequestResendEmail />}
         ></Route>
         <Route path="/user-dashboard" element={<UserDashboardPage />}></Route>
-        <Route path="/keranjang" element={<CartItemPages />}></Route>
+        <Route path="/cart" element={<CartItemPages />}></Route>
       </Routes>
     </div>
   )

@@ -1,11 +1,22 @@
 import React from 'react'
 
-function CheckOutCart() {
+function formatRupiah(number) {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR'
+  }).format(number)
+}
+
+function CheckOutCart({ subTotal }) {
+  const totalAmount = subTotal.reduce((total, item) => {
+    return total + item.totalPrice
+  }, 0)
+  const formattedSubTotal = formatRupiah(totalAmount)
   return (
-    <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md">
+    <div className=" h-fit rounded-lg border bg-white p-6 shadow-md">
       <div className="mb-2 flex justify-between">
-        <p className="text-gray-700">Subtotal</p>
-        <p className="text-gray-700">$129.99</p>
+        <p className="text-gray-700">Subtotal&nbsp;</p>
+        <p className="text-gray-700">{formattedSubTotal}</p>
       </div>
       <div className="flex justify-between">
         <p className="text-gray-700">Shipping</p>

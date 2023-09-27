@@ -5,7 +5,7 @@ import Footer from '../components/homePage/footer'
 
 function CartItemPages() {
   return (
-    <div className="container mx-auto max-w-screen-lg h-max flex flex-col">
+    <div className="container mx-auto max-w-screen-lg h-screen flex flex-col">
       <Navbar />
       <CartList />
       <Footer />

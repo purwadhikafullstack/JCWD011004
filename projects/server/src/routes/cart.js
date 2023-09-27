@@ -4,11 +4,13 @@ const {
   addItem,
   removeItem,
   getCartItems,
-  getCartItemsSortPagination
+  getCartItemsSortPagination,
+  updateItem
 } = require('../controller')
 
 router.post('/additem', addItem)
-router.patch('/removeItem', removeItem)
+router.patch('/removeitem', removeItem)
+router.patch('/update-item', updateItem)
 router.get('/items', getCartItems)
 router.get('/list-items', getCartItemsSortPagination)
 

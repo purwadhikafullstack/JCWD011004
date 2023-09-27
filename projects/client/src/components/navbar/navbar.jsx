@@ -4,7 +4,6 @@ import ButtonLoginRegister from '../homePage/buttonLoginRegister'
 import { useSelector } from 'react-redux'
 import { AvatarDropdown } from './profile'
 import CartIcons from '../cart/CartIcons'
-import { Link } from 'react-router-dom'
 function Navbar() {
   const stateToken = useSelector((state) => state.dataProduct.isLogin)
 
@@ -27,12 +26,12 @@ function Navbar() {
                   <AiOutlineHeart className="md:mr-2" />
                   Wishlist
                 </li>
-                <Link to="/keranjang">
+                <a href="/cart">
                   <li className="flex flex-col md:flex-row justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
                     <CartIcons />
                     Cart
                   </li>
-                </Link>
+                </a>
                 <li className="flex flex-col md:flex-row justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
                   {stateToken ? (
                     <>

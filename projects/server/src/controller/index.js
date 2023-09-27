@@ -9,11 +9,11 @@ const { getUserInfo } = require('./auth/keepLogin')
 const requestResetPassword = require('./auth/requestResetPassword')
 const { firebaseLogin, firebaseRegister } = require('./auth/firebaseLogin')
 const resetPassword = require('./auth/resetPassword')
-const { addItem, removeItem } = require('./card/addingItems')
+const { addItem, removeItem, updateItem } = require('./cart/addingItems')
 const {
   getCartItems,
   getCartItemsSortPagination
-} = require('./card/getCartItems')
+} = require('./cart/getCartItems')
 module.exports = {
   registerUser,
   login,
@@ -30,5 +30,6 @@ module.exports = {
   addItem,
   removeItem,
   getCartItems,
-  getCartItemsSortPagination
+  getCartItemsSortPagination,
+  updateItem
 }
