@@ -12,5 +12,6 @@ module.exports = {
   productRouter,
   paymentRouter,
   transactionRouter,
-  cardRouter
+  cardRouter,
+  cart
 }
