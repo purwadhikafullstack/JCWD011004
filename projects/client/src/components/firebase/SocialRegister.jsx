@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { signInWithPopup } from 'firebase/auth'
 import { auth, provider } from '../../config/firebase'
@@ -7,8 +7,10 @@ import 'react-toastify/dist/ReactToastify.css'
 import { FcGoogle } from 'react-icons/fc'
 
 function SocialRegister() {
+  const [isDisabled, setIsDisabled] = useState(false)
   const handleRegister = async () => {
     try {
+      setIsDisabled(true)
       const result = await signInWithPopup(auth, provider)
       console.log(result)
       const response = await axios.post(
@@ -18,6 +20,7 @@ function SocialRegister() {
         }
       )
       // Simpan token ke localStorage
+      setIsDisabled(false)
       localStorage.setItem('token', response.data.token)
       toast.success('Registrasi berhasil', {
         position: toast.POSITION.TOP_CENTER
@@ -25,6 +28,7 @@ function SocialRegister() {
       window.location.reload()
     } catch (error) {
       // Terjadi error saat registrasi
+      setIsDisabled(false)
       toast.error(error?.response?.data?.message, {
         position: toast.POSITION.TOP_CENTER
       })
@@ -32,14 +36,19 @@ function SocialRegister() {
   }
 
   return (
-    <div
+    <button
+      disabled={isDisabled}
       onClick={handleRegister}
-      className="flex justify-center text-base mt-5 cursor-pointer"
+      className={
+        isDisabled
+          ? 'flex justify-center text-base mt-5  bg-gray-200 active:bg-white rounded-full cursor-not-allowed'
+          : 'flex justify-center text-base mt-5 cursor-pointer bg-gray-200 active:bg-white rounded-full'
+      }
     >
       <p>Register with&nbsp;</p>
       <FcGoogle className="self-center" />
       <ToastContainer />
-    </div>
+    </button>
   )
 }
 

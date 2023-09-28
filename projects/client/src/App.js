@@ -9,6 +9,7 @@ import VerifyEditAccount from './pages/VerifyEditAccount'
 import RequestResendEmail from './pages/RequestResendEmail'
 import VerifyUpdatePassword from './pages/VerifyUpdatePassword'
 import UserDashboardPage from './pages/UserDashboardPage'
+import CartItemPages from './pages/CartItemPages'
 function App() {
   return (
     <div className="App">
@@ -35,6 +36,7 @@ function App() {
           element={<RequestResendEmail />}
         ></Route>
         <Route path="/user-dashboard" element={<UserDashboardPage />}></Route>
+        <Route path="/cart" element={<CartItemPages />}></Route>
       </Routes>
     </div>
   )

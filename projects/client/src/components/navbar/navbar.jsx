@@ -1,10 +1,9 @@
 import React from 'react'
-import { FiShoppingCart } from 'react-icons/fi'
 import { AiOutlineHeart } from 'react-icons/ai'
 import ButtonLoginRegister from '../homePage/buttonLoginRegister'
 import { useSelector } from 'react-redux'
 import { AvatarDropdown } from './profile'
-
+import CartIcons from '../cart/CartIcons'
 function Navbar() {
   const stateToken = useSelector((state) => state.dataProduct.isLogin)
 
@@ -27,10 +26,12 @@ function Navbar() {
                   <AiOutlineHeart className="md:mr-2" />
                   Wishlist
                 </li>
-                <li className="flex flex-col md:flex-row justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
-                  <FiShoppingCart className="md:mr-2" />
-                  Cart
-                </li>
+                <a href="/cart">
+                  <li className="flex flex-col md:flex-row justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
+                    <CartIcons />
+                    Cart
+                  </li>
+                </a>
                 <li className="flex flex-col md:flex-row justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
                   {stateToken ? (
                     <>
