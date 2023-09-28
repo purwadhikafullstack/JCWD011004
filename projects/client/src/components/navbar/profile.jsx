@@ -31,10 +31,6 @@ export const AvatarDropdown = () => {
   const handleProfile = () => {
     navigate('/user-dashboard')
   }
-  // const handleMyOrder = () => {
-  //   navigate('/sidebar-pemesanan')
-  // }
-
   const handleSignOut = () => {
     localStorage.clear()
     navigate('/')
