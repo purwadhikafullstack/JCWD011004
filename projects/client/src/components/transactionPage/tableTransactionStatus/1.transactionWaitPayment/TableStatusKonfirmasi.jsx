@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { UploadButton } from '../../components/button/button'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 
-export default function TableDashboardPemesanan(status) {
+export default function TableDashboardPemesananKonfirmasi() {
   const [data, setData] = useState([])
   const token = jwt_decode(localStorage.getItem('token'))
   const userId = token ? token.id : null
@@ -13,7 +12,7 @@ export default function TableDashboardPemesanan(status) {
     try {
       if (userId) {
         const response = await axios.get(
-          `${apiUrl}/transaction/all-status?userId=${userId}&transactionStatusId=${status}`
+          `{${apiUrl}/transaction/all-status?userId=${userId}&transactionStatusId=1`
         )
         setData(response.data.allOrderStatus)
       }
@@ -75,7 +74,9 @@ export default function TableDashboardPemesanan(status) {
                         {product?.Transaction_Item?.quantity}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-pr-mobile lg:text-pr-desktop font-sm">
-                        {order?.transactionStatusId ? '' : 'Belum Bayar'}
+                        {order?.transactionStatusId === 1
+                          ? 'Waiting Confirmation'
+                          : ''}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-pr-mobile lg:text-pr-desktop font-sm">
                         {product?.Transaction_Item?.totalPrice}
@@ -84,13 +85,6 @@ export default function TableDashboardPemesanan(status) {
                   ))}
                 </tbody>
               </table>
-              <div className=" border-4 flex ">
-                <UploadButton
-                  text="Upload Bukti Bayar"
-                  transactionId={order.id}
-                  userId={userId}
-                />
-              </div>
             </div>
           ))}
         </>

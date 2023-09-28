@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import TableDashboardPemesanan from './TableDashboardPemesanan'
-import Navbar from '../navbar/navbar'
-import Footer from '../homePage/footer'
+import Navbar from '../../../navbar/navbar'
+import Footer from '../../../homePage/footer'
+import TableDashboardPemesananDiterima from './TableStatusDiterima'
 
-export default function SidebarPemesanan() {
+export default function SidebarPemesananDiterima() {
   return (
     <div className="container mx-auto max-w-screen-lg">
       <Navbar />
@@ -21,7 +21,7 @@ export default function SidebarPemesanan() {
               <div id="menu" className="flex flex-col space-y-2">
                 <Link
                   to="/sidebar-pemesanan"
-                  className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-orange-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out bg-orange-500 text-white"
+                  className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-orange-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
                 >
                   <svg
                     className="w-6 h-6 fill-current inline-block"
@@ -38,7 +38,7 @@ export default function SidebarPemesanan() {
                 </Link>
                 <Link
                   to="/sidebar-pemesanan-not-paid"
-                  className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-orange-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+                  className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-orange-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out "
                 >
                   <svg
                     className="w-6 h-6 fill-current inline-block"
@@ -52,7 +52,7 @@ export default function SidebarPemesanan() {
                 </Link>
                 <Link
                   to="/sidebar-pemesanan-in-procces"
-                  className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-orange-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+                  className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-orange-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out "
                 >
                   <svg
                     className="w-6 h-6 fill-current inline-block"
@@ -60,7 +60,7 @@ export default function SidebarPemesanan() {
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path d="M9 2a1 1 0 000-1v3a1 1 0 000 2V9a1 1 0 000-1z" />
+                    <path d="M9 2a1 1 0 000-2h2a1 1 0 100-2H9z"></path>
                     <path
                       fillRule="evenodd"
                       d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z"
@@ -86,7 +86,7 @@ export default function SidebarPemesanan() {
                 </Link>
                 <Link
                   to="/sidebar-pemesanan-diterima"
-                  className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-orange-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+                  className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-orange-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out bg-orange-500 text-white"
                 >
                   <svg
                     className="w-6 h-6 fill-current inline-block"
@@ -112,7 +112,7 @@ export default function SidebarPemesanan() {
                     fill="#FF5733"
                   >
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-5.382 10-12S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-                    <path d="M16.293 7.293a.999.999 0 0 0-1.414 0L12 10.586 9.121 7.707a.999.999 0 1 0-1.414 1.414L10.586 12l-2.879 2.879a.999.999 0 1 0 1.414 1.414L12 13.414l2.879 2.879a.997.997 0 0 0 1.414 0c.39-.39.39-1.024 0-1.414L13.414 12l2.879-2.879c.39-.39.39-1.024 0-1.414z" />
+                    <path d="M16.293 7.293a.999.999.999.999 0 0 0-1.414 0L12 10.586 9.121 7.707a.999.999.999.999 0 0 0-1.414 1.414L10.586 12l-2.879 2.879a.999.999.999.999 0 0 0 1.414 1.414L12 13.414l2.879 2.879a.997.997.997.997 0 0 0 1.414 0c.39-.39.39-1.024 0-1.414L13.414 12l2.879-2.879c.39-.39.39-1.024 0-1.414z" />
                   </svg>
                   <span>Cancelled</span>
                 </Link>
@@ -120,7 +120,7 @@ export default function SidebarPemesanan() {
             </div>
           </div>
           <div>
-            <TableDashboardPemesanan />
+            <TableDashboardPemesananDiterima />
           </div>
         </div>
       </div>

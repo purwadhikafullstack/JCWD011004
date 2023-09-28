@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-export function UploadButton({ transactionId, userId }) {
+export function UploadButton({ transactionId, userId, onCancel }) {
   const [isLoading, setIsLoading] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
 
@@ -25,7 +25,7 @@ export function UploadButton({ transactionId, userId }) {
       formData.append('receipt', selectedFile)
 
       const response = await axios.post(
-        `http://localhost:8000/api/payment/proof/${transactionId}?userId=${userId}`, // Ini fetchnya pertransaksi id ya bukan produkId
+        `http://localhost:8000/api/payment/proof/${transactionId}?userId=${userId}`,
         formData
       )
       console.log('API Response:', response.data)
@@ -52,6 +52,13 @@ export function UploadButton({ transactionId, userId }) {
     }
   }
 
+  const handleCancel = () => {
+    // Panggil onCancel jika tombol Cancel diklik
+    if (onCancel) {
+      onCancel()
+    }
+  }
+
   return (
     <div>
       <input
@@ -63,7 +70,7 @@ export function UploadButton({ transactionId, userId }) {
         accept=".jpg, .jpeg, .png"
         disabled={isLoading}
       />
-      <div className="grid grid-cols-2 mt-4">
+      <div className="grid grid-cols-3 gap-4">
         <button
           onClick={() => document.getElementById('file-input').click()}
           className={`flex items-center justify-center px-2 py-1 rounded bg-neutral-500 text-white hover:bg-neutral-800 focus:outline-none focus:ring focus:ring-blue-300`}
@@ -79,6 +86,14 @@ export function UploadButton({ transactionId, userId }) {
           disabled={isLoading}
         >
           {isLoading ? 'Uploading...' : 'Post'}
+        </button>
+        <button
+          onClick={handleCancel}
+          className={`flex items-center justify-center px-2 py-1 rounded bg-red-400 text-white hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300`}
+          style={{ width: '170px' }}
+          disabled={isLoading}
+        >
+          Cancel
         </button>
         <ToastContainer />
       </div>
