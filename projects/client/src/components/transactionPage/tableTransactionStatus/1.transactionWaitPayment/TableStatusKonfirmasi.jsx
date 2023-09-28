@@ -12,9 +12,10 @@ export default function TableDashboardPemesananKonfirmasi() {
     try {
       if (userId) {
         const response = await axios.get(
-          `{${apiUrl}/transaction/all-status?userId=${userId}&transactionStatusId=1`
+          `${apiUrl}/transaction/all-status?userId=${userId}&transactionStatusId=1`
         )
         setData(response.data.allOrderStatus)
+        console.log(response.data.allOrderStatus)
       }
     } catch (error) {
       console.error('Error fetching data:', error)

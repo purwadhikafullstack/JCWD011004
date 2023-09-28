@@ -3,7 +3,7 @@ import { UploadButton } from '../../components/button/button'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 
-export default function TableDashboardPemesanan(status) {
+export default function TableDashboardPemesanan() {
   const [data, setData] = useState([])
   const token = jwt_decode(localStorage.getItem('token'))
   const userId = token ? token.id : null
@@ -13,7 +13,7 @@ export default function TableDashboardPemesanan(status) {
     try {
       if (userId) {
         const response = await axios.get(
-          `${apiUrl}/transaction/all-status?userId=${userId}&transactionStatusId=${status}`
+          `${apiUrl}/transaction/all-status?userId=${userId}&transactionStatusId=0`
         )
         setData(response.data.allOrderStatus)
       }
