@@ -20,7 +20,6 @@ function CardList() {
 
   const products = dataProduct.products
   const totalPage = dataProduct.totalPages
-
   useEffect(() => {
     dispatch(getCategoryIdx(categoryNumber))
   }, [dispatch, category])

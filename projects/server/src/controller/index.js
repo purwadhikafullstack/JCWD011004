@@ -8,10 +8,14 @@ const { verifyUser } = require('./auth/verify')
 const { getUserInfo } = require('./auth/keepLogin')
 const {uploadReceipt} = require('./payment/uploadReceipt')
 const requestResetPassword = require('./auth/requestResetPassword')
-const { addItem, removeItem } = require('./card/addingItems')
 const { firebaseLogin, firebaseRegister } = require('./auth/firebaseLogin')
 const resetPassword = require('./auth/resetPassword')
 const {getAllOrderStatus} = require('./transaction/getOrderStatus')
+const { addItem, removeItem, updateItem } = require('./cart/addingItems')
+const {
+  getCartItems,
+  getCartItemsSortPagination
+} = require('./cart/getCartItems')
 module.exports = {
   registerUser,
   login,
@@ -30,5 +34,10 @@ module.exports = {
   firebaseRegister,
   seeDetailProduct,
   uploadReceipt,
-  getAllOrderStatus
+  getAllOrderStatus,
+  addItem,
+  removeItem,
+  getCartItems,
+  getCartItemsSortPagination,
+  updateItem
 }
