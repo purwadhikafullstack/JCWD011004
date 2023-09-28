@@ -53,7 +53,6 @@ export function UploadButton({ transactionId, userId, onCancel }) {
   }
 
   const handleCancel = () => {
-    // Panggil onCancel jika tombol Cancel diklik
     if (onCancel) {
       onCancel()
     }
