@@ -46,6 +46,10 @@ module.exports = (sequelize, DataTypes) => {
       cityId: {
         type: DataTypes.INTEGER
       },
+      postalcode: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       longitude: {
         type: DataTypes.DECIMAL,
         allowNull: false

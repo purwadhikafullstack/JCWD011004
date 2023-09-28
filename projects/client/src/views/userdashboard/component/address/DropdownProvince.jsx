@@ -12,12 +12,13 @@ export default function DropdownProvince() {
 
   const provinces = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/province')
+      const { data } = await axios.get(
+        'http://localhost:8000/api/external/province'
+      )
       const provinces = data.rajaongkir.results
-      if (provinces.length > 0) {
-        setSelected(provinces[0].province)
-      }
+      setSelected(provinces[0].province)
       setSortData(provinces)
+      dispatch(provinceData(provinces[0]))
     } catch (err) {
       console.log(err.message)
     }
@@ -29,7 +30,7 @@ export default function DropdownProvince() {
 
   const handleChange = (index) => {
     setSelected(sortData[index]?.province)
-    dispatch(provinceData(sortData[index]?.province_id))
+    dispatch(provinceData(sortData[index]))
   }
 
   return (
@@ -51,7 +52,7 @@ export default function DropdownProvince() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute mt-1 max-h-60 w-auto overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="absolute mt-1 max-h-60 w-auto overflow-auto rounded-md bg-white p-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {sortData?.map((dataSort, dataSortIdx) => (
                 <Listbox.Option
                   key={dataSortIdx}

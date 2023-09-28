@@ -3,7 +3,10 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { openAddAddress } from '../../../../services/reducer/addressReducer'
+import {
+  getAllAddress,
+  openAddAddress
+} from '../../../../services/reducer/addressReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import DropdownProvince from './DropdownProvince'
 import DropdownCityRegency from './DropdownCityRegency'
@@ -12,15 +15,18 @@ import axios from 'axios'
 const phoneRegExp = /^(\+62|62|0)8[1-9][0-9]/
 const numberRegex = /^([0-9])/
 
-export const AddAddress = () => {
+export const UpdateAddress = () => {
   const dispatch = useDispatch()
+  const { userData } = useSelector((state) => state.dataAddress.allAddress)
+  const addressDataId = useSelector((state) => state.dataAddress.addressDataId)
+  const addressData = userData[addressDataId]
   const cityRegencyData = useSelector((state) => state.dataAddress.cityRegency)
   const [longlat, setStateLonglat] = useState({})
 
-  const createAddress = async (values) => {
+  const updateAddress = async (values) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.post(
+      const response = await axios.patch(
         `http://localhost:8000/api/update/address`,
         values,
         {
@@ -30,11 +36,12 @@ export const AddAddress = () => {
         }
       )
       if (response.status === 200) {
-        toast.success('Add address succeed', {
+        toast.success('Update address succeed', {
           position: toast.POSITION.TOP_CENTER
         })
         setTimeout(() => {
           dispatch(openAddAddress(0))
+          dispatch(getAllAddress())
         }, 2000)
       }
     } catch (err) {
@@ -93,16 +100,17 @@ export const AddAddress = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      phone: '',
-      address: '',
-      province: cityRegencyData.province,
-      cityRegency: cityRegencyData.city_name,
-      subdistrict: '',
-      cityId: cityRegencyData.city_id,
-      postalcode: '',
-      longitude: longlat.lng,
-      latitude: longlat.lat
+      addressId: addressData.id,
+      name: addressData.name,
+      phone: addressData.phone,
+      address: addressData.address,
+      province: addressData.province,
+      cityRegency: addressData.cityRegency,
+      subdistrict: addressData.subdistrict,
+      cityId: addressData.cityId,
+      postalcode: addressData.postalcode,
+      longitude: addressData.longitude,
+      latitude: addressData.latitude
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -112,7 +120,7 @@ export const AddAddress = () => {
         values.cityId = cityRegencyData.city_id
         values.longitude = longlat.lng
         values.latitude = longlat.lat
-        createAddress(values)
+        updateAddress(values)
       } catch (error) {
         console.log(error.message)
         toast.error(error.response.data.error, {
@@ -124,7 +132,7 @@ export const AddAddress = () => {
 
   return (
     <div className="bg-white p-4 rounded-lg w-full text-sm">
-      <h3 className="font-sans font-bold pb-3">Add New Address</h3>
+      <h3 className="font-sans font-bold pb-3">Update Address</h3>
       <form
         onSubmit={formik.handleSubmit}
         className="flex flex-col items-start"
@@ -252,7 +260,7 @@ export const AddAddress = () => {
             type="submit"
             className="w-24 py-2 bg-blue-300 text-white rounded-full hover:bg-blue-400 focus:outline-none"
           >
-            Add
+            Update
           </button>
         </div>
       </form>

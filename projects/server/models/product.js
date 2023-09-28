@@ -1,34 +1,31 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict'
+const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
       this.belongsToMany(models.Cart, {
-        through: "Cart_Item",
-        foreignKey: "productId",
-      });
+        through: 'Cart_Item',
+        foreignKey: 'productId'
+      })
       this.belongsToMany(models.Transaction, {
-        through: "Transaction_Item",
-        foreignKey: "productId",
-      });
-      
-      // Perubahan yang diperlukan: Mengganti "belongsToMany" menjadi "hasMany" untuk asosiasi dengan Warehouse_Product
+        through: 'Transaction_Item',
+        foreignKey: 'productId'
+      })
       this.hasMany(models.Warehouse_Product, {
-        foreignKey: 'productId',
-      });
-      
+        foreignKey: 'productId'
+      })
       this.belongsTo(models.Category, {
-        foreignKey: "categoryId",
-      });
+        foreignKey: 'categoryId'
+      })
       this.hasMany(models.Product_Image, {
-        foreignKey: "productId",
-      });
+        foreignKey: 'productId'
+      })
       this.hasMany(models.Mutation, {
-        foreignKey: "productId",
-      });
+        foreignKey: 'productId'
+      })
       this.hasMany(models.Transaction_Item, {
-        foreignKey: 'productId',
+        foreignKey: 'productId'
       })
     }
   }
@@ -36,28 +33,28 @@ module.exports = (sequelize, DataTypes) => {
     {
       categoryId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       price: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       isActive: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true,
-      },
+        defaultValue: true
+      }
     },
     {
       sequelize,
-      modelName: "Product",
+      modelName: 'Product'
     }
-  );
-  return Product;
-};
+  )
+  return Product
+}

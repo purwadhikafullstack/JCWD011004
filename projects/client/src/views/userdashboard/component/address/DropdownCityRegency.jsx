@@ -2,23 +2,30 @@ import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { FaChevronDown } from 'react-icons/fa'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { cityRegencyData } from '../../../../services/reducer/addressReducer'
 
 export default function DropdownProvince() {
   const [sortData, setSortData] = useState([])
   const [selected, setSelected] = useState('City/Regency')
-  const provinceId = useSelector((state) => state.dataAddress.provinceId)
+  const provinceId = useSelector((state) =>
+    state.dataAddress.provinceData
+      ? state.dataAddress.provinceData.province_id
+      : 1
+  )
+  const dispatch = useDispatch()
 
   const cityRegency = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8000/api/city?province=${provinceId}`
+        `http://localhost:8000/api/external/city?province=${provinceId}`
       )
       const city = data.rajaongkir.results
       if (city.length > 0) {
         setSelected(city[0].city_name)
       }
       setSortData(city)
+      dispatch(cityRegencyData(city[0]))
     } catch (err) {
       console.log(err.message)
     }
@@ -30,6 +37,7 @@ export default function DropdownProvince() {
 
   const handleChange = (index) => {
     setSelected(sortData[index]?.city_name)
+    dispatch(cityRegencyData(sortData[index]))
   }
 
   return (
@@ -51,7 +59,7 @@ export default function DropdownProvince() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute mt-1 max-h-60 w-auto overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="absolute mt-1 max-h-60 w-auto overflow-auto rounded-md bg-white p-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {sortData?.map((dataSort, dataSortIdx) => (
                 <Listbox.Option
                   key={dataSortIdx}

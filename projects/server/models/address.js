@@ -40,12 +40,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false
       },
+      postalcode: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       longitude: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(9, 6),
         allowNull: false
       },
       latitude: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(8, 6),
         allowNull: false
       }
     },

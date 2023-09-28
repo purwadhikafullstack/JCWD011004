@@ -10,7 +10,14 @@ const requestResetPassword = require('./auth/requestResetPassword')
 const { addItem, removeItem } = require('./card/addingItems')
 const { firebaseLogin, firebaseRegister } = require('./auth/firebaseLogin')
 const resetPassword = require('./auth/resetPassword')
-const { addAddress } = require('./userUpdate/userAddress')
+const {
+  addAddress,
+  updateAddress,
+  getAddress,
+  deleteAddress
+} = require('./userUpdate/userAddress')
+const { province, cityRegency } = require('./external/rajaongkir')
+const { longlat } = require('./external/opencage')
 module.exports = {
   registerUser,
   login,
@@ -26,5 +33,11 @@ module.exports = {
   removeItem,
   firebaseLogin,
   firebaseRegister,
-  addAddress
+  addAddress,
+  updateAddress,
+  getAddress,
+  deleteAddress,
+  province,
+  cityRegency,
+  longlat
 }

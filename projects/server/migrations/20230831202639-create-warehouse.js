@@ -27,6 +27,9 @@ module.exports = {
       cityId: {
         type: Sequelize.INTEGER
       },
+      postalcode: {
+        type: Sequelize.INTEGER
+      },
       longitude: {
         type: Sequelize.DECIMAL
       },
