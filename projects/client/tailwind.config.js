@@ -2,7 +2,11 @@
 module.exports = {
   content: ['./src/**/*.{html,js,jsx}'],
   theme: {
-    extend: {}
+    extend: {
+      width: {
+        fill: '-webkit-fill-available'
+      }
+    }
   },
   plugins: [
     function ({ addUtilities }) {

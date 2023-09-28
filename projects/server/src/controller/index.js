@@ -7,9 +7,13 @@ const { seeDetailProduct } = require('./product/seeDetailProduct')
 const { verifyUser } = require('./auth/verify')
 const { getUserInfo } = require('./auth/keepLogin')
 const requestResetPassword = require('./auth/requestResetPassword')
-const { addItem, removeItem } = require('./card/addingItems')
 const { firebaseLogin, firebaseRegister } = require('./auth/firebaseLogin')
 const resetPassword = require('./auth/resetPassword')
+const { addItem, removeItem, updateItem } = require('./cart/addingItems')
+const {
+  getCartItems,
+  getCartItemsSortPagination
+} = require('./cart/getCartItems')
 module.exports = {
   registerUser,
   login,
@@ -24,5 +28,10 @@ module.exports = {
   addItem,
   removeItem,
   firebaseLogin,
-  firebaseRegister
+  firebaseRegister,
+  addItem,
+  removeItem,
+  getCartItems,
+  getCartItemsSortPagination,
+  updateItem
 }
