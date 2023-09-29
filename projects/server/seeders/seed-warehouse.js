@@ -14,8 +14,9 @@ module.exports = {
         district: 'Kecamatan 1',
         subdistrict: 'Kelurahan 1',
         cityId: 35,
-        longitude: 123.456, // Ganti dengan nilai yang sesuai
-        latitude: 789.012, // Ganti dengan nilai yang sesuai
+        postalcode: 98766,
+        longitude: 123.45609, // Ganti dengan nilai yang sesuai
+        latitude: 789.01299, // Ganti dengan nilai yang sesuai
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -27,6 +28,7 @@ module.exports = {
         district: 'Kecamatan 2',
         subdistrict: 'Kelurahan 2',
         cityId: 1,
+        postalcode: 55556,
         longitude: 456.789, // Ganti dengan nilai yang sesuai
         latitude: 123.012, // Ganti dengan nilai yang sesuai
         createdAt: new Date(),
