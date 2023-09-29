@@ -1,69 +1,68 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Warehouse extends Model {
     static associate(models) {
       this.hasMany(models.Mutation, {
-        foreignKey: "fromWarehouse",
-      });
+        foreignKey: 'fromWarehouse'
+      })
       this.hasMany(models.Mutation, {
-        foreignKey: "toWarehouse",
-      });
+        foreignKey: 'toWarehouse'
+      })
       this.hasMany(models.Warehouse_Admin, {
-        foreignKey: "warehouseId",
-      });
+        foreignKey: 'warehouseId'
+      })
       this.hasMany(models.Transaction, {
-        foreignKey: "warehouseId",
-      });
+        foreignKey: 'warehouseId'
+      })
       this.belongsToMany(models.Product, {
-        through: "Warehouse_Product",
-        foreignKey: "warehouseId",
-      });
+        through: 'Warehouse_Product',
+        foreignKey: 'warehouseId'
+      })
     }
   }
   Warehouse.init(
     {
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
-      country: {
+      address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       province: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       cityRegency: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
-      district: {
+      subdistrict: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
-      subDistrict: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      cityId: {
+        type: DataTypes.INTEGER
       },
-      street: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      postalcode: {
+        type: DataTypes.INTEGER,
+        allowNull: false
       },
       longitude: {
-        type: DataTypes.DECIMAL,
-        allowNull: false,
+        type: DataTypes.DECIMAL(9, 5),
+        allowNull: false
       },
       latitude: {
-        type: DataTypes.DECIMAL,
-        allowNull: false,
-      },
+        type: DataTypes.DECIMAL(8, 5),
+        allowNull: false
+      }
     },
     {
       sequelize,
-      modelName: "Warehouse",
+      modelName: 'Warehouse'
     }
-  );
-  return Warehouse;
-};
+  )
+  return Warehouse
+}

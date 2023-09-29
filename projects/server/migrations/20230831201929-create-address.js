@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -12,7 +12,13 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER
       },
-      country: {
+      name: {
+        type: Sequelize.STRING
+      },
+      phone: {
+        type: Sequelize.STRING
+      },
+      address: {
         type: Sequelize.STRING
       },
       province: {
@@ -21,14 +27,14 @@ module.exports = {
       cityRegency: {
         type: Sequelize.STRING
       },
-      district: {
+      subdistrict: {
         type: Sequelize.STRING
       },
-      subDistrict: {
-        type: Sequelize.STRING
+      cityId: {
+        type: Sequelize.INTEGER
       },
-      street: {
-        type: Sequelize.STRING
+      postalcode: {
+        type: Sequelize.INTEGER
       },
       longitude: {
         type: Sequelize.DECIMAL
@@ -44,9 +50,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Addresses');
+    await queryInterface.dropTable('Addresses')
   }
-};
+}

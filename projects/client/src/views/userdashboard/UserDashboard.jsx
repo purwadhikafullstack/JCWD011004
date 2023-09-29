@@ -1,6 +1,7 @@
 import React from 'react'
 import EditAccount from './component/edit account/EditAccount'
 import ImageUpload from './component/profile photo/ImageUpload'
+import EditAddress from './component/address/FormAddress'
 import UserDashboardNavbar from './component/navbar/UserDashboardNavbar'
 import './styles.css'
 import { useState, useEffect } from 'react'
@@ -55,7 +56,7 @@ function UserDashboard() {
             <ImageUpload />
           </>
         ) : (
-          'ini page alamat'
+          <EditAddress />
         )}
       </div>
     </div>
