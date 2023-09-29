@@ -15,6 +15,7 @@ export default function TableDashboardPemesanan() {
         const response = await axios.get(
           `${apiUrl}/transaction/all-status?userId=${userId}&transactionStatusId=0`
         )
+        console.log(response)
         setData(response.data.allOrderStatus)
       }
     } catch (error) {

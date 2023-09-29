@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -7,62 +7,62 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       userId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       warehouseId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       invoiceNo: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
+        unique: true
       },
       totalItemPrice: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
+        defaultValue: 0
       },
       totalPrice: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
+        defaultValue: 0
       },
       shippingAddress: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       paymentMethod: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       paymentProof: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       paymentStatus: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        defaultValue: false
       },
-      transactionStatus: {
+      transactionStatusId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Transaction_Status",
-          key: "code",
-        },
+          model: 'Transaction_Status',
+          key: 'code'
+        }
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
-    });
+        type: Sequelize.DATE
+      }
+    })
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Transactions');
-  },
-};
+    await queryInterface.dropTable('Transactions')
+  }
+}

@@ -4,8 +4,9 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Warehouse_Product extends Model {
     static associate(models) {
-      // Asosiasi dengan model Product, menggunakan relasi belongsTo
-      this.belongsTo(models.Product, { foreignKey: 'productId' })
+      this.belongsTo(models.Product, {
+        foreignKey: 'productIds'
+      })
     }
   }
 
@@ -15,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      productId: {
+      productIds: {
         type: DataTypes.INTEGER,
         allowNull: false
       },

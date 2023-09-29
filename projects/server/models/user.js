@@ -1,78 +1,75 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       this.belongsTo(models.Role, {
-        foreignKey: "roleId",
-      });
+        foreignKey: 'roleId'
+      })
       this.hasMany(models.Address, {
-        foreignKey: "userId",
-      });
+        foreignKey: 'userId'
+      })
       this.hasMany(models.Warehouse_Admin, {
-        foreignKey: "userId",
-      });
+        foreignKey: 'userId'
+      })
       this.hasMany(models.Transaction, {
-        foreignKey: "userId",
-      });
+        foreignKey: 'userId'
+      })
       this.hasMany(models.Cart, {
-        foreignKey: "userId",
-      });
+        foreignKey: 'userId'
+      })
     }
   }
   User.init(
     {
       roleId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       username: {
-        type: DataTypes.STRING,
-        unique: true,
+        type: DataTypes.STRING
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
+        allowNull: false
       },
       profileImage: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       firstName: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       lastName: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       phoneNumber: {
-        type: DataTypes.STRING,
-        unique: true,
+        type: DataTypes.STRING
       },
       password: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       twitter: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       facebook: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       google: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       isVerified: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: false
       },
       isActive: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true,
-      },
+        defaultValue: true
+      }
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: 'User'
     }
-  );
-  return User;
-};
+  )
+  return User
+}
