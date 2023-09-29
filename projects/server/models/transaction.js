@@ -1,64 +1,75 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict'
+const { Model } = require('sequelize')
+
 module.exports = (sequelize, DataTypes) => {
   class Transaction extends Model {
     static associate(models) {
       this.belongsTo(models.User, {
-        foreignKey: "userId",
-      });
+        foreignKey: 'userId'
+      })
       this.belongsTo(models.Warehouse, {
-        foreignKey: "warehouseId",
-      });
+        foreignKey: 'warehouseId'
+      })
       this.belongsToMany(models.Product, {
-        through: "Transaction_Item",
-        foreignKey: "transactionId",
-      });
+        through: 'Transaction_Item',
+        foreignKey: 'transactionId'
+      })
+      this.belongsTo(models.Transaction_Status, {
+        foreignKey: 'transactionStatusId',
+        as: 'statusTransaction'
+      })
     }
   }
   Transaction.init(
     {
       userId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       warehouseId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       invoiceNo: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
+        unique: true
       },
       totalItemPrice: {
         type: DataTypes.INTEGER,
-        defaultValue: 0,
+        defaultValue: 0
       },
       totalPrice: {
         type: DataTypes.INTEGER,
-        defaultValue: 0,
+        defaultValue: 0
       },
       shippingAddress: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       paymentMethod: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       paymentProof: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       paymentStatus: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: false
       },
-      transactionStatus: {
-        type: DataTypes.STRING,
-      },
+      transactionStatusId: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+        references: {
+          model: 'Transaction_Statuses',
+          key: 'code'
+        }
+      }
     },
     {
       sequelize,
-      modelName: "Transaction",
+      modelName: 'Transaction'
     }
-  );
-  return Transaction;
-};
+  )
+  return Transaction
+}

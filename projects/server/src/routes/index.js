@@ -2,13 +2,20 @@
 const authRouter = require('./authRouter')
 const userUpdate = require('./userUpdate')
 const productRouter = require('./productRouter')
+const paymentRouter = require('./paymentRouter')
+const transactionRouter = require('./transactionRouter')
 const cardRouter = require('./cardRouter')
 const externalRouter = require('./externalRouter')
+const cart = require('./cart')
 
 module.exports = {
   authRouter,
   userUpdate,
   productRouter,
   cardRouter,
-  externalRouter
+  externalRouter,
+  paymentRouter,
+  transactionRouter,
+  cardRouter,
+  cart
 }

@@ -2,45 +2,11 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import AddToCartButton from './components/AddToCartButton'
 
 function ProductDetailPage({ id }) {
   const [productData, setProductData] = useState(null)
   const [quantity, setQuantity] = useState(1)
-
-  const handleAddToCart = async () => {
-    try {
-      const apiUrl = 'http://localhost:8000/api/cart/addItem'
-      const data = {
-        cartId: 5,
-        productId: 1,
-        quantity
-      }
-
-      const response = await axios.post(apiUrl, data)
-      console.log(response)
-      alert(`${quantity} item${quantity > 1 ? 's' : ''} added to cart!`)
-    } catch (error) {
-      console.error('Error adding item to cart:', error)
-    }
-  }
-
-  const handleRemoveFromCart = async () => {
-    try {
-      const apiUrl = 'http://localhost:8000/api/cart/removeItem'
-
-      const data = {
-        cartId: 5,
-        productId: 1,
-        quantity
-      }
-
-      const response = await axios.put(apiUrl, data)
-      console.log(response)
-      alert(`${quantity} item${quantity > 1 ? 's' : ''} removed from cart!`)
-    } catch (error) {
-      console.error('Error removing item from cart:', error)
-    }
-  }
 
   useEffect(() => {
     const apiurl = `http://localhost:8000/api/product/${id}`
@@ -48,6 +14,7 @@ function ProductDetailPage({ id }) {
     const fetchData = async () => {
       try {
         const response = await axios.get(apiurl)
+        console.log(response)
         setProductData(response.data)
       } catch (error) {
         console.error('Error fetching product data:', error)
@@ -115,21 +82,12 @@ function ProductDetailPage({ id }) {
             </button>
           </div>
           <div className="mt-4">
-            <button
-              className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
-              onClick={handleAddToCart}
-            >
-              Add to Cart
-            </button>
+            <AddToCartButton
+              productId={id}
+              isProductActive={productData?.Warehouse_Products[0]?.stock}
+            />
           </div>
-          <div className="mt-4">
-            <button
-              className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
-              onClick={handleRemoveFromCart}
-            >
-              Remove Cart
-            </button>
-          </div>
+          <div className="mt-4"></div>
         </div>
       </div>
     </div>

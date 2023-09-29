@@ -2,10 +2,11 @@ require('dotenv/config')
 const express = require('express')
 const cors = require('cors')
 const { join } = require('path')
-const { authRouter, userUpdate } = require('./routes')
-const { productRouter } = require('./routes')
+const { paymentRouter } = require('./routes')
+const { transactionRouter } = require('./routes')
 const { cardRouter } = require('./routes')
 const { externalRouter } = require('./routes')
+const { authRouter, userUpdate, productRouter, cart } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
 const admin = require('./services/firebaseAdmin')
@@ -22,6 +23,9 @@ app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')))
 
 app.use(express.json())
 // const db = require('../models')
+// db.sequelize.sync({ force: true })
+
+// const db = require('../models')
 // db.sequelize.sync({ alter: true })
 
 //#region API ROUTES
@@ -31,8 +35,11 @@ app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api/update', userUpdate)
 app.use('/api/product', productRouter)
+app.use('/api/payment', paymentRouter)
+app.use('/api/transaction', transactionRouter)
 app.use('/api/card', cardRouter)
 app.use('/api/external', externalRouter)
+app.use('/api/cart', cart)
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`)

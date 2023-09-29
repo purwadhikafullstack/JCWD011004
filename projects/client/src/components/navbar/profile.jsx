@@ -31,7 +31,6 @@ export const AvatarDropdown = () => {
   const handleProfile = () => {
     navigate('/user-dashboard')
   }
-
   const handleSignOut = () => {
     localStorage.clear()
     navigate('/')
@@ -79,6 +78,14 @@ export const AvatarDropdown = () => {
             >
               Settings
             </button>
+            <a href="/sidebar-pemesanan">
+              <button
+                className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                role="menuitem"
+              >
+                My Order
+              </button>
+            </a>
             <button
               onClick={handleSignOut}
               className="block w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100 hover:text-red-800"

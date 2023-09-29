@@ -22,14 +22,19 @@ module.exports = async (req, res) => {
     if (firstName) firstName = capitalize(firstName)
     if (lastName) lastName = capitalize(lastName)
 
-    await User.update(
-      { firstName, lastName, email, phoneNumber },
-      {
-        where: {
-          id: userId
-        }
+    const updatedUserInfo = { firstName, lastName, phoneNumber }
+
+    // If email is updated, also clear the google attribute
+    if (email) {
+      updatedUserInfo.email = email
+      updatedUserInfo.google = null
+    }
+
+    await User.update(updatedUserInfo, {
+      where: {
+        id: userId
       }
-    )
+    })
 
     res.status(200).send('User updated successfully')
   } catch (error) {
