@@ -22,6 +22,9 @@ app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')))
 
 app.use(express.json())
 // const db = require('../models')
+// db.sequelize.sync({ force: true })
+
+// const db = require('../models')
 // db.sequelize.sync({ alter: true })
 
 //#region API ROUTES

@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
         allowNull: false,
         references: {
-          model: 'Transaction_Status',
+          model: 'Transaction_Statuses',
           key: 'code'
         }
       }
