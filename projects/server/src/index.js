@@ -5,6 +5,7 @@ const { join } = require('path')
 const { paymentRouter } = require('./routes')
 const { transactionRouter } = require('./routes')
 const { cardRouter } = require('./routes')
+const { externalRouter } = require('./routes')
 const { authRouter, userUpdate, productRouter, cart } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
@@ -22,6 +23,9 @@ app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')))
 
 app.use(express.json())
 // const db = require('../models')
+// db.sequelize.sync({ force: true })
+
+// const db = require('../models')
 // db.sequelize.sync({ alter: true })
 
 //#region API ROUTES
@@ -34,6 +38,7 @@ app.use('/api/product', productRouter)
 app.use('/api/payment', paymentRouter)
 app.use('/api/transaction', transactionRouter)
 app.use('/api/card', cardRouter)
+app.use('/api/external', externalRouter)
 app.use('/api/cart', cart)
 
 app.get('/api', (req, res) => {

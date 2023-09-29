@@ -2,15 +2,13 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Transaction_Item extends Model {
     static associate(models) {
-      // Asosiasi dengan model Product
       this.belongsTo(models.Product, {
         foreignKey: 'productId',
         as: 'product'
       })
 
-      // Asosiasi dengan model Product_Image
       this.belongsTo(models.Product_Image, {
-        foreignKey: 'productId', // Sesuaikan dengan kunci asing yang benar
+        foreignKey: 'productId',
         as: 'productImage'
       })
     }
