@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.Product, { foreignKey: 'productId' })
       this.belongsTo(models.Cart, { foreignKey: 'cartId' })
-      this.hasMany(models.Product_Image, { foreignKey: 'productId' })
     }
   }
 

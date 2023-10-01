@@ -43,7 +43,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        productId: 3, // Ganti dengan productId yang sesuai
+        productId: 5, // Ganti dengan productId yang sesuai
         transactionId: 4, // Ganti dengan transactionId yang sesuai
         productPrice: 400,
         quantity: 4,
@@ -52,7 +52,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        productId: 1, // Ganti dengan productId yang sesuai
+        productId: 6, // Ganti dengan productId yang sesuai
         transactionId: 2, // Ganti dengan transactionId yang sesuai
         productPrice: 400,
         quantity: 4,
