@@ -1,30 +1,30 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Warehouse_Products', [
+    return queryInterface.bulkInsert('warehouse_products', [
       {
-        warehouseId: 1,
-        productId: 1,
+        id: 1,
+        productId: 17,
         stock: 10,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        warehouseId: 1,
-        productId: 2,
+        id: 2,
+        productId: 18,
         stock: 15,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        warehouseId: 1,
-        productId: 3,
+        id: 3,
+        productId: 19,
         stock: 8,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        warehouseId: 1,
-        productId: 4,
+        id: 4,
+        productId: 20,
         stock: 12,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -33,7 +33,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    // If you want to perform a rollback, you can delete all data from the "Warehouse_Products" table
-    return queryInterface.bulkDelete('Warehouse_Products', null, {})
+    // Jika Anda ingin melakukan rollback, Anda dapat menghapus semua data dari tabel "warehouse_products"
+    return queryInterface.bulkDelete('warehouse_products', null, {})
   }
 }

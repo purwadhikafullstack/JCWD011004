@@ -7,8 +7,8 @@ module.exports = {
     // Data transaksi item yang akan diisi ke dalam tabel 'Transaction_Items'
     const transactionItemsData = [
       {
-        productId: 1, // Ganti dengan productId yang sesuai
-        transactionId: 1, // Ganti dengan transactionId yang sesuai
+        productId: 16, // Ganti dengan productId yang sesuai
+        transactionId: 17, // Ganti dengan transactionId yang sesuai
         productPrice: 100,
         quantity: 2,
         totalPrice: 200,
@@ -16,8 +16,8 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        productId: 2, // Ganti dengan productId yang sesuai
-        transactionId: 2, // Ganti dengan transactionId yang sesuai
+        productId: 17, // Ganti dengan productId yang sesuai
+        transactionId: 18, // Ganti dengan transactionId yang sesuai
         productPrice: 200,
         quantity: 3,
         totalPrice: 600,
@@ -25,8 +25,8 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        productId: 3, // Ganti dengan productId yang sesuai
-        transactionId: 3, // Ganti dengan transactionId yang sesuai
+        productId: 18, // Ganti dengan productId yang sesuai
+        transactionId: 19, // Ganti dengan transactionId yang sesuai
         productPrice: 300,
         quantity: 1,
         totalPrice: 300,
@@ -34,26 +34,8 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        productId: 4, // Ganti dengan productId yang sesuai
-        transactionId: 4, // Ganti dengan transactionId yang sesuai
-        productPrice: 400,
-        quantity: 4,
-        totalPrice: 1600,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        productId: 5, // Ganti dengan productId yang sesuai
-        transactionId: 4, // Ganti dengan transactionId yang sesuai
-        productPrice: 400,
-        quantity: 4,
-        totalPrice: 1600,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        productId: 6, // Ganti dengan productId yang sesuai
-        transactionId: 2, // Ganti dengan transactionId yang sesuai
+        productId: 19, // Ganti dengan productId yang sesuai
+        transactionId: 20, // Ganti dengan transactionId yang sesuai
         productPrice: 400,
         quantity: 4,
         totalPrice: 1600,

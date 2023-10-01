@@ -7,7 +7,7 @@ module.exports = {
     // Data transaksi yang akan diisi ke dalam tabel 'Transactions'
     const transactionsData = [
       {
-        userId: 1, // Ganti dengan userId yang sesuai
+        userId: 5, // Ganti dengan userId yang sesuai
         warehouseId: 1, // Ganti dengan warehouseId yang sesuai
         invoiceNo: 1001, // Ganti dengan nomor faktur yang sesuai
         totalItemPrice: 300, // Total harga item
@@ -21,7 +21,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        userId: 2, // Ganti dengan userId yang sesuai
+        userId: 6, // Ganti dengan userId yang sesuai
         warehouseId: 1, // Ganti dengan warehouseId yang sesuai
         invoiceNo: 1002, // Ganti dengan nomor faktur yang sesuai
         totalItemPrice: 400, // Total harga item
@@ -35,7 +35,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        userId: 1, // Ganti dengan userId yang sesuai
+        userId: 7, // Ganti dengan userId yang sesuai
         warehouseId: 2, // Ganti dengan warehouseId yang sesuai
         invoiceNo: 1003, // Ganti dengan nomor faktur yang sesuai
         totalItemPrice: 500, // Total harga item
@@ -49,7 +49,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        userId: 2, // Ganti dengan userId yang sesuai
+        userId: 6, // Ganti dengan userId yang sesuai
         warehouseId: 2, // Ganti dengan warehouseId yang sesuai
         invoiceNo: 1004, // Ganti dengan nomor faktur yang sesuai
         totalItemPrice: 600, // Total harga item
