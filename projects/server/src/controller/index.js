@@ -24,6 +24,7 @@ const {
   getCartItems,
   getCartItemsSortPagination
 } = require('./cart/getCartItems')
+const{ createWarehouses, updateWarehouses, deleteWarehouses, getWarehouses} = require('./warehouse/warehouseController')
 module.exports = {
   registerUser,
   login,
@@ -54,5 +55,9 @@ module.exports = {
   removeItem,
   getCartItems,
   getCartItemsSortPagination,
-  updateItem
+  updateItem,
+  createWarehouses,
+  updateWarehouses,
+  deleteWarehouses,
+  getWarehouses,
 }
