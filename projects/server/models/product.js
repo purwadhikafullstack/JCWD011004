@@ -55,6 +55,5 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Product'
     }
   )
-
   return Product
 }

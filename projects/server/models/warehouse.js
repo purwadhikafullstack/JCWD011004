@@ -1,6 +1,5 @@
 'use strict'
 const { Model } = require('sequelize')
-
 module.exports = (sequelize, DataTypes) => {
   class Warehouse extends Model {
     static associate(models) {
@@ -25,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      country: {
+      address: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -37,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      district: {
+      subdistrict: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -63,6 +62,5 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Warehouse'
     }
   )
-
   return Warehouse
 }

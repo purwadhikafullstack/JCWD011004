@@ -16,6 +16,14 @@ const {
   getCartItems,
   getCartItemsSortPagination
 } = require('./cart/getCartItems')
+const {
+  addAddress,
+  updateAddress,
+  getAddress,
+  deleteAddress
+} = require('./userUpdate/userAddress')
+const { province, cityRegency } = require('./external/rajaongkir')
+const { longlat } = require('./external/opencage')
 module.exports = {
   registerUser,
   login,
@@ -32,6 +40,13 @@ module.exports = {
   removeItem,
   firebaseLogin,
   firebaseRegister,
+  addAddress,
+  updateAddress,
+  getAddress,
+  deleteAddress,
+  province,
+  cityRegency,
+  longlat,
   seeDetailProduct,
   uploadReceipt,
   getAllOrderStatus,
