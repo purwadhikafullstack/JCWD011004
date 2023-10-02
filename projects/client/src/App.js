@@ -16,6 +16,7 @@ import SidebarPemesananDelivery from './components/transactionPage/tableTransact
 import SidebarPemesananDiterima from './components/transactionPage/tableTransactionStatus/4.transactionAccepting/SidebarDiterima'
 import SidebarPemesananCancel from './components/transactionPage/tableTransactionStatus/5.transactionCancel/SidebarCancel'
 import CartItemPages from './pages/CartItemPages'
+import AdminDashboard from './views/adminDashboard/AdminDashboard'
 function App() {
   return (
     <div className="App">
@@ -65,6 +66,7 @@ function App() {
           element={<SidebarPemesananCancel />}
         ></Route>
         <Route path="/cart" element={<CartItemPages />}></Route>
+        <Route path="/admin" element={<AdminDashboard />}></Route>
       </Routes>
     </div>
   )
