@@ -1,6 +1,6 @@
 import React from 'react'
 
-function MainHead() {
+function MainHead({ toggleSidebar }) {
   return (
     <>
       {' '}
@@ -9,7 +9,10 @@ function MainHead() {
           <h5 hidden className="text-2xl text-gray-600 font-medium lg:block">
             Dashboard
           </h5>
-          <button className="w-12 h-16 -mr-2 border-r lg:hidden">
+          <button
+            onClick={toggleSidebar}
+            className="w-12 h-16 -mr-2 border-r lg:hidden"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 my-auto"

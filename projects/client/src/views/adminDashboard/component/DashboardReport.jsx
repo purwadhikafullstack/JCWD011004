@@ -45,10 +45,10 @@ function DashboardReport() {
   return (
     <>
       {' '}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="shadow-lg rounded-lg overflow-hidden">
+      <div className="max-[1024px]:flex  max-[1024px]:justify-center">
+        <div className="h-1/2 w-1/2 max-[1024px]:w-2/3  shadow-lg rounded-lg overflow-hidden">
           <div className="py-3 px-5 bg-gray-50">Bar chart</div>
-          <canvas className="p-10" ref={chartRef}></canvas>
+          <canvas className="" ref={chartRef}></canvas>
         </div>
       </div>
     </>

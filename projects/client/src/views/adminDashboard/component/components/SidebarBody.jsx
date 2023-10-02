@@ -1,6 +1,6 @@
-import React from 'react'
-
+import React, { useState } from 'react'
 function SidebarBody() {
+  const [activeLink, setActiveLink] = useState('dashboard')
   return (
     <>
       {' '}
@@ -8,8 +8,13 @@ function SidebarBody() {
         <li>
           <a
             href="#"
+            onClick={() => setActiveLink('dashboard')}
             aria-label="dashboard"
-            className="relative px-4 py-3 flex items-center space-x-4 rounded-xl text-white bg-gradient-to-r from-sky-600 to-cyan-400"
+            className={`relative px-4 py-3 flex items-center space-x-4 rounded-xl ${
+              activeLink === 'dashboard'
+                ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400'
+                : 'text-gray-600 group'
+            }`}
           >
             <svg className="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
               <path
@@ -31,7 +36,12 @@ function SidebarBody() {
         <li>
           <a
             href="#"
-            className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
+            onClick={() => setActiveLink('user')}
+            className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
+              activeLink === 'user'
+                ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400'
+                : 'text-gray-600 group'
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
