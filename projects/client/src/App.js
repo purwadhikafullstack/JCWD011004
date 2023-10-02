@@ -17,6 +17,8 @@ import SidebarPemesananDiterima from './components/transactionPage/tableTransact
 import SidebarPemesananCancel from './components/transactionPage/tableTransactionStatus/5.transactionCancel/SidebarCancel'
 import CartItemPages from './pages/CartItemPages'
 import Warehouse from './components/warehouse/Warehouse'
+import ModalCreateProduct from './components/warehouse/component/ModalCreateProduct'
+
 function App() {
   return (
     <div className="App">
@@ -67,6 +69,7 @@ function App() {
         ></Route>
         <Route path="/cart" element={<CartItemPages />}></Route>
         <Route path="/warehouse" element={<Warehouse />}></Route>
+        <Route path="/modal-create" element={<ModalCreateProduct />}></Route>
       </Routes>
     </div>
   )

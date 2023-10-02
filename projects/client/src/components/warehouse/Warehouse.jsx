@@ -24,7 +24,6 @@ const Warehouse = () => {
       <div className="flex items-center justify-between pb-6">
         <div>
           <h2 className="text-gray-600 font-semibold">Warehouse</h2>
-          <span className="text-xs">All Warehouse</span>
         </div>
         <div className="flex items-center justify-between">
           <div className="lg:ml-40 ml-10 space-x-8">
