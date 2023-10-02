@@ -10,6 +10,12 @@ const { uploadReceipt } = require('./payment/uploadReceipt')
 const requestResetPassword = require('./auth/requestResetPassword')
 const { firebaseLogin, firebaseRegister } = require('./auth/firebaseLogin')
 const resetPassword = require('./auth/resetPassword')
+const { getAllOrderStatus } = require('./transaction/getOrderStatus')
+const { addItem, removeItem, updateItem } = require('./cart/addingItems')
+const {
+  getCartItems,
+  getCartItemsSortPagination
+} = require('./cart/getCartItems')
 const {
   addAddress,
   updateAddress,
@@ -18,12 +24,6 @@ const {
 } = require('./userUpdate/userAddress')
 const { province, cityRegency } = require('./external/rajaongkir')
 const { longlat } = require('./external/opencage')
-const { getAllOrderStatus } = require('./transaction/getOrderStatus')
-const { addItem, removeItem, updateItem } = require('./cart/addingItems')
-const {
-  getCartItems,
-  getCartItemsSortPagination
-} = require('./cart/getCartItems')
 module.exports = {
   registerUser,
   login,

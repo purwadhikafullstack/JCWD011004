@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -8,6 +8,8 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
     item?.totalPrice * quantity
   )
   const [isDisabled, setIsDisabled] = useState(false)
+  const [productImage, setProductImage] = useState(null)
+  console.log(productImage)
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const handleIncrease = async () => {
     setIsDisabled(true)
@@ -70,10 +72,26 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
     handleSubTotal(checkListItem, event.target.checked)
   }
 
+  const handleProductImage = async (id) => {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await axios.get(`${apiUrl}/product/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setProductImage(response?.data?.Product_Images[0]?.image)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  useEffect(() => {
+    item && handleProductImage(item?.Product?.id)
+  }, [])
   return (
     <div className="justify-between  mb-6 max-[640px]:flex-col max-[640px]:gap-4 rounded-lg bg-white p-10 shadow-md sm:flex sm:justify-start overflow-x-scroll relative">
       <img
-        src={item?.Product?.Product_Images[0]?.image}
+        src={productImage}
         alt="product-image"
         className="w-40 h-40 rounded-lg max-[640px]:content-center inline-block "
       />

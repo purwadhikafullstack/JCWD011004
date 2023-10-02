@@ -3,13 +3,10 @@ module.exports = (sequelize, DataTypes) => {
   class Transaction_Item extends Model {
     static associate(models) {
       this.belongsTo(models.Product, {
-        foreignKey: 'productId',
-        as: 'product'
+        foreignKey: 'productId'
       })
-
-      this.belongsTo(models.Product_Image, {
-        foreignKey: 'productId',
-        as: 'productImage'
+      this.belongsTo(models.Transaction, {
+        foreignKey: 'transactionId'
       })
     }
   }
