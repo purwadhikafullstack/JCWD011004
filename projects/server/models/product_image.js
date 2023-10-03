@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
   class Product_Image extends Model {
     static associate(models) {
       this.belongsTo(models.Product, { foreignKey: 'productId' })
-      this.belongsTo(models.Cart_Item, { foreignKey: 'productId' })
     }
   }
   Product_Image.init(

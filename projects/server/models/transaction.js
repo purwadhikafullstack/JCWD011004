@@ -10,13 +10,14 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Warehouse, {
         foreignKey: 'warehouseId'
       })
-      this.belongsToMany(models.Product, {
-        through: 'Transaction_Item',
+      this.belongsTo(models.Product, {
+        foreignKey: 'productId'
+      })
+      this.hasMany(models.Transaction_Item, {
         foreignKey: 'transactionId'
       })
       this.belongsTo(models.Transaction_Status, {
-        foreignKey: 'transactionStatusId',
-        as: 'statusTransaction'
+        foreignKey: 'transactionStatusId'
       })
     }
   }

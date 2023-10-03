@@ -68,7 +68,7 @@ function CartList() {
 
   return (
     <div>
-      <div className="h-screen bg-gray-100 p-24 flex flex-col gap-5 mt-10 flex-grow">
+      <div className="h-full bg-gray-100 p-24 flex flex-col gap-5 mt-10 flex-grow">
         <h1 className=" text-left text-2xl font-bold max-[760px]:mt-16">
           Cart Items
         </h1>
