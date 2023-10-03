@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 function SidebarBody() {
   const [activeLink, setActiveLink] = useState('dashboard')
   return (
@@ -6,8 +7,8 @@ function SidebarBody() {
       {' '}
       <ul className="space-y-2 tracking-wide mt-8">
         <li>
-          <a
-            href="#"
+          <Link
+            to="/admin/dashboard-report"
             onClick={() => setActiveLink('dashboard')}
             aria-label="dashboard"
             className={`relative px-4 py-3 flex items-center space-x-4 rounded-xl ${
@@ -31,11 +32,11 @@ function SidebarBody() {
               ></path>
             </svg>
             <span className="-mr-1 font-medium">Dashboard</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a
-            href="#"
+          <Link
+            to="/admin/user"
             onClick={() => setActiveLink('user')}
             className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
               activeLink === 'user'
@@ -60,12 +61,17 @@ function SidebarBody() {
             </svg>
 
             <span className="group-hover:text-gray-700">User</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a
-            href="#"
-            className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
+          <Link
+            to="/admin/resident"
+            onClick={() => setActiveLink('resident')}
+            className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
+              activeLink === 'resident'
+                ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400'
+                : 'text-gray-600 group'
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -84,13 +90,18 @@ function SidebarBody() {
                 d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"
               />
             </svg>
-            <span className="group-hover:text-gray-700">Reports</span>
-          </a>
+            <span className="group-hover:text-gray-700">Data Penduduk</span>
+          </Link>
         </li>
         <li>
           <a
             href="#"
-            className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
+            onClick={() => setActiveLink('otherData')}
+            className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
+              activeLink === 'otherData'
+                ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400'
+                : 'text-gray-600 group'
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -108,31 +119,6 @@ function SidebarBody() {
               />
             </svg>
             <span className="group-hover:text-gray-700">Other data</span>
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                className="fill-current text-gray-300 group-hover:text-cyan-300"
-                d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"
-              />
-              <path
-                className="fill-current text-gray-600 group-hover:text-cyan-600"
-                fillRule="evenodd"
-                d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <span className="group-hover:text-gray-700">Finance</span>
           </a>
         </li>
       </ul>

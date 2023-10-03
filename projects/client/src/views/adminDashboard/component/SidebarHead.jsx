@@ -12,7 +12,7 @@ function SidebarHead({ isSidebarOpen }) {
         <div>
           <div className="-mx-6 px-6 py-4">
             <a href="#" title="home">
-              <h1 className="flex text-2xl font-bold">AKUI</h1>
+              <h1 className="flex text-2xl font-bold">Sakata</h1>
             </a>
           </div>
 
