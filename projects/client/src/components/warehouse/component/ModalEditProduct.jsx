@@ -26,7 +26,9 @@ function EditWarehouseModal({ isOpen, onClose, warehouseData }) {
       !editedWarehouse.warehouseName ||
       !editedWarehouse.streetAddress ||
       !editedWarehouse.selectedProvince ||
-      !editedWarehouse.selectedCity
+      !editedWarehouse.selectedCity ||
+      !editedWarehouse.subdistrict ||
+      !editedWarehouse.postalCode
     ) {
       toast.error('Harap isi semua field.', {
         position: toast.POSITION.TOP_CENTER
@@ -83,6 +85,17 @@ function EditWarehouseModal({ isOpen, onClose, warehouseData }) {
         </label>
         <br />
         <label className="block mb-2">
+          Kode Pos:
+          <input
+            type="text"
+            className="border rounded-md p-2 w-full"
+            name="postalCode"
+            value={editedWarehouse.postalCode}
+            onChange={handleInputChange}
+          />
+        </label>
+        <br />
+        <label className="block mb-2">
           Provinsi:
           <select
             className="border rounded-md p-2 w-full"
@@ -108,6 +121,17 @@ function EditWarehouseModal({ isOpen, onClose, warehouseData }) {
           </select>
         </label>
         <br />
+        <label className="block mb-2">
+          Kecamatan:
+          <input
+            type="text"
+            className="border rounded-md p-2 w-full"
+            name="subdistrict"
+            value={editedWarehouse.subdistrict}
+            onChange={handleInputChange}
+          />
+        </label>
+        <br />
         <div className="flex justify-between">
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
@@ -128,6 +152,7 @@ function EditWarehouseModal({ isOpen, onClose, warehouseData }) {
         <br />
         {isLoading && <p>Sedang memproses...</p>}
       </div>
+      <ToastContainer />
     </Modal>
   )
 }
