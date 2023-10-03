@@ -2,19 +2,25 @@ const axios = require('axios');
 
 async function getLatLongFromAddress(province, city_name) {
   const address = `${city_name} ${province}`;
-  console.log(address);
   const url = `https://api.opencagedata.com/geocode/v1/json?q=${address}&key=${process.env.OPENCAGE_API_KEY}`;
+  
+  console.log('Debugging Info:');
+  console.log('Address:', address);
+  console.log('URL:', url);
+  
   try {
     const response = await axios.get(url);
-    if (response.data.results && response.data.results.length > 0) {
+
+    if (response.data && response.data.results && response.data.results.length > 0) {
       const { lat, lng } = response.data.results[0].geometry;
       return { latitude: lat, longitude: lng };
     } else {
-      console.log('Tidak dapat menemukan koordinat untuk alamat ini.');
+      throw new Error('Failed to retrieve valid coordinates from the API.');
     }
   } catch (error) {
-    console.log(error);
+    console.error('Error while fetching coordinates:', error);
+    throw error; // Re-throw the error to be handled by the caller
   }
 }
 
-module.exports = getLatLongFromAddress
+module.exports = getLatLongFromAddress;
