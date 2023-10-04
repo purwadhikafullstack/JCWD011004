@@ -7,9 +7,9 @@ import axios from 'axios'
 // Komponen modal untuk membuat gudang
 function CreateWarehouseModal() {
   const [isOpen, setIsOpen] = useState(false)
-  const [provinces] = useState([])
+  const [province, setProvince] = useState([])
   const [selectedProvince, setSelectedProvince] = useState('')
-  const [cities] = useState([])
+  const [cities, setCities] = useState([])
   const [selectedCity, setSelectedCity] = useState('')
   const [subdistrict, setSubdistrict] = useState('')
   const [warehouseName, setWarehouseName] = useState('')
@@ -30,6 +30,37 @@ function CreateWarehouseModal() {
   const openModal = () => {
     setIsOpen(true)
   }
+  const fetchProvinces = async () => {
+    try {
+      const { data } = await axios.get(
+        'http://localhost:8000/api/external/province'
+      )
+      const provinces = data.rajaongkir.results
+      // console.log(provinces)
+      setProvince(provinces)
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+
+  const fetchCities = async () => {
+    try {
+      if (selectedProvince) {
+        const response = await axios.get(
+          `http://localhost:8000/api/external/city?province=${selectedProvince}`
+        )
+        const cities = response.data.rajaongkir.results
+        setCities(cities)
+        console.log(cities)
+      } else {
+        // Jika selectedProvince tidak ada, kosongkan daftar kota
+        setCities([])
+      }
+    } catch (error) {
+      console.error('Error fetching cities:', error)
+    }
+  }
+
   const fetchDataFromApi = async () => {
     try {
       const response = await axios.post(
@@ -45,6 +76,8 @@ function CreateWarehouseModal() {
       console.error('Error fetching data from API:', error)
     }
   }
+  // console.log(province)
+  console.log(selectedProvince)
   const createWarehouse = async () => {
     if (
       !warehouseName ||
@@ -93,8 +126,10 @@ function CreateWarehouseModal() {
   useEffect(() => {
     if (isOpen) {
       fetchDataFromApi()
+      fetchProvinces()
+      fetchCities()
     }
-  }, [isOpen])
+  }, [isOpen, selectedProvince])
   return (
     <div>
       <button
@@ -147,9 +182,9 @@ function CreateWarehouseModal() {
               onChange={(e) => setSelectedProvince(e.target.value)}
             >
               <option value="">Pilih Provinsi</option>
-              {provinces.map((province, index) => (
-                <option key={index} value={province}>
-                  {province}
+              {province.map((province, index) => (
+                <option key={index} value={province.province_id}>
+                  {province.province}
                 </option>
               ))}
             </select>
@@ -163,8 +198,8 @@ function CreateWarehouseModal() {
             >
               <option value="">Pilih Kabupaten</option>
               {cities.map((city, index) => (
-                <option key={index} value={city}>
-                  {city}
+                <option key={index} value={city.city_id}>
+                  {city.city_name}
                 </option>
               ))}
             </select>
