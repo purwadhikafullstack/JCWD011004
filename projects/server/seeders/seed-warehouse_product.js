@@ -3,28 +3,32 @@ module.exports = {
     return queryInterface.bulkInsert('warehouse_products', [
       {
         id: 1,
-        productId: 17,
+        warehouseId: 1,
+        productId: 1,
         stock: 10,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         id: 2,
-        productId: 18,
+        warehouseId: 1,
+        productId: 2,
         stock: 15,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         id: 3,
-        productId: 19,
+        warehouseId: 2,
+        productId: 3,
         stock: 8,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         id: 4,
-        productId: 20,
+        warehouseId: 2,
+        productId: 4,
         stock: 12,
         createdAt: new Date(),
         updatedAt: new Date()

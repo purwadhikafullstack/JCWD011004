@@ -40,20 +40,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      subDistrict: {
-        type: DataTypes.STRING,
+      cityId: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
-      street: {
-        type: DataTypes.STRING,
+      postalcode: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       longitude: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(9, 5),
         allowNull: false
       },
       latitude: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(8, 5),
         allowNull: false
       }
     },
