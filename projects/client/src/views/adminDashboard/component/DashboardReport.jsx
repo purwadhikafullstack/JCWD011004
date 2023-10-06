@@ -40,8 +40,8 @@ function DashboardReport() {
   return (
     <>
       {' '}
-      <div className="max-[1024px]:flex-col flex justify-evenly max-[1024px]:justify-center">
-        <div className="h-1/2 w-1/2 max-[1024px]:w-2/3  shadow-lg rounded-lg overflow-hidden">
+      <div className="max-[1024px]:flex-col flex justify-evenly max-[1024px]:justify-center gap-20">
+        <div className="h-1/2 w-1/2 max-[1024px]:w-2/3  shadow-lg rounded-lg overflow-hidden self-center">
           <div className="py-3 px-5 flex justify-between bg-gray-50">
             <h2 className="text-xl font-semibold">Bar chart</h2>{' '}
             <CategoriesReport />

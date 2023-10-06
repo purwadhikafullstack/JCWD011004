@@ -1,17 +1,28 @@
 import React, { useState } from 'react'
 
-const CategoriesReport = () => {
+const DropDownUserCategory = ({ sort }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [category, setCategory] = useState('Category 1')
+  const [category, setCategory] = useState('All')
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen)
   }
 
   const handleChangeCategory = (item) => {
+    item === 'All'
+      ? sort('')
+      : item === 'User'
+      ? sort(3)
+      : item === 'Admin'
+      ? sort(2)
+      : item === 'Super Admin'
+      ? sort(1)
+      : ''
     setCategory(item)
     setIsDropdownOpen(!isDropdownOpen)
   }
+
+  const userCategory = ['Super Admin', 'Admin', 'User', 'All']
 
   return (
     <>
@@ -21,7 +32,7 @@ const CategoriesReport = () => {
           id="dropdown-button"
           className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
         >
-          {category}
+          Sort:&nbsp;{category}&nbsp;role
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-5 h-5 ml-2 -mr-1"
@@ -47,36 +58,20 @@ const CategoriesReport = () => {
               aria-orientation="vertical"
               aria-labelledby="dropdown-button"
             >
-              <a
-                href="#"
-                className="block px-4 py-2 mb-1 text-sm text-gray-700 rounded-md bg-white hover:bg-gray-100"
-                role="menuitem"
-                onClick={() => {
-                  handleChangeCategory('Category 1')
-                }}
-              >
-                Category 1
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 mb-1 text-sm text-gray-700 rounded-md bg-white hover:bg-gray-100"
-                role="menuitem"
-                onClick={() => {
-                  handleChangeCategory('Category 2')
-                }}
-              >
-                Category 2
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 mb-1 text-sm text-gray-700 rounded-md bg-white hover:bg-gray-100"
-                role="menuitem"
-                onClick={() => {
-                  handleChangeCategory('Category 3')
-                }}
-              >
-                Category 3
-              </a>
+              {userCategory &&
+                userCategory.map((item, index) => (
+                  <a
+                    key={index}
+                    href="#"
+                    className="block px-4 py-2 mb-1 text-sm text-gray-700 rounded-md bg-white hover:bg-gray-100"
+                    role="menuitem"
+                    onClick={() => {
+                      handleChangeCategory(item)
+                    }}
+                  >
+                    {item}
+                  </a>
+                ))}
             </div>
           </div>
         )}
@@ -85,4 +80,4 @@ const CategoriesReport = () => {
   )
 }
 
-export default CategoriesReport
+export default DropDownUserCategory

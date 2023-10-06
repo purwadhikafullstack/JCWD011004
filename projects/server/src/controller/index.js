@@ -24,6 +24,7 @@ const {
 } = require('./userUpdate/userAddress')
 const { province, cityRegency } = require('./external/rajaongkir')
 const { longlat } = require('./external/opencage')
+const { getUsersSortPagination } = require('./admin/getUserData')
 module.exports = {
   registerUser,
   login,
@@ -54,5 +55,6 @@ module.exports = {
   removeItem,
   getCartItems,
   getCartItemsSortPagination,
-  updateItem
+  updateItem,
+  getUsersSortPagination
 }

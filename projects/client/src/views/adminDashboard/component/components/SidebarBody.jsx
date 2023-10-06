@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-function SidebarBody() {
+function SidebarBody({ data }) {
+  console.log(data)
   const [activeLink, setActiveLink] = useState('dashboard')
   return (
     <>
@@ -13,63 +14,66 @@ function SidebarBody() {
             aria-label="dashboard"
             className={`relative px-4 py-3 flex items-center space-x-4 rounded-xl ${
               activeLink === 'dashboard'
-                ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400'
+                ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
           >
             <svg className="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
               <path
                 d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
-                className="fill-current text-cyan-400 dark:fill-slate-600"
+                className="fill-current text-orange-400 dark:fill-slate-600"
               ></path>
               <path
                 d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
-                className="fill-current text-cyan-200 group-hover:text-cyan-300"
+                className="fill-current text-orange-200 group-hover:text-orange-300"
               ></path>
               <path
                 d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
-                className="fill-current group-hover:text-sky-300"
+                className="fill-current group-hover:text-orange-800"
               ></path>
             </svg>
             <span className="-mr-1 font-medium">Dashboard</span>
           </Link>
         </li>
-        <li>
-          <Link
-            to="/admin/user"
-            onClick={() => setActiveLink('user')}
-            className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
-              activeLink === 'user'
-                ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400'
-                : 'text-gray-600 group'
-            }`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-5 w-5"
+        {data?.userInfo?.roleId === 1 && (
+          <li>
+            <Link
+              to="/admin/user"
+              onClick={() => setActiveLink('user')}
+              className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
+                activeLink === 'user'
+                  ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
+                  : 'text-gray-600 group'
+              }`}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="fill-current text-gray-300 group-hover:text-cyan-300"
-                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-              />
-            </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="fill-current text-gray-300 group-hover:text-orange-300"
+                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                />
+              </svg>
 
-            <span className="group-hover:text-gray-700">User</span>
-          </Link>
-        </li>
+              <span className="group-hover:text-gray-700">User</span>
+            </Link>
+          </li>
+        )}
+
         <li>
           <Link
             to="/admin/resident"
             onClick={() => setActiveLink('resident')}
             className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
               activeLink === 'resident'
-                ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400'
+                ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
           >
@@ -80,17 +84,17 @@ function SidebarBody() {
               fill="currentColor"
             >
               <path
-                className="fill-current text-gray-600 group-hover:text-cyan-600"
+                className="fill-current text-gray-600 group-hover:text-orange-600"
                 fillRule="evenodd"
                 d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z"
                 clipRule="evenodd"
               />
               <path
-                className="fill-current text-gray-300 group-hover:text-cyan-300"
+                className="fill-current text-gray-300 group-hover:text-orange-300"
                 d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"
               />
             </svg>
-            <span className="group-hover:text-gray-700">Data Penduduk</span>
+            <span className="group-hover:text-gray-700">Order</span>
           </Link>
         </li>
         <li>
@@ -99,7 +103,7 @@ function SidebarBody() {
             onClick={() => setActiveLink('otherData')}
             className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
               activeLink === 'otherData'
-                ? 'text-white bg-gradient-to-r from-sky-600 to-cyan-400'
+                ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
           >
@@ -110,15 +114,15 @@ function SidebarBody() {
               fill="currentColor"
             >
               <path
-                className="fill-current text-gray-600 group-hover:text-cyan-600"
+                className="fill-current text-gray-600 group-hover:text-orange-600"
                 d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"
               />
               <path
-                className="fill-current text-gray-300 group-hover:text-cyan-300"
+                className="fill-current text-gray-300 group-hover:text-orange-300"
                 d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
               />
             </svg>
-            <span className="group-hover:text-gray-700">Other data</span>
+            <span className="group-hover:text-gray-700">Other</span>
           </a>
         </li>
       </ul>

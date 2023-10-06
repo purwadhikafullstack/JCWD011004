@@ -8,15 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Address.init(
     {
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
       name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      phone: {
         type: DataTypes.STRING,
         allowNull: false
       },

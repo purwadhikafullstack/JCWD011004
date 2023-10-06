@@ -1,6 +1,12 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import SidebarBody from './components/SidebarBody'
-function SidebarHead({ isSidebarOpen }) {
+function SidebarHead({ isSidebarOpen, data }) {
+  const navigate = useNavigate()
+  const handleSignOut = () => {
+    localStorage.clear()
+    navigate('/')
+  }
   return (
     <>
       {' '}
@@ -12,7 +18,7 @@ function SidebarHead({ isSidebarOpen }) {
         <div>
           <div className="-mx-6 px-6 py-4">
             <a href="#" title="home">
-              <h1 className="flex text-2xl font-bold">Sakata</h1>
+              <h1 className="flex text-2xl font-bold">AKUI</h1>
             </a>
           </div>
 
@@ -28,7 +34,7 @@ function SidebarHead({ isSidebarOpen }) {
             <span className="text-gray-400 lg:block">Role Admin</span>
           </div>
 
-          <SidebarBody />
+          <SidebarBody data={data} />
         </div>
 
         <div className="px-6 -mx-6 pt-4 flex justify-between items-center border-t">
@@ -47,7 +53,9 @@ function SidebarHead({ isSidebarOpen }) {
                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
               />
             </svg>
-            <span className="group-hover:text-gray-700">Logout</span>
+            <span onClick={handleSignOut} className="group-hover:text-gray-700">
+              Logout
+            </span>
           </button>
         </div>
       </aside>
