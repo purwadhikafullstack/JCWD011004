@@ -1,5 +1,6 @@
 import React from 'react'
 import SidebarBody from './components/SidebarBody'
+import AvatarUploadAdmin from './components/AvatarUploadAdmin'
 function SidebarHead({ isSidebarOpen }) {
   return (
     <>
@@ -17,11 +18,7 @@ function SidebarHead({ isSidebarOpen }) {
           </div>
 
           <div className="mt-8 text-center">
-            <img
-              src="https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp"
-              alt=""
-              className="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28"
-            />
+            <AvatarUploadAdmin />
             <h5 className="mt-4 text-xl font-semibold text-gray-600 lg:block">
               Ini Admin
             </h5>
