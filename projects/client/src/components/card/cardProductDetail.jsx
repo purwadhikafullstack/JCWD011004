@@ -14,7 +14,6 @@ function ProductDetailPage({ id }) {
     const fetchData = async () => {
       try {
         const response = await axios.get(apiurl)
-        console.log(response)
         setProductData(response.data)
       } catch (error) {
         console.error('Error fetching product data:', error)
