@@ -25,6 +25,9 @@ const {
 const { province, cityRegency } = require('./external/rajaongkir')
 const { longlat } = require('./external/opencage')
 const { getUsersSortPagination } = require('./admin/getUserData')
+const getWarehouses = require('./admin/getWarehouses')
+const { createWarehouseAdmin } = require('./admin/createAdmin')
+const { verifyAdminAccount } = require('./admin/verifyNewAdmin')
 module.exports = {
   registerUser,
   login,
@@ -56,5 +59,8 @@ module.exports = {
   getCartItems,
   getCartItemsSortPagination,
   updateItem,
-  getUsersSortPagination
+  getUsersSortPagination,
+  getWarehouses,
+  createWarehouseAdmin,
+  verifyAdminAccount
 }

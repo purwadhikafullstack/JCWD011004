@@ -6,6 +6,7 @@ import CreateAdminButton from '../../../../components/button/CreateAdminButton'
 import DropDownUserActive from '../../../../components/dropdown/DropDownUserActive'
 import axios from 'axios'
 import UserPagination from './UserPagination'
+import CreateAdminModal from '../../../../components/loginModal/CreateAdminModal'
 
 const tableHead = [
   'No',
@@ -30,13 +31,23 @@ function UserTable() {
   const [totalPages, setTotalPages] = useState(0)
   const [sortActiveUser, setSortActiveUser] = useState(1)
   const [sortRoleUser, setsortRoleUser] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const itemsPerPage = 10
+
   const handleActiveSortChange = (newSort) => {
     setSortActiveUser(newSort)
   }
 
   const handleSortUserChange = (newSort) => {
     setsortRoleUser(newSort)
+  }
+
+  function handleOpenModal() {
+    setIsModalOpen(true)
+  }
+
+  function handleCloseModal() {
+    setIsModalOpen(false)
   }
 
   const token = localStorage.getItem('token')
@@ -67,7 +78,7 @@ function UserTable() {
       <div className="w-full flex gap-10 justify-end">
         <DropDownUserActive sort={handleActiveSortChange} />
         <DropDownUserCategory sort={handleSortUserChange} />
-        <CreateAdminButton />
+        <CreateAdminButton onClick={handleOpenModal} />
       </div>
       <div className="flex flex-col">
         <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
@@ -139,6 +150,7 @@ function UserTable() {
           </div>
         </div>
       </div>
+      <CreateAdminModal isOpen={isModalOpen} onClose={handleCloseModal} />
       <UserPagination
         totalPages={totalPages}
         fetchData={fetchData}

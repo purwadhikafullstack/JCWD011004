@@ -1,8 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-function SidebarBody({ data }) {
-  console.log(data)
+import axios from 'axios'
+
+const apiUrl = process.env.REACT_APP_API_BASE_URL
+function SidebarBody() {
   const [activeLink, setActiveLink] = useState('dashboard')
+  const [admin, setAdmin] = useState()
+
+  const fetchData = async () => {
+    try {
+      const { data } = await axios.get(`${apiUrl}/auth/user`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      setAdmin(data?.userInfo)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return (
     <>
       {' '}
@@ -35,7 +56,7 @@ function SidebarBody({ data }) {
             <span className="-mr-1 font-medium">Dashboard</span>
           </Link>
         </li>
-        {data?.userInfo?.roleId === 1 && (
+        {admin?.roleId === 1 && (
           <li>
             <Link
               to="/admin/user"

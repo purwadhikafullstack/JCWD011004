@@ -1,11 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import SidebarBody from './components/SidebarBody'
-function SidebarHead({ isSidebarOpen, data }) {
+function SidebarHead({ isSidebarOpen }) {
   const navigate = useNavigate()
   const handleSignOut = () => {
     localStorage.clear()
     navigate('/')
+    window.location.reload()
   }
   return (
     <>
@@ -34,7 +35,7 @@ function SidebarHead({ isSidebarOpen, data }) {
             <span className="text-gray-400 lg:block">Role Admin</span>
           </div>
 
-          <SidebarBody data={data} />
+          <SidebarBody />
         </div>
 
         <div className="px-6 -mx-6 pt-4 flex justify-between items-center border-t">
