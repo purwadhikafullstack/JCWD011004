@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
@@ -14,6 +15,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
+  const nav = useNavigate()
   const apiUrl = process.env.REACT_APP_API_BASE_URL
 
   const handleLogin = async () => {
@@ -30,26 +32,37 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
         password: password
       })
 
-      if (response.status === 200) {
-        const userRole = response.data.role
-        if (userRole === 3) {
-          toast.success('Login Berhasil', {
-            position: toast.POSITION.TOP_CENTER
-          })
-          localStorage.setItem('token', response.data.token)
-          setTimeout(() => {
-            onClose()
-            dispatch(isLogin(response.data.token))
-          }, 2000)
-        } else {
-          toast.error('Wrong User', {
-            position: toast.POSITION.TOP_CENTER
-          })
-        }
-      } else {
-        toast.error('Login Gagal', {
+      if (response.status === 200 && response.data.role === 1) {
+        nav('/admin/dashboard-report')
+        toast.success('Login Berhasil', {
           position: toast.POSITION.TOP_CENTER
         })
+        localStorage.setItem('token', response.data.token)
+        setTimeout(() => {
+          onClose()
+          dispatch(isLogin(response.data.token))
+        }, 2000)
+      }
+      if (response.status === 200 && response.data.role === 2) {
+        nav('/admin/dashboard-report')
+        toast.success('Login Berhasil', {
+          position: toast.POSITION.TOP_CENTER
+        })
+        localStorage.setItem('token', response.data.token)
+        setTimeout(() => {
+          onClose()
+          dispatch(isLogin(response.data.token))
+        }, 2000)
+      }
+      if (response.status === 200 && response.data.role === 3) {
+        toast.success('Login Berhasil', {
+          position: toast.POSITION.TOP_CENTER
+        })
+        localStorage.setItem('token', response.data.token)
+        setTimeout(() => {
+          onClose()
+          dispatch(isLogin(response.data.token))
+        }, 2000)
       }
     } catch (error) {
       console.error('Terjadi kesalahan:', error)
