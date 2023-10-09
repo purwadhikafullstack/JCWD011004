@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import { useFormikContext } from 'formik'
 
-const SwitchUserStatus = ({ status, change }) => {
-  const [isOn, setIsOn] = useState(status)
-  const toggleSwitch = () => {
-    setIsOn(!isOn)
-    change(!isOn)
+const SwitchUserStatus = ({ name }) => {
+  const { values, setFieldValue } = useFormikContext()
+  const isOn = values[name]
+
+  const toggleSwitch = (event) => {
+    event.preventDefault() // Prevent the event from triggering a form submit
+    setFieldValue(name, !isOn)
   }
-
-  useEffect(() => {}, [isOn])
 
   return (
     <button

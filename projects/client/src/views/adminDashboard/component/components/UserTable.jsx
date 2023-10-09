@@ -7,6 +7,7 @@ import DropDownUserActive from '../../../../components/dropdown/DropDownUserActi
 import axios from 'axios'
 import UserPagination from './UserPagination'
 import CreateAdminModal from '../../../../components/loginModal/CreateAdminModal'
+import UpdateAdminModal from '../../../../components/loginModal/UpdateAdminModal'
 
 const tableHead = [
   'No',
@@ -32,6 +33,8 @@ function UserTable() {
   const [sortActiveUser, setSortActiveUser] = useState(1)
   const [sortRoleUser, setsortRoleUser] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false)
+  const [updateData, setUpdateData] = useState({})
   const itemsPerPage = 10
 
   const handleActiveSortChange = (newSort) => {
@@ -48,6 +51,14 @@ function UserTable() {
 
   function handleCloseModal() {
     setIsModalOpen(false)
+  }
+  function handleOpenUpdateModal(data) {
+    setUpdateData(data)
+    setIsModalUpdateOpen(true)
+  }
+
+  function handleClosUpdateModal() {
+    setIsModalUpdateOpen(false)
   }
 
   const token = localStorage.getItem('token')
@@ -72,7 +83,7 @@ function UserTable() {
 
   useEffect(() => {
     fetchData()
-  }, [sortActiveUser, sortRoleUser])
+  }, [sortActiveUser, sortRoleUser, isModalOpen, isModalUpdateOpen])
   return (
     <>
       <div className="w-full flex gap-10 justify-end">
@@ -136,10 +147,13 @@ function UserTable() {
                               : 'Null'}
                           </td>
                           <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-5 justify-center">
-                            <button>
+                            <button
+                              onClick={() => {
+                                handleOpenUpdateModal(e)
+                              }}
+                            >
                               <BsFillPencilFill />
                             </button>
-                            {/* <SwitchUserStatus status={e?.isActive} /> */}
                           </td>
                         </tr>
                       )
@@ -150,6 +164,11 @@ function UserTable() {
           </div>
         </div>
       </div>
+      <UpdateAdminModal
+        isOpen={isModalUpdateOpen}
+        onClose={handleClosUpdateModal}
+        data={updateData}
+      />
       <CreateAdminModal isOpen={isModalOpen} onClose={handleCloseModal} />
       <UserPagination
         totalPages={totalPages}
