@@ -5,20 +5,37 @@ import { Link } from 'react-router-dom'
 
 const Warehouse = () => {
   const [data, setData] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
 
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/warehouse/get-all`
+        `http://localhost:8000/api/warehouse/get-all?page=${currentPage}&limit=10`
       )
       setData(response?.data?.data)
+      setTotalPages(Math.ceil(response?.data?.data?.totalItems / 10))
     } catch (error) {
       console.error('Error fetching data:', error)
     }
   }
+
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData(currentPage)
+  }, [currentPage])
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1)
+      console.log('Next button clicked. New currentPage:', currentPage + 1)
+    }
+  }
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
 
   return (
     <div className="bg-white p-8 rounded-md w-full">
@@ -44,14 +61,21 @@ const Warehouse = () => {
         </div>
         <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
           <span className="text-xs xs:text-sm text-gray-900">
-            Showing 1 to 4 of 50 Entries
+            Showing {(currentPage - 1) * 10 + 1} to{' '}
+            {Math.min(currentPage * 10, data?.totalItems)}
           </span>
           <div className="inline-flex mt-2 xs:mt-0">
-            <button className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-l">
+            <button
+              className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-l"
+              onClick={handlePrevPage}
+            >
               Prev
             </button>
             &nbsp; &nbsp;
-            <button className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-r">
+            <button
+              className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-r"
+              onClick={handleNextPage}
+            >
               Next
             </button>
           </div>

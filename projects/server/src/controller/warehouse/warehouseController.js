@@ -41,12 +41,26 @@ const deleteWarehouses = async (req, res) => {
 
 async function getWarehouses(req, res) {
   try {
-    const result = await getWarehouse()
-    res.status(result.status).json(messages.response(result))
+    const { page, limit } = req.query;
+    const pageNumber = parseInt(page, 10) || 1;
+    const itemsPerPage = parseInt(limit, 10) || 10;
+    const result = await getWarehouse(pageNumber, itemsPerPage);
+
+    const responseData = {
+      ...result,
+      pagination: {
+        page: pageNumber,
+        perPage: itemsPerPage,
+      },
+    };
+
+    res.status(result.status).json(messages.response(responseData));
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    console.error(error);
+    res.status(500).json(messages.error(500, error.message));
   }
 }
+
 
 module.exports = {
   createWarehouses,
