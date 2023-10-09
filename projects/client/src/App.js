@@ -16,6 +16,11 @@ import SidebarPemesananDelivery from './components/transactionPage/tableTransact
 import SidebarPemesananDiterima from './components/transactionPage/tableTransactionStatus/4.transactionAccepting/SidebarDiterima'
 import SidebarPemesananCancel from './components/transactionPage/tableTransactionStatus/5.transactionCancel/SidebarCancel'
 import CartItemPages from './pages/CartItemPages'
+import AdminDashboard from './views/adminDashboard/AdminDashboard'
+import DashboardReport from './views/adminDashboard/component/DashboardReport'
+import UserTable from './views/adminDashboard/component/components/UserTable'
+import ResidentTable from './views/adminDashboard/component/components/ResidentTable'
+import VerifyAdminChangePassword from './pages/VerifyAdminChangePassword'
 function App() {
   return (
     <div className="App">
@@ -64,7 +69,17 @@ function App() {
           path="/sidebar-pemesanan-cancel"
           element={<SidebarPemesananCancel />}
         ></Route>
+        <Route
+          path="/verify-admin/:token"
+          element={<VerifyAdminChangePassword />}
+        ></Route>
         <Route path="/cart" element={<CartItemPages />}></Route>
+        <Route path="/admin/*" element={<AdminDashboard />}>
+          <Route index element={<DashboardReport />} />
+          <Route path="dashboard-report" element={<DashboardReport />} />
+          <Route path="user" element={<UserTable />} />
+          <Route path="resident" element={<ResidentTable />} />
+        </Route>
       </Routes>
     </div>
   )
