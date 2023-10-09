@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import SidebarHead from './component/SidebarHead'
 import MainHead from './component/MainHead'
-// import DashboardReport from './component/DashboardReport'
 import { Outlet } from 'react-router-dom'
 
 function AdminDashboard() {
