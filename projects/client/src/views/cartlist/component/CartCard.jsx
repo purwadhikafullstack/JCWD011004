@@ -2,19 +2,29 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { setTriggerPrice } from '../../../services/reducer/cartItemsReducer'
 function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
+  const dataTrigger = useSelector((state) => state.cartItems.triggerPrice)
+  const dispatch = useDispatch()
   const [quantity, setQuantity] = useState(item?.quantity)
   const [formattedPrice, setFormattedPrice] = useState(
-    item?.totalPrice * quantity
+    formatRupiah(item?.totalPrice)
   )
   const [isDisabled, setIsDisabled] = useState(false)
   const [productImage, setProductImage] = useState(null)
-  console.log(productImage)
+  const [isChecked, setChecked] = useState(false)
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const handleIncrease = async () => {
     setIsDisabled(true)
-    setQuantity(quantity + 1)
-    setFormattedPrice((quantity + 1) * item?.totalPrice)
+    setQuantity(item?.quantity + 1)
+    const checkListItem = {
+      productId: item?.productId,
+      quantity: item?.quantity + 1,
+      totalPrice: item?.totalPrice
+    }
+    handleSubTotal(checkListItem, isChecked)
+    setFormattedPrice(formatRupiah(item?.totalPrice))
     try {
       const token = localStorage.getItem('token')
       const response = await axios.patch(
@@ -27,6 +37,7 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
         }
       )
       response.status === 200 && setIsDisabled(false)
+      dispatch(setTriggerPrice(!dataTrigger))
     } catch (error) {
       setIsDisabled(false)
       toast.error(error?.response?.data?.error, {
@@ -35,11 +46,24 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
     }
   }
 
+  function formatRupiah(number) {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR'
+    }).format(number)
+  }
+
   const handleDecrease = async () => {
     if (quantity > 1) {
       setIsDisabled(true)
-      setQuantity(quantity - 1)
-      setFormattedPrice((quantity - 1) * item?.totalPrice)
+      setQuantity(item?.quantity - 1)
+      const checkListItem = {
+        productId: item?.productId,
+        quantity: item?.quantity - 1,
+        totalPrice: item?.totalPrice
+      }
+      handleSubTotal(checkListItem, isChecked)
+      setFormattedPrice(formatRupiah(item?.totalPrice))
       try {
         const token = localStorage.getItem('token')
         const response = await axios.patch(
@@ -52,6 +76,7 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
           }
         )
         response.status === 200 && setIsDisabled(false)
+        dispatch(setTriggerPrice(!dataTrigger))
       } catch (error) {
         setIsDisabled(false)
         toast.error(error?.response?.data?.error, {
@@ -66,9 +91,10 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
   const handleCheckList = (event) => {
     const checkListItem = {
       productId: item?.productId,
+      quantity: item?.quantity,
       totalPrice: item?.totalPrice
     }
-
+    setChecked(event.target.checked)
     handleSubTotal(checkListItem, event.target.checked)
   }
 
@@ -87,6 +113,7 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
   }
   useEffect(() => {
     item && handleProductImage(item?.Product?.id)
+    setFormattedPrice(formatRupiah(item?.totalPrice))
   }, [])
   return (
     <div className="justify-between  mb-6 max-[640px]:flex-col max-[640px]:gap-4 rounded-lg bg-white p-10 shadow-md sm:flex sm:justify-start overflow-x-scroll relative">

@@ -24,6 +24,11 @@ const {
 } = require('./userUpdate/userAddress')
 const { province, cityRegency } = require('./external/rajaongkir')
 const { longlat } = require('./external/opencage')
+const { getUsersSortPagination } = require('./admin/getUserData')
+const getWarehouses = require('./admin/getWarehouses')
+const { createWarehouseAdmin } = require('./admin/createAdmin')
+const { verifyAdminAccount } = require('./admin/verifyNewAdmin')
+const updateWarehouseAdmin = require('./admin/updateAdmin')
 module.exports = {
   registerUser,
   login,
@@ -54,5 +59,10 @@ module.exports = {
   removeItem,
   getCartItems,
   getCartItemsSortPagination,
-  updateItem
+  updateItem,
+  getUsersSortPagination,
+  getWarehouses,
+  createWarehouseAdmin,
+  verifyAdminAccount,
+  updateWarehouseAdmin
 }
