@@ -18,6 +18,7 @@ import SidebarPemesananCancel from './components/transactionPage/tableTransactio
 import CartItemPages from './pages/CartItemPages'
 import Warehouse from './components/warehouse/Warehouse'
 import CreateWarehousePage from './components/warehouse/component/CreateWarehouse'
+import EditWarehousePage from './components/warehouse/component/EditWarehouse'
 
 function App() {
   return (
@@ -72,6 +73,10 @@ function App() {
         <Route
           path="/create-warehouse"
           element={<CreateWarehousePage />}
+        ></Route>
+        <Route
+          path="/edit-warehouse/:id"
+          element={<EditWarehousePage />}
         ></Route>
       </Routes>
     </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Table = ({ data }) => {
   const headTable = [
@@ -48,9 +49,11 @@ const Table = ({ data }) => {
                 {item.province}
               </td>
               <td className="px-5 py-2 sm:py-5 border-b border-gray-200 bg-white text-sm">
-                <button className="bg-indigo-600 px-3 py-1 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                  Edit
-                </button>
+                <Link to={`/edit-warehouse/${item.id}`}>
+                  <button className="bg-indigo-600 px-3 py-1 rounded-md text-white font-semibold tracking-wide cursor-pointer">
+                    Edit
+                  </button>
+                </Link>
                 <button className="bg-red-600 px-3 py-1 rounded-md text-white font-semibold tracking-wide cursor-pointer ml-2">
                   Delete
                 </button>

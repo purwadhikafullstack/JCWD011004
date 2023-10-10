@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
+import { Link, useParams } from 'react-router-dom'
 
-function CreateWarehousePage() {
+function EditWarehousePage() {
   const [province, setProvince] = useState([])
   const [cities, setCities] = useState([])
   const [selectedProvince, setSelectedProvince] = useState('')
@@ -13,8 +14,9 @@ function CreateWarehousePage() {
   const [streetAddress, setStreetAddress] = useState('')
   const [postalCode, setPostalCode] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [isCreating, setIsCreating] = useState(false)
+  const [isUpdating, setIsUpdating] = useState(false)
   const provinceName = province[selectedProvince - 1]
+  const { id } = useParams()
 
   const fetchProvinces = async () => {
     try {
@@ -44,8 +46,6 @@ function CreateWarehousePage() {
     }
   }
 
-  console.log(selectedProvince)
-
   const closeModal = () => {
     setSelectedProvince('')
     setSelectedCity('')
@@ -55,7 +55,7 @@ function CreateWarehousePage() {
     setPostalCode('')
   }
 
-  const createWarehouse = async () => {
+  const updateWarehouse = async () => {
     if (
       !warehouseName ||
       !streetAddress ||
@@ -69,7 +69,7 @@ function CreateWarehousePage() {
       })
       return
     }
-    setIsCreating(true)
+    setIsUpdating(true)
     const warehouseData = {
       name: warehouseName,
       address: streetAddress,
@@ -78,13 +78,13 @@ function CreateWarehousePage() {
       postalcode: postalCode
     }
     try {
-      const response = await axios.post(
-        'http://localhost:8000/api/warehouse/create',
+      const response = await axios.patch(
+        `http://localhost:8000/api/warehouse/update/${id}`,
         warehouseData
       )
       console.log('Response from API:', response.data)
       setIsLoading(false)
-      setIsCreating(false)
+      setIsUpdating(false)
       setSelectedProvince('')
       setSelectedCity('')
       setSubdistrict('')
@@ -92,15 +92,14 @@ function CreateWarehousePage() {
       setStreetAddress('')
       setPostalCode('')
       closeModal()
-      toast.success('Gudang berhasil dibuat!', {
+      toast.success('Gudang berhasil diperbarui!', {
         position: toast.POSITION.TOP_CENTER
       })
-
       setTimeout(() => {
         window.location.href = '/warehouse'
-      }, 2000)
+      }, 1000)
     } catch (error) {
-      console.error('Error creating warehouse:', error)
+      console.error('Error updating warehouse:', error)
     }
   }
 
@@ -110,50 +109,50 @@ function CreateWarehousePage() {
   }, [selectedProvince])
 
   return (
-    <div className="container mx-auto max-w-screen-lg p-4 bg-white rounded shadow-lg">
-      <h2 className="text-2xl font-semibold mb-4">Create Warehouse</h2>
-      <div className="mb-4 text-left">
-        <label htmlFor="warehouseName" className="block text-gray-600">
+    <div className="text-left p-4 bg-white rounded shadow-lg">
+      <h2 className="text-2xl font-semibold mb-4">Edit Warehouse</h2>
+      <div className="mb-4">
+        <label htmlFor="warehouseName" className="block mb-2 text-gray-600">
           Nama Warehouse:
           <input
             type="text"
             id="warehouseName"
-            className="border rounded-md p-2 w-full mt-1"
+            className="border rounded-md p-2 w-full"
             value={warehouseName}
             onChange={(e) => setWarehouseName(e.target.value)}
           />
         </label>
       </div>
-      <div className="mb-4 text-left">
-        <label htmlFor="streetAddress" className="block text-gray-600">
+      <div className="mb-4">
+        <label htmlFor="streetAddress" className="block mb-2 text-gray-600">
           Jalan:
           <input
             type="text"
             id="streetAddress"
-            className="border rounded-md p-2 w-full mt-1"
+            className="border rounded-md p-2 w-full"
             value={streetAddress}
             onChange={(e) => setStreetAddress(e.target.value)}
           />
         </label>
       </div>
-      <div className="mb-4 text-left">
-        <label htmlFor="postalCode" className="block text-gray-600">
+      <div className="mb-4">
+        <label htmlFor="postalCode" className="block mb-2 text-gray-600">
           Kode Pos:
           <input
             type="text"
             id="postalCode"
-            className="border rounded-md p-2 w-full mt-1"
+            className="border rounded-md p-2 w-full"
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
           />
         </label>
       </div>
-      <div className="mb-4 text-left">
-        <label htmlFor="selectedProvince" className="block text-gray-600">
+      <div className="mb-4">
+        <label htmlFor="selectedProvince" className="block mb-2 text-gray-600">
           Provinsi:
           <select
             id="selectedProvince"
-            className="border rounded-md p-2 w-full mt-1"
+            className="border rounded-md p-2 w-full"
             value={selectedProvince}
             onChange={(e) => setSelectedProvince(e.target.value)}
           >
@@ -166,12 +165,12 @@ function CreateWarehousePage() {
           </select>
         </label>
       </div>
-      <div className="mb-4 text-left">
-        <label htmlFor="selectedCity" className="block text-gray-600">
+      <div className="mb-4">
+        <label htmlFor="selectedCity" className="block mb-2 text-gray-600">
           Kabupaten:
           <select
             id="selectedCity"
-            className="border rounded-md p-2 w-full mt-1"
+            className="border rounded-md p-2 w-full"
             value={selectedCity}
             onChange={(e) => setSelectedCity(e.target.value)}
           >
@@ -184,26 +183,33 @@ function CreateWarehousePage() {
           </select>
         </label>
       </div>
-      <div className="mb-4 text-left">
-        <label htmlFor="subdistrict" className="block text-gray-600">
+      <div className="mb-4">
+        <label htmlFor="subdistrict" className="block mb-2 text-gray-600">
           Kecamatan:
           <input
             type="text"
             id="subdistrict"
-            className="border rounded-md p-2 w-full mt-1"
+            className="border rounded-md p-2 w-full"
             value={subdistrict}
             onChange={(e) => setSubdistrict(e.target.value)}
           />
         </label>
       </div>
       <div className="flex justify-between">
+        <Link to={'/warehouse'} className="text-blue-500 hover:underline">
+          Kembali
+        </Link>
         <button
           className={`bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ${
-            isLoading || isCreating ? 'opacity-50 cursor-not-allowed' : ''
+            isLoading || isUpdating ? 'opacity-50 cursor-not-allowed' : ''
           }`}
-          onClick={isLoading || isCreating ? null : createWarehouse}
+          onClick={isLoading || isUpdating ? null : updateWarehouse}
         >
-          {isLoading ? 'Membuat...' : isCreating ? 'Membuat' : 'Buat'}
+          {isLoading
+            ? 'Memperbarui...'
+            : isUpdating
+            ? 'Memperbarui'
+            : 'Perbarui'}
         </button>
       </div>
       {isLoading && <p className="text-center mt-4">Sedang memproses...</p>}
@@ -212,4 +218,4 @@ function CreateWarehousePage() {
   )
 }
 
-export default CreateWarehousePage
+export default EditWarehousePage
