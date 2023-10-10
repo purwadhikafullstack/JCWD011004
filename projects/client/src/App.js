@@ -94,6 +94,7 @@ function App() {
           <Route path="dashboard-report" element={<DashboardReport />} />
           <Route path="user" element={<UserTable />} />
           <Route path="resident" element={<ResidentTable />} />
+          <Route path="warehouse" element={<Warehouse />} />
         </Route>
         <Route path="*" element={<PagesNotFound />}></Route>
       </Routes>

@@ -19,10 +19,10 @@ function CreateWarehousePage() {
 
   const fetchProvinces = async () => {
     try {
-      const { data } = await axios.get(
+      const response = await axios.get(
         'http://localhost:8000/api/external/province'
       )
-      const provinces = data.rajaongkir.results
+      const provinces = response.data.rajaongkir.results
       setProvince(provinces)
     } catch (err) {
       console.log(err)
@@ -36,6 +36,7 @@ function CreateWarehousePage() {
           `http://localhost:8000/api/external/city?province=${selectedProvince}`
         )
         const cities = response.data.rajaongkir.results
+        console.log(response.data.rajaongkir.results)
         setCities(cities)
       } else {
         setCities([])
@@ -44,8 +45,6 @@ function CreateWarehousePage() {
       console.error('Error fetching cities:', error)
     }
   }
-
-  console.log(selectedProvince)
 
   const closeModal = () => {
     setSelectedProvince('')
@@ -98,7 +97,7 @@ function CreateWarehousePage() {
       })
 
       setTimeout(() => {
-        window.location.href = '/warehouse'
+        window.location.href = '/admin/warehouse'
       }, 2000)
     } catch (error) {
       console.error('Error creating warehouse:', error)
@@ -198,7 +197,7 @@ function CreateWarehousePage() {
         </label>
       </div>
       <div className="flex justify-between">
-        <Link to={'/warehouse'} className="text-blue-500 hover:underline">
+        <Link to={'/admin/warehouse'} className="text-blue-500 hover:underline">
           Kembali
         </Link>
         <button

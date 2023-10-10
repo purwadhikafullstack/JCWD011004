@@ -96,7 +96,7 @@ function EditWarehousePage() {
         position: toast.POSITION.TOP_CENTER
       })
       setTimeout(() => {
-        window.location.href = '/warehouse'
+        window.location.href = '/admin/warehouse'
       }, 1000)
     } catch (error) {
       console.error('Error updating warehouse:', error)
@@ -196,7 +196,7 @@ function EditWarehousePage() {
         </label>
       </div>
       <div className="flex justify-between">
-        <Link to={'/warehouse'} className="text-blue-500 hover:underline">
+        <Link to={'/admin/warehouse'} className="text-blue-500 hover:underline">
           Kembali
         </Link>
         <button

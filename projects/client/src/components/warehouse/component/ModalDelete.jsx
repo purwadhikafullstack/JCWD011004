@@ -18,7 +18,7 @@ function DeleteModal({ id, isOpen, onClose }) {
           }
       }
       setTimeout(() => {
-        window.location.href = '/warehouse'
+        window.location.href = '/admin/warehouse'
       }, 1000)
     } catch (error) {
       console.log(error)

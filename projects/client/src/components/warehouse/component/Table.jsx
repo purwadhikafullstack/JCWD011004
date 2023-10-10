@@ -42,7 +42,7 @@ const Table = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data?.data?.map((item) => (
+          {data?.map((item) => (
             <tr key={item.id}>
               <td className="px-5 py-2 sm:py-5 border-b border-gray-200 bg-white text-sm">
                 {item.id}

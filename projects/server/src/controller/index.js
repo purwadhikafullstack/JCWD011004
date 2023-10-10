@@ -10,8 +10,6 @@ const { uploadReceipt } = require('./payment/uploadReceipt')
 const requestResetPassword = require('./auth/requestResetPassword')
 const { firebaseLogin, firebaseRegister } = require('./auth/firebaseLogin')
 const resetPassword = require('./auth/resetPassword')
-const { getAllOrderStatus } = require('./transaction/getOrderStatus')
-const { addItem, removeItem, updateItem } = require('./cart/addingItems')
 const {
   getCartItems,
   getCartItemsSortPagination
@@ -27,12 +25,13 @@ const { longlat } = require('./external/opencage')
 const { getAllOrderStatus } = require('./transaction/getOrderStatus')
 const { addItem, removeItem, updateItem } = require('./cart/addingItems')
 const {
-  getCartItems,
-  getCartItemsSortPagination
-} = require('./cart/getCartItems')
-const{ createWarehouses, updateWarehouses, deleteWarehouses, getWarehouses} = require('./warehouse/warehouseController')
+  createWarehouses,
+  updateWarehouses,
+  deleteWarehouses,
+  getWarehouses
+} = require('./warehouse/warehouseController')
 const { getUsersSortPagination } = require('./admin/getUserData')
-const getWarehouses = require('./admin/getWarehouses')
+const getWarehouse = require('./admin/getWarehouses')
 const { createWarehouseAdmin } = require('./admin/createAdmin')
 const { verifyAdminAccount } = require('./admin/verifyNewAdmin')
 const updateWarehouseAdmin = require('./admin/updateAdmin')
@@ -70,7 +69,7 @@ module.exports = {
   createWarehouses,
   updateWarehouses,
   deleteWarehouses,
-  getWarehouses,
+  getWarehouse,
   getUsersSortPagination,
   getWarehouses,
   createWarehouseAdmin,

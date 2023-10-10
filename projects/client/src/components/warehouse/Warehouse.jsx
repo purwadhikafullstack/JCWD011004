@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 const Warehouse = () => {
   const [data, setData] = useState([])
+  const [dta, setDta] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
 
@@ -13,7 +14,8 @@ const Warehouse = () => {
       const response = await axios.get(
         `http://localhost:8000/api/warehouse/get-all?page=${currentPage}&limit=10`
       )
-      setData(response?.data?.data)
+      setDta(response?.data)
+      setData(response?.data?.data?.data)
       setTotalPages(Math.ceil(response?.data?.data?.totalItems / 10))
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -27,7 +29,6 @@ const Warehouse = () => {
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1)
-      console.log('Next button clicked. New currentPage:', currentPage + 1)
     }
   }
 
@@ -62,7 +63,7 @@ const Warehouse = () => {
         <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
           <span className="text-xs xs:text-sm text-gray-900">
             Showing {(currentPage - 1) * 10 + 1} to{' '}
-            {Math.min(currentPage * 10, data?.totalItems)}
+            {Math.min(currentPage * 10, dta?.data?.totalItems)}
           </span>
           <div className="inline-flex mt-2 xs:mt-0">
             <button

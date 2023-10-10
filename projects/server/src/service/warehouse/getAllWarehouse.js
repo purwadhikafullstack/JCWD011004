@@ -6,8 +6,6 @@ const getWarehouse = async (page, perPage) => {
   try {
     const pageNumber = parseInt(page, 10) || 1;
     const itemsPerPage = parseInt(perPage, 10) || 10;
-
-    // Hitung offset (mulai dari mana) dan limit (jumlah item yang diambil)
     const offset = (pageNumber - 1) * itemsPerPage;
     const limit = itemsPerPage;
     const result = await warehouse.findAndCountAll({
