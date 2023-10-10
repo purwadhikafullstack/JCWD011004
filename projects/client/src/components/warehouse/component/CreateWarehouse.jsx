@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 function CreateWarehousePage() {
   const [province, setProvince] = useState([])
@@ -197,6 +198,9 @@ function CreateWarehousePage() {
         </label>
       </div>
       <div className="flex justify-between">
+        <Link to={'/warehouse'} className="text-blue-500 hover:underline">
+          Kembali
+        </Link>
         <button
           className={`bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 ${
             isLoading || isCreating ? 'opacity-50 cursor-not-allowed' : ''

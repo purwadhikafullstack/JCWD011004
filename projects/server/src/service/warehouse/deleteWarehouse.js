@@ -3,17 +3,15 @@ const warehouse = db.Warehouse
 
 const deleteWarehouse = async (id) => {
   try {
-    const existingWarehouse = await warehouse.findOne({
-      where: { id: id },
-    })
+    const existingWarehouse = await warehouse.findByPk(id);
     if (!existingWarehouse) {
-      return messages.error(404, 'Gudang tidak ditemukan')
+      return { success: false, message: 'Gudang tidak ditemukan' };
     }
     await existingWarehouse.destroy();
-    return messages.success('Gudang berhasil dihapus', {})
+    return { success: true, message: 'Gudang berhasil dihapus' };
   } catch (error) {
-    return messages.error(500, error.message);
+    return { success: false, message: 'Terjadi kesalahan saat menghapus gudang: ' + error.message };
   }
 }
 
-module.exports = deleteWarehouse
+module.exports = deleteWarehouse;

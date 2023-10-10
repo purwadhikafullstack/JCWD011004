@@ -33,9 +33,14 @@ const deleteWarehouses = async (req, res) => {
   try {
     const { id } = req.params
     const result = await deleteWarehouse(id)
-    res.status(result.status).json(messages.success(result))
+    if (result.success) {
+      res.status(200).json({ message: result.message });
+    } else {
+      res.status(404).json({ message: result.message });
+    }
   } catch (error) {
-    res.status(500).json({ message: error.messages })
+    console.error("Error deleting warehouse:", error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat menghapus gudang' });
   }
 }
 

@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import DeleteModal from './ModalDelete'
+import { useState } from 'react'
 
 const Table = ({ data }) => {
   const headTable = [
@@ -11,6 +13,18 @@ const Table = ({ data }) => {
     'Province',
     'Action'
   ]
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [selectedItemId, setSelectedItemId] = useState(null)
+
+  const openDeleteModal = (id) => {
+    setSelectedItemId(id)
+    setIsDeleteModalOpen(true)
+  }
+
+  const closeDeleteModal = () => {
+    setSelectedItemId(null)
+    setIsDeleteModalOpen(false)
+  }
 
   return (
     <div className="overflow-x-auto">
@@ -54,7 +68,10 @@ const Table = ({ data }) => {
                     Edit
                   </button>
                 </Link>
-                <button className="bg-red-600 px-3 py-1 rounded-md text-white font-semibold tracking-wide cursor-pointer ml-2">
+                <button
+                  className="bg-red-600 px-3 py-1 rounded-md text-white font-semibold tracking-wide cursor-pointer ml-2"
+                  onClick={() => openDeleteModal(item.id)}
+                >
                   Delete
                 </button>
               </td>
@@ -62,6 +79,11 @@ const Table = ({ data }) => {
           ))}
         </tbody>
       </table>
+      <DeleteModal
+        id={selectedItemId}
+        isOpen={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+      />
     </div>
   )
 }

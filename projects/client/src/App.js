@@ -19,6 +19,7 @@ import CartItemPages from './pages/CartItemPages'
 import Warehouse from './components/warehouse/Warehouse'
 import CreateWarehousePage from './components/warehouse/component/CreateWarehouse'
 import EditWarehousePage from './components/warehouse/component/EditWarehouse'
+import ModalDelete from './components/warehouse/component/ModalDelete'
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function App() {
           path="/edit-warehouse/:id"
           element={<EditWarehousePage />}
         ></Route>
+        <Route path="/delete-modal" element={<ModalDelete />}></Route>
       </Routes>
     </div>
   )
