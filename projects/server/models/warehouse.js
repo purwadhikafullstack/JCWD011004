@@ -15,12 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Transaction, {
         foreignKey: 'warehouseId'
       })
-      this.belongsToMany(models.Product, {
-        through: 'Warehouse_Product',
-        foreignKey: 'warehouseId'
-      })
     }
   }
+
   Warehouse.init(
     {
       name: {
@@ -44,7 +41,8 @@ module.exports = (sequelize, DataTypes) => {
         // allowNull: false
       },
       cityId: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
       },
       postalcode: {
         type: DataTypes.INTEGER,

@@ -20,7 +20,12 @@ import Warehouse from './components/warehouse/Warehouse'
 import CreateWarehousePage from './components/warehouse/component/CreateWarehouse'
 import EditWarehousePage from './components/warehouse/component/EditWarehouse'
 import ModalDelete from './components/warehouse/component/ModalDelete'
-
+import AdminDashboard from './views/adminDashboard/AdminDashboard'
+import DashboardReport from './views/adminDashboard/component/DashboardReport'
+import UserTable from './views/adminDashboard/component/components/UserTable'
+import ResidentTable from './views/adminDashboard/component/components/ResidentTable'
+import VerifyAdminChangePassword from './pages/VerifyAdminChangePassword'
+import PagesNotFound from './pages/PagesNotFound'
 function App() {
   return (
     <div className="App">
@@ -69,6 +74,10 @@ function App() {
           path="/sidebar-pemesanan-cancel"
           element={<SidebarPemesananCancel />}
         ></Route>
+        <Route
+          path="/verify-admin/:token"
+          element={<VerifyAdminChangePassword />}
+        ></Route>
         <Route path="/cart" element={<CartItemPages />}></Route>
         <Route path="/warehouse" element={<Warehouse />}></Route>
         <Route
@@ -80,6 +89,13 @@ function App() {
           element={<EditWarehousePage />}
         ></Route>
         <Route path="/delete-modal" element={<ModalDelete />}></Route>
+        <Route path="/admin/*" element={<AdminDashboard />}>
+          <Route index element={<DashboardReport />} />
+          <Route path="dashboard-report" element={<DashboardReport />} />
+          <Route path="user" element={<UserTable />} />
+          <Route path="resident" element={<ResidentTable />} />
+        </Route>
+        <Route path="*" element={<PagesNotFound />}></Route>
       </Routes>
     </div>
   )

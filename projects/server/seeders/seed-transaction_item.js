@@ -25,8 +25,8 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        productId: 18, // Ganti dengan productId yang sesuai
-        transactionId: 3, // Ganti dengan transactionId yang sesuai
+        productId: 5, // Ganti dengan productId yang sesuai
+        transactionId: 2, // Ganti dengan transactionId yang sesuai
         productPrice: 300,
         quantity: 1,
         totalPrice: 300,
@@ -34,8 +34,8 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        productId: 19, // Ganti dengan productId yang sesuai
-        transactionId: 4, // Ganti dengan transactionId yang sesuai
+        productId: 1, // Ganti dengan productId yang sesuai
+        transactionId: 3, // Ganti dengan transactionId yang sesuai
         productPrice: 400,
         quantity: 4,
         totalPrice: 1600,
@@ -43,7 +43,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        productId: 17, // Ganti dengan productId yang sesuai
+        productId: 1, // Ganti dengan productId yang sesuai
         transactionId: 4, // Ganti dengan transactionId yang sesuai
         productPrice: 400,
         quantity: 4,

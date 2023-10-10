@@ -4,7 +4,7 @@ import CheckOutCart from './component/CheckOutCart'
 import CartPagination from './component/CartPagination'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { setItems } from '../../services/reducer/cartItemsReducer'
+import { setItemPrice, setItems } from '../../services/reducer/cartItemsReducer'
 import CartSort from './component/CartSort'
 import { BsFillCartXFill } from 'react-icons/bs'
 import ModalDeleteItem from './component/ModalDeleteItem'
@@ -15,6 +15,7 @@ function CartList() {
   const [showModalDelete, setShowModalDelete] = useState(false)
   const [deleteProduct, setDeleteProduct] = useState({})
   const [subTotal, setSubTotal] = useState([])
+  const dataTrigger = useSelector((state) => state.cartItems.triggerPrice)
 
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const dispatch = useDispatch()
@@ -30,9 +31,17 @@ function CartList() {
   const handleSubTotalChange = (item, isChecked) => {
     setSubTotal((prevSubTotal) => {
       if (isChecked) {
-        const newSubTotal = [...prevSubTotal]
-        newSubTotal.push(item)
-        return newSubTotal
+        const existingItem = prevSubTotal.find(
+          (i) => i.productId === item.productId
+        )
+
+        if (existingItem) {
+          return prevSubTotal.map((i) =>
+            i.productId === item.productId ? item : i
+          )
+        } else {
+          return [...prevSubTotal, item]
+        }
       } else {
         return prevSubTotal.filter((i) => i.productId !== item.productId)
       }
@@ -56,7 +65,7 @@ function CartList() {
       )
 
       setTotalPages(response?.data?.totalPages)
-      dispatch(setItems(response?.data?.items)) // set items in the Redux store
+      dispatch(setItems(response?.data?.items))
     } catch (error) {
       console.error('Error fetching data', error)
     }
@@ -64,11 +73,15 @@ function CartList() {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [dataTrigger])
+
+  useEffect(() => {
+    dispatch(setItemPrice(subTotal))
+  }, [subTotal, items])
 
   return (
     <div>
-      <div className="h-screen bg-gray-100 p-24 flex flex-col gap-5 mt-10 flex-grow">
+      <div className="h-full bg-gray-100 p-24 flex flex-col gap-5 mt-10 flex-grow">
         <h1 className=" text-left text-2xl font-bold max-[760px]:mt-16">
           Cart Items
         </h1>
@@ -93,7 +106,7 @@ function CartList() {
               </div>
             )}
           </div>
-          <CheckOutCart subTotal={subTotal} />
+          <CheckOutCart />
         </div>
         <CartPagination fetchData={fetchData} totalPages={totalPages} />
         <ModalDeleteItem

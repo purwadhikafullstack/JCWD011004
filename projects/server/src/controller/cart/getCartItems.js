@@ -2,7 +2,6 @@ const db = require('../../../models')
 const Cart_Item = db.Cart_Item
 const Cart = db.Cart
 const Product = db.Product
-const Product_Image = db.Product_Image
 const jwt = require('jsonwebtoken')
 
 async function getCartItems(req, res) {
@@ -75,8 +74,7 @@ async function getCartItemsSortPagination(req, res) {
       },
       include: [
         {
-          model: Product,
-          include: [Product_Image]
+          model: Product
         }
       ],
       limit: size,

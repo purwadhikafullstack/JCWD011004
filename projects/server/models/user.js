@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId'
       })
       this.hasMany(models.Warehouse_Admin, {
-        foreignKey: 'userId'
+        foreignKey: 'adminId'
       })
       this.hasMany(models.Transaction, {
         foreignKey: 'userId'

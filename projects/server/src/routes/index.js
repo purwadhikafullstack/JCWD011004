@@ -8,6 +8,7 @@ const cardRouter = require('./cardRouter')
 const externalRouter = require('./externalRouter')
 const cart = require('./cart')
 const warehouseRoute = require('./warehouseRoute')
+const adminRouter = require('./adminRouter')
 
 module.exports = {
   authRouter,
@@ -19,5 +20,6 @@ module.exports = {
   transactionRouter,
   cardRouter,
   cart,
-  warehouseRoute
+  warehouseRoute,
+  adminRouter
 }
