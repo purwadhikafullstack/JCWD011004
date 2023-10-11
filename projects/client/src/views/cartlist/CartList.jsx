@@ -8,6 +8,7 @@ import { setItemPrice, setItems } from '../../services/reducer/cartItemsReducer'
 import CartSort from './component/CartSort'
 import { BsFillCartXFill } from 'react-icons/bs'
 import ModalDeleteItem from './component/ModalDeleteItem'
+import CheckoutCard from '../../components/checkout/checkoutCardList'
 
 function CartList() {
   const [totalPages, setTotalPages] = useState(0)
@@ -16,7 +17,7 @@ function CartList() {
   const [deleteProduct, setDeleteProduct] = useState({})
   const [subTotal, setSubTotal] = useState([])
   const dataTrigger = useSelector((state) => state.cartItems.triggerPrice)
-
+  const isCheckout = useSelector((state) => state.checkoutData.isCheckout)
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const dispatch = useDispatch()
   const items = useSelector((state) => state.cartItems.items)
@@ -81,14 +82,20 @@ function CartList() {
 
   return (
     <div>
-      <div className="h-full bg-gray-100 p-24 flex flex-col gap-5 mt-10 flex-grow">
+      <div className="h-full bg-gray-100 py-24 px-10 flex flex-col gap-5 mt-10 flex-grow">
         <h1 className=" text-left text-2xl font-bold max-[760px]:mt-16">
-          Cart Items
+          {isCheckout ? 'Checkout Items' : 'Cart Items'}
         </h1>
-        <CartSort onSortChange={handleSortChange} fetchData={fetchData} />
+        {!isCheckout ? (
+          <CartSort onSortChange={handleSortChange} fetchData={fetchData} />
+        ) : (
+          ''
+        )}
         <div className="mx-auto max-w-5xl justify-center gap-6  md:flex md:space-x-6 xl:px-0">
           <div className="rounded-lg md:w-2/3">
-            {items[0] ? (
+            {isCheckout ? (
+              <CheckoutCard />
+            ) : items[0] ? (
               items.map((item) => (
                 <CartCard
                   key={item.id}
@@ -108,7 +115,11 @@ function CartList() {
           </div>
           <CheckOutCart />
         </div>
-        <CartPagination fetchData={fetchData} totalPages={totalPages} />
+        {!isCheckout ? (
+          <CartPagination fetchData={fetchData} totalPages={totalPages} />
+        ) : (
+          ''
+        )}
         <ModalDeleteItem
           showModalDelete={showModalDelete}
           handleCloseShowModalDelete={handleCloseShowModalDelete}

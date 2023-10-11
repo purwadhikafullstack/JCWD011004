@@ -3,12 +3,14 @@ import getAllProduct from './reducer/productReducer'
 import getAllAddress from './reducer/addressReducer'
 import cartReducer from './reducer/cartReducer'
 import cartItemsReducer from './reducer/cartItemsReducer'
+import checkoutData from './reducer/checkoutReducer'
 
 export const store = configureStore({
   reducer: {
     dataProduct: getAllProduct,
     dataAddress: getAllAddress,
     cart: cartReducer,
-    cartItems: cartItemsReducer
+    cartItems: cartItemsReducer,
+    checkoutData: checkoutData
   }
 })
