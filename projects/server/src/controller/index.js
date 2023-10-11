@@ -34,6 +34,7 @@ const { getUsersSortPagination } = require('./admin/getUserData')
 const getWarehouse = require('./admin/getWarehouses')
 const { createWarehouseAdmin } = require('./admin/createAdmin')
 const { verifyAdminAccount } = require('./admin/verifyNewAdmin')
+const { productOngkir } = require('./ongkir/getOngkir')
 const updateWarehouseAdmin = require('./admin/updateAdmin')
 module.exports = {
   registerUser,
@@ -74,5 +75,6 @@ module.exports = {
   getWarehouses,
   createWarehouseAdmin,
   verifyAdminAccount,
+  productOngkir,
   updateWarehouseAdmin
 }
