@@ -4,21 +4,21 @@ import * as Yup from 'yup'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import SwitchUserStatus from '../switch/SwitchUserStatus'
 
 const token = localStorage.getItem('token')
 // eslint-disable-next-line no-undef
 const apiurl = process.env.REACT_APP_API_BASE_URL
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
-  username: Yup.string().required('Required'),
-  firstName: Yup.string().required('Required'),
-  lastName: Yup.string().required('Required'),
+  email: Yup.string().email('Invalid email'),
+  firstName: Yup.string(),
+  lastName: Yup.string(),
   phoneNumber: Yup.string()
-    .required('Required')
+    .nullable()
     .min(9, 'Phone number must be at least 9 digits long')
     .test('is-number', 'Invalid phone number', (value) => {
       if (!value) {
-        return false
+        return true
       }
 
       const regex = /^[0-9]*$/
@@ -27,7 +27,7 @@ const validationSchema = Yup.object().shape({
   warehouseId: Yup.string().required('Required')
 })
 
-function CreateAdminForm() {
+function UpdateUserForm({ data }) {
   const [warehouses, setWarehouses] = useState([])
 
   const getWarehouses = async () => {
@@ -45,21 +45,16 @@ function CreateAdminForm() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const res = await axios.post(
-        `${apiurl}/admin/create-warehouse-admin`,
-        { ...values },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
-      console.log(res)
-      toast.success('Admin created successfully!', {
-        position: toast.POSITION.BOTTOM_CENTER
+      console.log(values, 'ini push values')
+      const res = await axios.patch(`${apiurl}/admin/update`, {
+        userId: data?.id, // Add userId here
+        ...values
       })
+      res?.status === 200 &&
+        toast.success('Admin updated successfully!', {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
     } catch (error) {
-      console.log(error, 'ni errror')
       toast.error(error.response.data.message, {
         position: toast.POSITION.BOTTOM_CENTER
       })
@@ -74,12 +69,13 @@ function CreateAdminForm() {
 
   const formikProps = {
     initialValues: {
+      userId: data?.id,
       email: '',
-      username: '',
       firstName: '',
       lastName: '',
       phoneNumber: '',
-      warehouseId: 0
+      warehouseId: 0,
+      isActive: data?.isActive || false
     },
     validationSchema,
     onSubmit: handleSubmit
@@ -104,7 +100,7 @@ function CreateAdminForm() {
                     </td>
                     <td className="p-4">
                       <Field
-                        placeholder="Email"
+                        placeholder={data?.email}
                         type="email"
                         name="email"
                         className="form-input rounded-md shadow-sm mt-1 block w-full"
@@ -114,29 +110,6 @@ function CreateAdminForm() {
                       )}
                     </td>
                   </tr>
-
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="username"
-                        className="block font-medium text-gray-700"
-                      >
-                        Username
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <Field
-                        placeholder="Username"
-                        type="text"
-                        name="username"
-                        className="form-input rounded-md shadow-sm mt-1 block w-full"
-                      />
-                      {errors.username && touched.username && (
-                        <div className="text-red-500">{errors.username}</div>
-                      )}
-                    </td>
-                  </tr>
-
                   <tr>
                     <td className="p-4">
                       <label
@@ -148,7 +121,7 @@ function CreateAdminForm() {
                     </td>
                     <td className="p-4">
                       <Field
-                        placeholder="First Name"
+                        placeholder={data?.firstName}
                         type="text"
                         name="firstName"
                         className="form-input rounded-md shadow-sm mt-1 block w-full"
@@ -170,7 +143,7 @@ function CreateAdminForm() {
                     </td>
                     <td className="p-4">
                       <Field
-                        placeholder="Last Name"
+                        placeholder={data?.lastName}
                         type="text"
                         name="lastName"
                         className="form-input rounded-md shadow-sm mt-1 block w-full"
@@ -192,7 +165,7 @@ function CreateAdminForm() {
                     </td>
                     <td className="p-4">
                       <Field
-                        placeholder="Phone Number"
+                        placeholder={data?.phoneNumber}
                         type="tel"
                         name="phoneNumber"
                         className="form-input rounded-md shadow-sm mt-1 block w-full"
@@ -208,31 +181,58 @@ function CreateAdminForm() {
                     </td>
                   </tr>
 
+                  {data.roleId === 2 && (
+                    <tr>
+                      <td className="p-4">
+                        <label
+                          htmlFor="warehouse"
+                          className="block font-medium text-gray-700"
+                        >
+                          Warehouse
+                        </label>
+                      </td>
+                      <td className="p-4">
+                        <Field
+                          as="select"
+                          name="warehouseId"
+                          className="form-select rounded-md shadow-sm mt-1 block w-full"
+                        >
+                          <option
+                            value={data?.Warehouse_Admins[0]?.warehouseId}
+                          >
+                            {data?.Warehouse_Admins[0]?.Warehouse?.name}
+                          </option>
+                          {warehouses?.map((e, i) => {
+                            if (
+                              e?.id !== data?.Warehouse_Admins[0]?.warehouseId
+                            ) {
+                              return (
+                                <option key={i} value={e?.id}>
+                                  {e?.name}
+                                </option>
+                              )
+                            }
+                          })}
+                        </Field>
+                        {errors.warehouseId && touched.warehouseId && (
+                          <div className="text-red-500">
+                            {errors.warehouseId}
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  )}
                   <tr>
                     <td className="p-4">
                       <label
-                        htmlFor="warehouse"
+                        htmlFor="isActive"
                         className="block font-medium text-gray-700"
                       >
-                        Warehouse
+                        isActive
                       </label>
                     </td>
-                    <td className="p-4">
-                      <Field
-                        as="select"
-                        name="warehouseId"
-                        className="form-select rounded-md shadow-sm mt-1 block w-full"
-                      >
-                        <option value="">Select Warehouse</option>
-                        {warehouses?.map((e, i) => (
-                          <option key={i} value={e?.id}>
-                            {e?.name}
-                          </option>
-                        ))}
-                      </Field>
-                      {errors.warehouseId && touched.warehouseId && (
-                        <div className="text-red-500">{errors.warehouseId}</div>
-                      )}
+                    <td className="p-4  flex justify-center">
+                      <SwitchUserStatus name="isActive" />
                     </td>
                   </tr>
                 </tbody>
@@ -253,4 +253,4 @@ function CreateAdminForm() {
   )
 }
 
-export default CreateAdminForm
+export default UpdateUserForm

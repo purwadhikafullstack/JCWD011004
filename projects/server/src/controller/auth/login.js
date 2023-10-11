@@ -16,6 +16,11 @@ async function login(req, res) {
       return res.status(404).json({ message: 'Email tidak ditemukan' })
     }
 
+    // Check if user is active
+    if (!user.isActive) {
+      return res.status(403).json({ message: 'User is not active' })
+    }
+
     const isPassword = await bcrypt.compare(password, user.password)
 
     if (!isPassword) {
