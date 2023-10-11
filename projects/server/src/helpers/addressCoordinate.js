@@ -13,7 +13,7 @@ async function getLatLongFromAddress(province, city_name) {
     }
   } catch (error) {
     console.error('Error while fetching coordinates:', error);
-    throw error; // Re-throw the error to be handled by the caller
+    throw error;
   }
 }
 

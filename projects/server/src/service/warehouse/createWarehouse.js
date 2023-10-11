@@ -18,6 +18,8 @@ const createWarehouse = async (body) => {
           address: body.address,
           province: body.province,
           cityRegency: body.cityRegency,
+          subdistrict: body.subdistrict,
+          cityId: body.cityId,
           postalcode: body.postalcode,
           latitude,
           longitude

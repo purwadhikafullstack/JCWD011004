@@ -36,7 +36,6 @@ function CreateWarehousePage() {
           `http://localhost:8000/api/external/city?province=${selectedProvince}`
         )
         const cities = response.data.rajaongkir.results
-        console.log(response.data.rajaongkir.results)
         setCities(cities)
       } else {
         setCities([])
@@ -69,20 +68,27 @@ function CreateWarehousePage() {
       })
       return
     }
+
+    const [cityId, cityRegency] = selectedCity.split('-')
+
     setIsCreating(true)
+
     const warehouseData = {
       name: warehouseName,
       address: streetAddress,
       province: provinceName.province,
-      cityRegency: selectedCity,
+      subdistrict: subdistrict,
+      cityId: cityId,
+      cityRegency: cityRegency,
       postalcode: postalCode
     }
+
     try {
       const response = await axios.post(
         'http://localhost:8000/api/warehouse/create',
         warehouseData
       )
-      console.log('Response from API:', response.data)
+      console.log(response)
       setIsLoading(false)
       setIsCreating(false)
       setSelectedProvince('')
@@ -92,13 +98,14 @@ function CreateWarehousePage() {
       setStreetAddress('')
       setPostalCode('')
       closeModal()
+
       toast.success('Gudang berhasil dibuat!', {
         position: toast.POSITION.TOP_CENTER
       })
 
       setTimeout(() => {
         window.location.href = '/admin/warehouse'
-      }, 2000)
+      }, 1000)
     } catch (error) {
       console.error('Error creating warehouse:', error)
     }
@@ -144,7 +151,13 @@ function CreateWarehousePage() {
             id="postalCode"
             className="border rounded-md p-2 w-full mt-1"
             value={postalCode}
-            onChange={(e) => setPostalCode(e.target.value)}
+            onChange={(e) => {
+              // Hanya menerima input angka
+              const re = /^[0-9\b]+$/
+              if (e.target.value === '' || re.test(e.target.value)) {
+                setPostalCode(e.target.value)
+              }
+            }}
           />
         </label>
       </div>
@@ -177,11 +190,23 @@ function CreateWarehousePage() {
           >
             <option value="">Pilih Kabupaten</option>
             {cities.map((city, index) => (
-              <option key={index} value={city?.city_name}>
+              <option key={index} value={`${city.city_id}-${city.city_name}`}>
                 {city.city_name}
               </option>
             ))}
           </select>
+        </label>
+      </div>
+      <div className="mb-4 text-left">
+        <label htmlFor="subdistrict" className="block text-gray-600">
+          IdKota:
+          <input
+            type="text"
+            id="subdistrict"
+            className="border rounded-md p-2 w-full mt-1"
+            value={selectedCity} // Menggunakan nilai selectedCity yang merupakan ID Kota
+            onChange={(e) => setSubdistrict(e.target.value)} // Mengatur subdistrict dengan nilai ID Kota
+          />
         </label>
       </div>
       <div className="mb-4 text-left">

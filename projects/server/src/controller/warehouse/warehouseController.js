@@ -7,8 +7,8 @@ const messages = require('../../helpers/message')
 
 const createWarehouses = async (req, res) => {
   try {
-    const { name, address, province, cityRegency, postalcode } = req.body
-    const body = { name, address, province, cityRegency, postalcode }
+    const { name, address, province, cityRegency, cityId, subdistrict, postalcode } = req.body
+    const body = { name, address, province, cityRegency, cityId, subdistrict, postalcode }
     const result = await createWarehouse(body)
     res.status(result.status).json(messages.success(result))
   } catch (error) {
