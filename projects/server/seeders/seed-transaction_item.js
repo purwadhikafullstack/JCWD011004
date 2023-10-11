@@ -7,7 +7,7 @@ module.exports = {
     // Data transaksi item yang akan diisi ke dalam tabel 'Transaction_Items'
     const transactionItemsData = [
       {
-        productId: 16, // Ganti dengan productId yang sesuai
+        productId: 1, // Ganti dengan productId yang sesuai
         transactionId: 1, // Ganti dengan transactionId yang sesuai
         productPrice: 100,
         quantity: 2,
@@ -16,7 +16,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        productId: 17, // Ganti dengan productId yang sesuai
+        productId: 2, // Ganti dengan productId yang sesuai
         transactionId: 2, // Ganti dengan transactionId yang sesuai
         productPrice: 200,
         quantity: 3,
@@ -34,7 +34,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        productId: 1, // Ganti dengan productId yang sesuai
+        productId: 7, // Ganti dengan productId yang sesuai
         transactionId: 3, // Ganti dengan transactionId yang sesuai
         productPrice: 400,
         quantity: 4,
