@@ -1,7 +1,7 @@
 const db = require('../../../models')
 const Warehouse = db.Warehouse
 
-const getWarehouses = async (req, res) => {
+const getUserWarehouses = async (req, res) => {
   try {
     const warehouses = await Warehouse.findAll()
     return res.status(200).json({ warehouses })
@@ -11,4 +11,4 @@ const getWarehouses = async (req, res) => {
   }
 }
 
-module.exports = getWarehouses
+module.exports = getUserWarehouses
