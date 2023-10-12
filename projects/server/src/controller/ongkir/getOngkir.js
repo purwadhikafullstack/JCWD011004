@@ -5,7 +5,8 @@ const Warehouse = db.Warehouse
 const userOngkir = {
   courierOngkir: async (req, res) => {
     try {
-      const { userCityId, userLatitude, userLongitude, weight } = req.body
+      const { userCityId, userLatitude, userLongitude, courier, weight } =
+        req.body
 
       function haversineDistance(lat1, lon1, lat2, lon2) {
         const R = 6371
@@ -57,7 +58,7 @@ const userOngkir = {
           origin: nearestWarehouse.cityId,
           destination: userCityId,
           weight: weight,
-          courier: 'jne'
+          courier: courier
         },
         {
           headers: {
