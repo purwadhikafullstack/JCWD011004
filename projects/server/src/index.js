@@ -6,6 +6,7 @@ const { paymentRouter, adminRouter } = require('./routes')
 const { transactionRouter } = require('./routes')
 const { cardRouter } = require('./routes')
 const { externalRouter } = require('./routes')
+const { warehouseRoute } = require('./routes')
 const {
   authRouter,
   userUpdate,
@@ -46,6 +47,7 @@ app.use('/api/transaction', transactionRouter)
 app.use('/api/card', cardRouter)
 app.use('/api/external', externalRouter)
 app.use('/api/cart', cart)
+app.use('/api/warehouse', warehouseRoute)
 app.use('/api/admin', adminRouter)
 app.use('/api/ongkir', ongkirRouter)
 

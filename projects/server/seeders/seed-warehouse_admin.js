@@ -6,73 +6,73 @@ module.exports = {
       'warehouse_Admins',
       [
         {
-          adminId: 3,
+          adminId: 1,
           warehouseId: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          adminId: 9,
+          adminId: 2,
           warehouseId: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          adminId: 10,
+          adminId: 1,
           warehouseId: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          adminId: 13,
+          adminId: 2,
           warehouseId: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          adminId: 14,
+          adminId: 1,
           warehouseId: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          adminId: 16,
+          adminId: 2,
           warehouseId: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          adminId: 17,
+          adminId: 1,
           warehouseId: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          adminId: 19,
+          adminId: 1,
           warehouseId: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          adminId: 20,
+          adminId: 2,
           warehouseId: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          adminId: 21,
+          adminId: 2,
           warehouseId: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          adminId: 22,
+          adminId: 2,
           warehouseId: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          adminId: 23,
+          adminId: 1,
           warehouseId: 1,
           createdAt: new Date(),
           updatedAt: new Date()
