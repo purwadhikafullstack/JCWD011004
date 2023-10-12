@@ -22,7 +22,6 @@ const validationSchema = Yup.object().shape({
 
 // eslint-disable-next-line no-undef
 const apiUrl = process.env.REACT_APP_API_BASE_URL
-console.log(apiUrl)
 function VerifyAdminChangePassword() {
   const { token } = useParams()
   const [showPassword, setShowPassword] = useState(false)

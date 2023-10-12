@@ -5,6 +5,7 @@ import axios from 'axios'
 import { getCategoryIdx } from '../../services/reducer/productReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
+// eslint-disable-next-line
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 export default function Dropdown() {

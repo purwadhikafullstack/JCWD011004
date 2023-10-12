@@ -8,7 +8,8 @@ import { FiEye, FiEyeOff } from 'react-icons/fi'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const phoneRegExp = /^(\+62|62|0)8[1-9][0-9]/
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 const RegisterModal = () => {
   const { token } = useParams()
   const navigate = useNavigate()
@@ -53,15 +54,11 @@ const RegisterModal = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await axios.post(
-          'http://localhost:8000/api/auth/verify ',
-          values,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+        const response = await axios.post(`${apiUrl}/auth/verify`, values, {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-        )
+        })
         if (response.status === 200) {
           toast.success('Verification Berhasil', {
             position: toast.POSITION.TOP_CENTER

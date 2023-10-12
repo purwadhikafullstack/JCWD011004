@@ -1,21 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { signInWithPopup } from 'firebase/auth'
 import { auth, provider } from '../../config/firebase'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { FcGoogle } from 'react-icons/fc'
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 function UpdateButton() {
+  const [currentEmail, SetCurrentEmail] = useState('')
   const updateUser = async (idToken, email) => {
     try {
-      const response = await axios.patch(
-        'http://localhost:8000/api/update/user-google-auth',
-        {
-          idToken,
-          email
-        }
-      )
+      const response = await axios.patch(`${apiUrl}/update/user-google-auth`, {
+        idToken,
+        email
+      })
       if (response.status === 200) {
         toast.success('Sync Google Auth berhasil', {
           position: toast.POSITION.TOP_CENTER
@@ -28,18 +27,41 @@ function UpdateButton() {
       })
     }
   }
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await axios.get(`${apiUrl}/auth/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      SetCurrentEmail(response?.data?.userInfo?.email)
+    } catch (error) {
+      console.error('Error fetching data', error)
+    }
+  }
 
   const handleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider)
       const idToken = await result.user.getIdToken()
       const email = result.user.email
+      console.log(email, currentEmail)
+      if (email !== currentEmail) {
+        toast.error('Email harus sama', {
+          position: toast.POSITION.TOP_CENTER
+        })
+        return
+      }
       updateUser(idToken, email)
     } catch (error) {
       console.error(error)
     }
   }
 
+  useEffect(() => {
+    fetchData()
+  }, [])
   return (
     <div
       onClick={handleSignIn}

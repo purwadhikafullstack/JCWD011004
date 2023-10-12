@@ -36,7 +36,7 @@ function UserTable() {
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false)
   const [updateData, setUpdateData] = useState({})
   const itemsPerPage = 10
-
+  console.log(data)
   const handleActiveSortChange = (newSort) => {
     setSortActiveUser(newSort)
   }
@@ -146,15 +146,19 @@ function UserTable() {
                               ? e?.Warehouse_Admins[0]?.Warehouse?.name
                               : 'Null'}
                           </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-5 justify-center">
-                            <button
-                              onClick={() => {
-                                handleOpenUpdateModal(e)
-                              }}
-                            >
-                              <BsFillPencilFill />
-                            </button>
-                          </td>
+                          {e?.roleId === 1 ? (
+                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-5 justify-center"></td>
+                          ) : (
+                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-5 justify-center">
+                              <button
+                                onClick={() => {
+                                  handleOpenUpdateModal(e)
+                                }}
+                              >
+                                <BsFillPencilFill />
+                              </button>
+                            </td>
+                          )}
                         </tr>
                       )
                     })}

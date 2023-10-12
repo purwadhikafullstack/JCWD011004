@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import BeatLoader from 'react-spinners/BeatLoader'
 import { useParams, useNavigate } from 'react-router-dom'
+
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 function VerifyUpdatePassword() {
   const [loading, setLoading] = useState(false)
   const { token } = useParams()
@@ -11,7 +14,7 @@ function VerifyUpdatePassword() {
     try {
       setLoading(true)
       const res = await axios.patch(
-        `http://localhost:8000/api/update/verify-password?token=${token}`
+        `${apiUrl}/update/verify-password?token=${token}`
       )
       if (res.status === 200) {
         setLoading(false)

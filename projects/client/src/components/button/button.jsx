@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 export function UploadButton({ transactionId, userId, onCancel, loading }) {
   const [isLoading, setIsLoading] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
@@ -25,7 +26,7 @@ export function UploadButton({ transactionId, userId, onCancel, loading }) {
       formData.append('receipt', selectedFile)
 
       const response = await axios.post(
-        `http://localhost:8000/api/payment/proof/${transactionId}?userId=${userId}`,
+        `${apiUrl}/payment/proof/${transactionId}?userId=${userId}`,
         formData
       )
       console.log('API Response:', response.data)

@@ -23,18 +23,7 @@ import ResidentTable from './views/adminDashboard/component/components/ResidentT
 import VerifyAdminChangePassword from './pages/VerifyAdminChangePassword'
 import PagesNotFound from './pages/PagesNotFound'
 
-// import jwt_decode from 'jwt-decode'
-// import { useEffect } from 'react'
-// const authCheck = () => {
-//   const token = localStorage.getItem('token')
-//   console.log(token)
-//   const verifyLogin = token ? jwt_decode(token) : null
-//   console.log(verifyLogin)
-// }
 function App() {
-  // useEffect(() => {
-  //   authCheck()
-  // }, [])
   return (
     <div className="App">
       <Routes>
