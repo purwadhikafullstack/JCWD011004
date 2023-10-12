@@ -16,6 +16,10 @@ import SidebarPemesananDelivery from './components/transactionPage/tableTransact
 import SidebarPemesananDiterima from './components/transactionPage/tableTransactionStatus/4.transactionAccepting/SidebarDiterima'
 import SidebarPemesananCancel from './components/transactionPage/tableTransactionStatus/5.transactionCancel/SidebarCancel'
 import CartItemPages from './pages/CartItemPages'
+import Warehouse from './components/warehouse/Warehouse'
+import CreateWarehousePage from './components/warehouse/component/CreateWarehouse'
+import EditWarehousePage from './components/warehouse/component/EditWarehouse'
+import ModalDelete from './components/warehouse/component/ModalDelete'
 import AdminDashboard from './views/adminDashboard/AdminDashboard'
 import DashboardReport from './views/adminDashboard/component/DashboardReport'
 import UserTable from './views/adminDashboard/component/components/UserTable'
@@ -76,11 +80,22 @@ function App() {
           element={<VerifyAdminChangePassword />}
         ></Route>
         <Route path="/cart" element={<CartItemPages />}></Route>
+        <Route path="/warehouse" element={<Warehouse />}></Route>
+        <Route
+          path="/create-warehouse"
+          element={<CreateWarehousePage />}
+        ></Route>
+        <Route
+          path="/edit-warehouse/:id"
+          element={<EditWarehousePage />}
+        ></Route>
+        <Route path="/delete-modal" element={<ModalDelete />}></Route>
         <Route path="/admin/*" element={<AdminDashboard />}>
           <Route index element={<DashboardReport />} />
           <Route path="dashboard-report" element={<DashboardReport />} />
           <Route path="user" element={<UserTable />} />
           <Route path="resident" element={<ResidentTable />} />
+          <Route path="warehouse" element={<Warehouse />} />
         </Route>
         <Route path="*" element={<PagesNotFound />}></Route>
       </Routes>

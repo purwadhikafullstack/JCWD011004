@@ -7,6 +7,7 @@ const transactionRouter = require('./transactionRouter')
 const cardRouter = require('./cardRouter')
 const externalRouter = require('./externalRouter')
 const cart = require('./cart')
+const warehouseRoute = require('./warehouseRoute')
 const adminRouter = require('./adminRouter')
 const ongkirRouter = require('./ongkirRouter')
 
@@ -20,6 +21,7 @@ module.exports = {
   transactionRouter,
   cardRouter,
   cart,
+  warehouseRoute,
   adminRouter,
   ongkirRouter
 }
