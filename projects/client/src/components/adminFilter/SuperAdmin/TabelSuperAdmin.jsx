@@ -14,14 +14,14 @@ const TabelSuperAdmin = () => {
   ]
 
   const [data, setData] = useState([])
-  console.log(data)
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
         'http://localhost:8000/api/admin/all-transaction'
       )
-      console.log(response.data)
-      setData(response?.data)
+      console.log(response.data.allTransaction)
+      setData(response?.data?.allTransaction)
     } catch (error) {
       console.error(error)
     }
@@ -29,7 +29,7 @@ const TabelSuperAdmin = () => {
 
   useEffect(() => {
     fetchData()
-  }, []) // Pass an empty dependency array to run the effect only once
+  }, [])
 
   return (
     <div className="overflow-x-auto">
@@ -50,18 +50,26 @@ const TabelSuperAdmin = () => {
           {data?.map((item) => (
             <tr key={item.id}>
               <td className="px-5 py-2 sm:py-5 border-b border-gray-200 bg-white text-sm">
-                {/* {item.id} */}
+                {item.id}
               </td>
               <td className="px-5 py-2 sm:py-5 border-b border-gray-200 bg-white text-sm">
-                {/* {item.warehouse} */}
+                {item?.Warehouse?.name}{' '}
               </td>
               <td className="px-5 py-2 sm:py-5 border-b border-gray-200 bg-white text-sm">
-                {/* {item.product} */}
+                {item?.Product?.name}{' '}
               </td>
               <td className="px-5 py-2 sm:py-5 border-b border-gray-200 bg-white text-sm">
-                {/* {item.buyer} */}
+                {item.quantity}{' '}
               </td>
-              Add more columns for other data
+              <td className="px-5 py-2 sm:py-5 border-b border-gray-200 bg-white text-sm">
+                {item.status}{' '}
+              </td>
+              <td className="px-5 py-2 sm:py-5 border-b border-gray-200 bg-white text-sm">
+                {item.totalPrice}{' '}
+              </td>
+              <td className="px-5 py-2 sm:py-5 border-b border-gray-200 bg-white text-sm">
+                {item.createdAt}
+              </td>
             </tr>
           ))}
         </tbody>
