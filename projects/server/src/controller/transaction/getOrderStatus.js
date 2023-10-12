@@ -1,5 +1,6 @@
 const db = require("../../../models");
 const Transaction = db.Transaction;
+const Transaction_Item = db.Transaction_Item;
 const { Op } = require("sequelize");
 
 const getAllOrderStatus = async (req, res) => {
@@ -21,7 +22,9 @@ const getAllOrderStatus = async (req, res) => {
 
     const allOrderStatus = await Transaction.findAll({
       where: whereClause,
-      include: [{ model: db.Product }],
+      include: [{ model: db.Product },
+      { model: Transaction_Item }],
+
     });
 
     if (!allOrderStatus || allOrderStatus.length === 0) {
