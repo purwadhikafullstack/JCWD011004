@@ -7,6 +7,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 const ChangePasswordSchema = Yup.object().shape({
   oldPassword: Yup.string().required('Required'),
   newPassword: Yup.string()
@@ -38,7 +40,7 @@ function ChangePasswordForm({ handleShowEditPassword }) {
       try {
         const token = localStorage.getItem('token')
         const response = await axios.post(
-          'http://localhost:8000/api/update/user/password',
+          `${apiUrl}/update/user/password`,
           values,
           {
             headers: { Authorization: `Bearer ${token}` }

@@ -4,6 +4,8 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 const ImageUpload = () => {
   const [photoPreview, setPhotoPreview] = useState(null)
   const [avatar, setAvatar] = useState(null)
@@ -42,14 +44,11 @@ const ImageUpload = () => {
   const fetchImage = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get(
-        'http://localhost:8000/api/update/avatars',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.get(`${apiUrl}/update/avatars`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       setAvatar(response.data)
     } catch (error) {
       setAvatar(null)
@@ -61,16 +60,12 @@ const ImageUpload = () => {
     formData.append('myImage', photoRef.current.files[0])
 
     try {
-      const response = await axios.patch(
-        'http://localhost:8000/api/update/avatars',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
+      const response = await axios.patch(`${apiUrl}/update/avatars`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         }
-      )
+      })
 
       if (response?.status === 200) {
         fetchImage()

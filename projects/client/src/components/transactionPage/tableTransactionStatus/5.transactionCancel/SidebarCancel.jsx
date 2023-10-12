@@ -11,7 +11,7 @@ export default function SidebarPemesananCancel() {
       <div className="h-screen flex flex-col container mx-auto max-w-screen-lg mt-20">
         <div
           id="view"
-          className="h-full w-full flex flex-col md:flex-row shadow-lg bg-white border border-neutral-200"
+          className="h-full w-full flex flex-col md:flex-row shadow-lg bg-white border border-neutral-200 max-md:mt-20"
         >
           <div
             id="sidebar"
@@ -119,7 +119,7 @@ export default function SidebarPemesananCancel() {
               </div>
             </div>
           </div>
-          <div>
+          <div className="flex-grow">
             <TableDashboardPemesananCancel />
           </div>
         </div>
