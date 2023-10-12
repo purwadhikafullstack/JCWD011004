@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
-export function UploadButton({ transactionId, userId, onCancel }) {
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
+export function UploadButton({ transactionId, userId, onCancel, loading }) {
   const [isLoading, setIsLoading] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
 
@@ -25,7 +26,7 @@ export function UploadButton({ transactionId, userId, onCancel }) {
       formData.append('receipt', selectedFile)
 
       const response = await axios.post(
-        `http://localhost:8000/api/payment/proof/${transactionId}?userId=${userId}`,
+        `${apiUrl}/payment/proof/${transactionId}?userId=${userId}`,
         formData
       )
       console.log('API Response:', response.data)
@@ -49,6 +50,7 @@ export function UploadButton({ transactionId, userId, onCancel }) {
       })
     } finally {
       setIsLoading(false)
+      loading
     }
   }
 
@@ -59,7 +61,7 @@ export function UploadButton({ transactionId, userId, onCancel }) {
   }
 
   return (
-    <div>
+    <div className="flex-grow ">
       <input
         type="file"
         id="file-input"
@@ -69,7 +71,7 @@ export function UploadButton({ transactionId, userId, onCancel }) {
         accept=".jpg, .jpeg, .png"
         disabled={isLoading}
       />
-      <div className="grid grid-cols-3 gap-4">
+      <div className="flex justify-center gap-4">
         <button
           onClick={() => document.getElementById('file-input').click()}
           className={`flex items-center justify-center px-2 py-1 rounded bg-neutral-500 text-white hover:bg-neutral-800 focus:outline-none focus:ring focus:ring-blue-300`}

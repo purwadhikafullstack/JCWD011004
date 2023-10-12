@@ -26,6 +26,7 @@ import UserTable from './views/adminDashboard/component/components/UserTable'
 import ResidentTable from './views/adminDashboard/component/components/ResidentTable'
 import VerifyAdminChangePassword from './pages/VerifyAdminChangePassword'
 import PagesNotFound from './pages/PagesNotFound'
+
 function App() {
   return (
     <div className="App">

@@ -16,8 +16,8 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   const nav = useNavigate()
+  // eslint-disable-next-line
   const apiUrl = process.env.REACT_APP_API_BASE_URL
-
   const handleLogin = async () => {
     try {
       if (!email || !password) {

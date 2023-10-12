@@ -9,6 +9,7 @@ const ModalDeleteItem = ({
   deleteProduct,
   fetchData
 }) => {
+  // eslint-disable-next-line
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const handleDelete = async () => {
     try {

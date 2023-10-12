@@ -6,7 +6,8 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './Styles.css'
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 function EditUserData({ handleShowEdit, userData }) {
   const [isDisabled, setIsDisabled] = useState(false)
   const editInformation = useFormik({
@@ -33,7 +34,7 @@ function EditUserData({ handleShowEdit, userData }) {
       }
       const token = localStorage.getItem('token')
       axios
-        .post('http://localhost:8000/api/update/user', payload, {
+        .post(`${apiUrl}/update/user`, payload, {
           headers: { Authorization: `Bearer ${token}` }
         })
         .then(() => {

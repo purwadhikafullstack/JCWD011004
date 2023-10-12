@@ -14,7 +14,8 @@ import axios from 'axios'
 
 const phoneRegExp = /^(\+62|62|0)8[1-9][0-9]/
 const numberRegex = /^([0-9])/
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 export const UpdateAddress = () => {
   const dispatch = useDispatch()
   const { userData } = useSelector((state) => state.dataAddress.allAddress)
@@ -26,15 +27,11 @@ export const UpdateAddress = () => {
   const updateAddress = async (values) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.patch(
-        `http://localhost:8000/api/update/address`,
-        values,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.patch(`${apiUrl}/update/address`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       if (response.status === 200) {
         toast.success('Update address succeed', {
           position: toast.POSITION.TOP_CENTER
