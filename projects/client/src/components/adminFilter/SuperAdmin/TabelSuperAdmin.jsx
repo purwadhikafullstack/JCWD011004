@@ -9,6 +9,7 @@ const statusTransaction = [
   'Diterima',
   'Cancel'
 ]
+//eslint-disable-next-line
 const apiUrl = process.env.REACT_APP_API_BASE_URL
 const TabelSuperAdmin = () => {
   const headTable = [
@@ -27,15 +28,11 @@ const TabelSuperAdmin = () => {
   const [transactionStatusFilter, setTransactionStatusFilter] = useState(0)
   const [admin, setAdmin] = useState()
   console.log(admin)
-  const [warehouseFilter, setWarehouseFilter] = useState(
-    admin?.warehouseAdmin?.warehouseId
-  )
+  const [warehouseFilter, setWarehouseFilter] = useState('all')
 
   const fetchWarehouses = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:8000/api/warehouse/get-all'
-      )
+      const response = await axios.get(`${apiUrl}/warehouse/get-all`)
       setWarehouses(response?.data?.data?.data)
     } catch (error) {
       console.error(error)
@@ -50,6 +47,7 @@ const TabelSuperAdmin = () => {
         }
       })
       setAdmin(data)
+      setWarehouseFilter(data?.warehouseAdmin?.id)
     } catch (error) {
       console.log(error)
     }
@@ -57,22 +55,17 @@ const TabelSuperAdmin = () => {
 
   const fetchData = async () => {
     try {
-      let url = 'http://localhost:8000/api/admin/all-transaction'
-
+      let url = `${apiUrl}/admin/all-transaction`
       const queryParameters = []
-
       if (warehouseFilter !== 'all') {
         queryParameters.push(`warehouseId=${warehouseFilter}`)
       }
-
       if (transactionStatusFilter !== 0) {
         queryParameters.push(`transactionStatusId=${transactionStatusFilter}`)
       }
-
       if (queryParameters.length > 0) {
         url += `?${queryParameters.join('&')}`
       }
-
       const response = await axios.get(url)
       setData(response?.data?.allTransaction)
     } catch (error) {
@@ -81,13 +74,13 @@ const TabelSuperAdmin = () => {
   }
 
   useEffect(() => {
-    fetchAdmin()
-  }, [])
+    fetchData()
+  }, [warehouseFilter, transactionStatusFilter])
 
   useEffect(() => {
     fetchWarehouses()
-    fetchData()
-  }, [warehouseFilter, transactionStatusFilter])
+    fetchAdmin()
+  }, [])
 
   const renderWarehouseOptions = () => {
     return (
@@ -125,10 +118,14 @@ const TabelSuperAdmin = () => {
   return (
     <div className="overflow-x-auto">
       <div className="mb-4 flex flex-col md:flex-row justify-between">
-        <div className="w-full md:w-1/3 mb-4 md:mb-0">
-          <label className="text-lg font-semibold">Filter by Warehouse:</label>
-          {renderWarehouseOptions()}
-        </div>
+        {admin?.userInfo?.roleId == 1 && (
+          <div className="w-full md:w-1/3 mb-4 md:mb-0">
+            <label className="text-lg font-semibold">
+              Filter by Warehouse:
+            </label>
+            {renderWarehouseOptions()}
+          </div>
+        )}
         <div className="w-full md:w-1/3">
           <label className="text-lg font-semibold">Filter by Status:</label>
           {renderStatusOptions()}
