@@ -7,6 +7,7 @@ import {
   openAddAddress
 } from '../../services/reducer/addressReducer'
 import { ToastContainer } from 'react-toastify'
+import { getCourier } from '../../services/reducer/courierReducer'
 
 export const DropdownAddress = () => {
   const { userData } = useSelector((state) => state.dataAddress.allAddress)
@@ -14,6 +15,8 @@ export const DropdownAddress = () => {
   const add = useSelector((state) => state.dataAddress.addAddress)
   const dispatch = useDispatch()
   const [selectedAddress, setSelectedAddress] = useState('')
+  console.log(addressData)
+  console.log(selectedAddress)
 
   useEffect(() => {
     dispatch(getAllAddress())
@@ -28,13 +31,28 @@ export const DropdownAddress = () => {
     setSelectedAddress(event.target.value)
   }
 
+  if (selectedAddress > 0) {
+    let userAddress = addressData?.filter((item) => item.id == selectedAddress)
+
+    console.log(userAddress)
+    dispatch(
+      getCourier(
+        userAddress[0].cityId,
+        userAddress[0].latitude,
+        userAddress[0].longitude,
+        3454,
+        'jne'
+      )
+    )
+  }
+
   return (
     <div>
       <div>
         <select
           value={selectedAddress}
           onChange={handleAddressChange}
-          className="bg-white rounded-lg my-2 p-2 text-sm text-left"
+          className="flex bg-white rounded-lg my-2 p-2 text-sm text-left"
         >
           <option value="">Select an address</option>
           {addressData?.map((address, index) => (

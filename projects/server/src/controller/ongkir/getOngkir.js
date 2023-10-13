@@ -51,7 +51,6 @@ const userOngkir = {
         userLatitude,
         userLongitude
       )
-
       const { data } = await axios.post(
         'https://api.rajaongkir.com/starter/cost',
         {
@@ -72,7 +71,7 @@ const userOngkir = {
       })
     } catch (err) {
       return res.status(500).json({
-        error: 'Add address failed',
+        error: 'Get courier failed',
         message: err.message
       })
     }
