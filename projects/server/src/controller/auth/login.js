@@ -28,7 +28,7 @@ async function login(req, res) {
     }
 
     const payload = { id: user.id, role: user.roleId, email: user.email }
-    const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '1h' })
+    const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '3h' })
     return res
       .status(200)
       .json({ message: 'Login Berhasil', token, role: user.roleId })

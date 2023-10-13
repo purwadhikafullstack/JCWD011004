@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCount } from '../../services/reducer/cartReducer'
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 function CartIcons() {
   const dispatch = useDispatch()
   const count = useSelector((state) => state.cart.count) // access count from Redux store
@@ -10,14 +11,11 @@ function CartIcons() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:8000/api/cart/items',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+        const response = await axios.get(`${apiUrl}/cart/items`, {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-        )
+        })
         dispatch(setCount(response.data.length)) // set the count in the Redux store
       } catch (error) {
         console.error('Error fetching data', error)

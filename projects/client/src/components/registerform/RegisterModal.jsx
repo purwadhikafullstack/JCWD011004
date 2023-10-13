@@ -12,7 +12,8 @@ const validationSchema = Yup.object().shape({
     .email('Invalid email address')
     .required('Email is required')
 })
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
   const [isDisabled, setIsDisabled] = useState(false)
 
@@ -24,14 +25,14 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
     onSubmit: async (values) => {
       try {
         setIsDisabled(true)
-        const response = await axios.post(
-          'http://localhost:8000/api/auth/register',
-          values
-        )
+        const response = await axios.post(`${apiUrl}/auth/register`, values)
         if (response.status === 200) {
-          toast.success('Register Berhasil', {
-            position: toast.POSITION.TOP_CENTER
-          })
+          toast.success(
+            'Register berhasil silahkan check email untuk verifikasi',
+            {
+              position: toast.POSITION.TOP_CENTER
+            }
+          )
           setIsDisabled(false)
           setTimeout(() => {
             onClose()

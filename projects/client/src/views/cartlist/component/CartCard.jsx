@@ -14,6 +14,7 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
   const [isDisabled, setIsDisabled] = useState(false)
   const [productImage, setProductImage] = useState(null)
   const [isChecked, setChecked] = useState(false)
+  // eslint-disable-next-line
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const handleIncrease = async () => {
     setIsDisabled(true)
@@ -92,7 +93,9 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
     const checkListItem = {
       productId: item?.productId,
       quantity: item?.quantity,
-      totalPrice: item?.totalPrice
+      totalPrice: item?.totalPrice,
+      productImage,
+      productName: item?.Product?.name
     }
     setChecked(event.target.checked)
     handleSubTotal(checkListItem, event.target.checked)
@@ -116,12 +119,33 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
     setFormattedPrice(formatRupiah(item?.totalPrice))
   }, [])
   return (
-    <div className="justify-between  mb-6 max-[640px]:flex-col max-[640px]:gap-4 rounded-lg bg-white p-10 shadow-md sm:flex sm:justify-start overflow-x-scroll relative">
-      <img
-        src={productImage}
-        alt="product-image"
-        className="w-40 h-40 rounded-lg max-[640px]:content-center inline-block "
-      />
+    <div className="justify-between mb-6 max-[640px]:flex-col max-[640px]:gap-4 rounded-lg bg-white p-8 shadow-md sm:flex sm:justify-start overflow-x-scroll relative">
+      <button
+        onClick={() => handleOpenShowModalDelete(item?.Product)}
+        className="absolute top-2 right-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <div className="flex justify-center items-center w-full">
+        <img
+          src={productImage}
+          alt="product-image"
+          className="h-28 rounded-lg max-[640px]:content-center inline-block "
+        />
+      </div>
       <div className="gap-10 sm:ml-4 sm:flex sm:w-full sm:justify-between">
         <div className="mt-5 sm:mt-0">
           <h2 className="text-lg font-bold text-gray-900">
@@ -154,23 +178,7 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
             </button>
           </div>
           <div className="flex items-center w-auto space-x-4">
-            <p className="text-sm">Rp&nbsp;{formattedPrice}</p>
-            <button onClick={() => handleOpenShowModalDelete(item?.Product)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+            <p className="text-sm">{formattedPrice}</p>
           </div>
         </div>
         <label>

@@ -22,16 +22,20 @@ function Navbar() {
                 className="bg-gray-700 text-white px-3 py-1 rounded-lg focus:outline-none hover:border border-gray-500"
               />
               <ul className="flex space-x-6">
-                <li className="flex flex-col md:flex-row justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
-                  <AiOutlineHeart className="md:mr-2" />
-                  Wishlist
-                </li>
-                <a href="/cart">
-                  <li className="flex flex-col md:flex-row justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
-                    <CartIcons />
-                    Cart
-                  </li>
-                </a>
+                {stateToken && (
+                  <>
+                    <li className="flex flex-col md:flex-row justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
+                      <AiOutlineHeart className="md:mr-2" />
+                      Wishlist
+                    </li>
+                    <a href="/cart">
+                      <li className="flex flex-col md:flex-row justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
+                        <CartIcons />
+                        Cart
+                      </li>
+                    </a>
+                  </>
+                )}
                 <li className="flex flex-col md:flex-row justify-between items-center hover:text-gray-400 transition duration-300 ease-in-out">
                   {stateToken ? (
                     <>

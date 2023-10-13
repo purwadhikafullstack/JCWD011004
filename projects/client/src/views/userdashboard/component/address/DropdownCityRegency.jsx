@@ -4,7 +4,8 @@ import { FaChevronDown } from 'react-icons/fa'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { cityRegencyData } from '../../../../services/reducer/addressReducer'
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 export default function DropdownProvince() {
   const [sortData, setSortData] = useState([])
   const [selected, setSelected] = useState('City/Regency')
@@ -18,7 +19,7 @@ export default function DropdownProvince() {
   const cityRegency = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8000/api/external/city?province=${provinceId}`
+        `${apiUrl}/external/city?province=${provinceId}`
       )
       const city = data.rajaongkir.results
       if (city.length > 0) {

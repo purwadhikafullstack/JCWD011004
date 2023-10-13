@@ -2,6 +2,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 export const AvatarDropdown = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [avatar, setAvatar] = useState(null)
@@ -10,14 +12,11 @@ export const AvatarDropdown = () => {
   const fetchImage = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get(
-        'http://localhost:8000/api/update/avatars',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.get(`${apiUrl}/update/avatars`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       setAvatar(response.data)
     } catch (error) {
       setAvatar(null)

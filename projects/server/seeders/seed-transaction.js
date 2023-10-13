@@ -16,6 +16,7 @@ module.exports = {
         paymentMethod: 'Metode Pembayaran 1',
         paymentProof: 'Bukti Pembayaran 1',
         paymentStatus: true, // True jika sudah dibayar, false jika belum
+        transactionStatusId: 0, // Status transaksi
         transactionStatus: 'Status Transaksi 1',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -30,6 +31,7 @@ module.exports = {
         paymentMethod: 'Metode Pembayaran 2',
         paymentProof: 'Bukti Pembayaran 2',
         paymentStatus: false, // True jika sudah dibayar, false jika belum
+        transactionStatusId: 0, // Status transaksi
         transactionStatus: 'Status Transaksi 2',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -44,6 +46,7 @@ module.exports = {
         paymentMethod: 'Metode Pembayaran 3',
         paymentProof: 'Bukti Pembayaran 3',
         paymentStatus: true, // True jika sudah dibayar, false jika belum
+        transactionStatusId: 0, // Status transaksi
         transactionStatus: 'Status Transaksi 3',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -58,6 +61,7 @@ module.exports = {
         paymentMethod: 'Metode Pembayaran 4',
         paymentProof: 'Bukti Pembayaran 4',
         paymentStatus: false, // True jika sudah dibayar, false jika belum
+        transactionStatusId: 0, // Status transaksi
         transactionStatus: 'Status Transaksi 4',
         createdAt: new Date(),
         updatedAt: new Date()

@@ -6,9 +6,9 @@ import Footer from '../homePage/footer'
 
 export default function SidebarPemesanan() {
   return (
-    <div className="container mx-auto max-w-screen-lg">
+    <div className="container mx-auto max-w-screen-lg gap-10">
       <Navbar />
-      <div className="h-screen flex flex-col container mx-auto max-w-screen-lg mt-20">
+      <div className="h-screen flex flex-col container mx-auto max-w-screen-lg mt-20 max-md:mt-40">
         <div
           id="view"
           className="h-full w-full flex flex-col md:flex-row shadow-lg bg-white border border-neutral-200"
@@ -119,7 +119,7 @@ export default function SidebarPemesanan() {
               </div>
             </div>
           </div>
-          <div>
+          <div className="flex-grow p-[10px]">
             <TableDashboardPemesanan />
           </div>
         </div>
