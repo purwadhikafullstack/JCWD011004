@@ -7,7 +7,8 @@ const {
   verifyAdminAccount,
   updateWarehouseAdmin,
   getAllTrasaction,
-  getAllTransactionAdmin
+  getAllTransactionAdmin,
+  getAdminInfo
 } = require('../controller')
 
 router.get('/user', getUsersSortPagination)
@@ -16,6 +17,7 @@ router.post('/create-warehouse-admin', createWarehouseAdmin)
 router.patch('/verify-admin/:token', verifyAdminAccount)
 router.patch('/update', updateWarehouseAdmin)
 router.get('/all-transaction', getAllTrasaction)
-router.get('/all-transaction-admin', getAllTransactionAdmin)
+router.get('/all-transaction-admin/:id', getAllTransactionAdmin)
+router.get('/info', getAdminInfo)
 
 module.exports = router

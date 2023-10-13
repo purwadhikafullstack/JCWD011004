@@ -7,10 +7,9 @@ const Transaction_Item = db.Transaction_Item
 
 const getAllTransactionAdmin = async (req, res) => {
   try {
-    const { userId } = req.body
-    console.log(userId)
+    const { id } = req.params
     const warehouseAdmin = await Warehouse_Admin.findOne({
-      where: { adminId: userId }
+      where: { adminId: id }
     })
 
     if (!warehouseAdmin) {

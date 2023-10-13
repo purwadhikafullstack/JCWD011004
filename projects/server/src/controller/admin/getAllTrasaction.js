@@ -1,25 +1,37 @@
-const db = require('../../../models');
-const Transaction = db.Transaction;
-const Product = db.Product;
-const Warehouse = db.Warehouse;
+const db = require('../../../models')
+const Transaction = db.Transaction
+const Product = db.Product
+const Transaction_Item = db.Transaction_Item
+const Warehouse = db.Warehouse
+const User = db.User
 
 const getAllTransaction = async (req, res) => {
   try {
-    const { warehouseId } = req.query;
-    const whereCondition = warehouseId ? { warehouseId } : {};
+    const { warehouseId, transactionStatusId } = req.query
+    const whereCondition = {}
+
+    if (warehouseId) {
+      whereCondition.warehouseId = warehouseId
+    }
+
+    if (transactionStatusId) {
+      whereCondition.transactionStatusId = transactionStatusId
+    }
 
     const allTransaction = await Transaction.findAll({
       where: whereCondition,
       include: [
-        { model: Product },
-        { model: Warehouse }
+        { model: Warehouse },
+        { model: Transaction_Item, include: Product },
+        { model: User }
       ]
-    });
+    })
 
-    return res.status(200).json({ allTransaction });
+    return res.status(200).json({ allTransaction })
   } catch (error) {
-    console.log(error);
+    console.error(error)
+    return res.status(500).json({ error: 'An error occurred' })
   }
 }
 
-module.exports = getAllTransaction;
+module.exports = getAllTransaction

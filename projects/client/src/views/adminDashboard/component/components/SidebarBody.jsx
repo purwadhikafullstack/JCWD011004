@@ -121,10 +121,10 @@ function SidebarBody() {
         )}
         <li>
           <Link
-            to="/admin/resident"
-            onClick={() => setActiveLink('resident')}
+            to="/admin/order"
+            onClick={() => setActiveLink('order')}
             className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
-              activeLink === 'resident'
+              activeLink === 'order'
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
