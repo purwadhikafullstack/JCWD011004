@@ -98,7 +98,6 @@ function App() {
           <Route path="warehouse" element={<Warehouse />} />
           <Route path="order" element={<TabelSuperAdmin />} />
         </Route>
-        {/* <Route path="table-admin" element={<TabelSuperAdmin />}></Route> */}
         <Route path="*" element={<PagesNotFound />}></Route>
       </Routes>
     </div>

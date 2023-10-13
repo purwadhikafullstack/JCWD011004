@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import BeatLoader from 'react-spinners/BeatLoader'
 import { useParams, useNavigate } from 'react-router-dom'
+
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 function VerifyEditAccount() {
   const [loading, setLoading] = useState(false)
   const { token } = useParams()
@@ -10,9 +13,7 @@ function VerifyEditAccount() {
   const handleVerify = async () => {
     try {
       setLoading(true)
-      const res = await axios.patch(
-        `http://localhost:8000/api/update/verify?token=${token}`
-      )
+      const res = await axios.patch(`${apiUrl}/update/verify?token=${token}`)
       if (res.status === 200) {
         setLoading(false)
         nav('/')

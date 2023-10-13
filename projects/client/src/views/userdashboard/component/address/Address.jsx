@@ -9,7 +9,8 @@ import {
 } from '../../../../services/reducer/addressReducer'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 export const Address = () => {
   const { userData } = useSelector((state) => state.dataAddress.allAddress)
   const addressData = userData
@@ -23,14 +24,11 @@ export const Address = () => {
   const deleteAddress = async (id) => {
     const token = localStorage.getItem('token')
     try {
-      const response = await axios.delete(
-        `http://localhost:8000/api/update/address/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.delete(`${apiUrl}/update/address/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       if (response.status === 200) {
         toast.success('Delete address succeed', {
           position: toast.POSITION.TOP_CENTER

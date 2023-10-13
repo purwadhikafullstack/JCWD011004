@@ -32,12 +32,12 @@ function UpdateUserForm({ data }) {
 
   const getWarehouses = async () => {
     try {
-      const { data } = await axios.get(`${apiurl}/admin/warehouses`, {
+      const res = await axios.get(`${apiurl}/admin/warehouses`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      setWarehouses(data?.warehouses)
+      setWarehouses(res?.data?.data?.data)
     } catch (error) {
       console.error(error)
     }

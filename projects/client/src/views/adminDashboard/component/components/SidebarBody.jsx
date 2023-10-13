@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-
+// eslint-disable-next-line
 const apiUrl = process.env.REACT_APP_API_BASE_URL
 function SidebarBody() {
   const [activeLink, setActiveLink] = useState('dashboard')

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
+// eslint-disable-next-line
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 function CategoryList() {

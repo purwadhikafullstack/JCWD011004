@@ -7,6 +7,8 @@ import './styles.css'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 function UserDashboard() {
   const [menu, setMenu] = useState({ accountData: true, alamat: false })
   const [userData, setUserData] = useState('')
@@ -24,12 +26,11 @@ function UserDashboard() {
     try {
       setLoading(true)
       const token = localStorage.getItem('token')
-      const res = await axios.get('http://localhost:8000/api/auth/user', {
+      const res = await axios.get(`${apiUrl}/auth/user`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      console.log(res)
       setUserData(res?.data?.userInfo)
       setLoading(false)
     } catch (error) {

@@ -35,7 +35,7 @@ module.exports = {
       },
       {
         productId: 7, // Ganti dengan productId yang sesuai
-        transactionId: 8, // Ganti dengan transactionId yang sesuai
+        transactionId: 3, // Ganti dengan transactionId yang sesuai
         productPrice: 400,
         quantity: 4,
         totalPrice: 1600,
