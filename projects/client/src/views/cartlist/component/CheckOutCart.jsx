@@ -13,6 +13,9 @@ function formatRupiah(number) {
 function CheckOutCart() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
   const isCheckout = useSelector((state) => state.checkoutData.isCheckout)
+  const selectedCourier = useSelector(
+    (state) => state.dataCourier.selectedCourierData
+  )
   const dispatch = useDispatch()
   const handleCheckout = (data) => {
     if (data === true) {
@@ -28,19 +31,38 @@ function CheckOutCart() {
   const totalAmount = subTotal?.reduce((total, item) => {
     return item.totalPrice * item.quantity + total
   }, 0)
+  const shipping =
+    selectedCourier && selectedCourier.cost && selectedCourier.cost[0]
+      ? selectedCourier.cost[0].value
+      : 0
+
   const formattedSubTotal = formatRupiah(totalAmount)
+  const formattedShippingCost = formatRupiah(shipping)
+
+  const formattedTotal = formatRupiah(totalAmount + shipping)
 
   useEffect(() => {
     setIsButtonDisabled(subTotal.length === 0)
   }, [subTotal])
+
   return (
     <div className=" w-auto h-fit rounded-lg border bg-white p-6 shadow-md">
-      {isCheckout ? <CheckoutAddress /> : ''}
+      {isCheckout ? (
+        <>
+          <CheckoutAddress />
+          <div className="text-right text-sm">
+            <p>Subtotal {formattedSubTotal}</p>
+            <p>Shipping {formattedShippingCost}</p>
+          </div>
+        </>
+      ) : (
+        ''
+      )}
       <hr className="my-4" />
       <div className="flex justify-between">
-        <p className="text-lg font-bold">Total</p>
+        <p className="text-lg font-bold">Total Price</p>
         <div className="">
-          <p className="mb-1 ml-1 text-lg font-bold">{formattedSubTotal}</p>
+          <p className="mb-1 ml-1 text-lg font-bold">{formattedTotal}</p>
           <p className="text-sm text-gray-700">including VAT</p>
         </div>
       </div>
@@ -55,7 +77,14 @@ function CheckOutCart() {
             >
               Cancel
             </button>
-            <button className="ml-3 flex-1 rounded-md bg-orange-300 py-1.5 font-medium text-blue-50 hover:bg-orange-600 active:bg-orange-300">
+            <button
+              disabled={!selectedCourier.cost}
+              className={`flex-1 rounded-md ${
+                !selectedCourier.cost
+                  ? 'bg-gray-300 cursor-not-allowed'
+                  : 'bg-orange-300 hover:bg-orange-600 active:bg-orange-300 cursor-pointer'
+              } py-1.5 font-medium text-blue-50 ml-2`}
+            >
               Order
             </button>
           </>

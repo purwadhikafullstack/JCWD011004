@@ -4,7 +4,8 @@ import axios from 'axios'
 const initialState = {
   courier: {},
   isCourier: true,
-  wait: false
+  wait: false,
+  selectedCourierData: {}
 }
 
 export const CourierReducer = createSlice({
@@ -19,6 +20,9 @@ export const CourierReducer = createSlice({
     },
     courierDataWait: (state, action) => {
       state.wait = action.payload
+    },
+    selectedCourierData: (state, action) => {
+      state.selectedCourierData = action.payload
     }
   }
 })
@@ -61,6 +65,10 @@ export const getCourier = (
   }
 }
 
-export const { storeCourier, isCourierAvailable, courierDataWait } =
-  CourierReducer.actions
+export const {
+  storeCourier,
+  isCourierAvailable,
+  courierDataWait,
+  selectedCourierData
+} = CourierReducer.actions
 export default CourierReducer.reducer

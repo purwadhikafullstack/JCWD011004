@@ -29,20 +29,26 @@ export const DropdownAddress = () => {
     setSelectedAddress(event.target.value)
   }
 
-  if (selectedAddress > 0) {
-    let userAddress = addressData?.filter((item) => item.id == selectedAddress)
-    dispatch(
-      getCourier(
-        userAddress[0].cityId,
-        userAddress[0].latitude,
-        userAddress[0].longitude,
-        3454,
-        'jne'
-      )
-    )
-  } else {
+  useEffect(() => {
     dispatch(storeCourier({}))
-  }
+    if (selectedAddress > 0) {
+      let userAddress = addressData?.filter(
+        (item) => item.id == selectedAddress
+      )
+      dispatch(
+        getCourier(
+          userAddress[0].cityId,
+          userAddress[0].latitude,
+          userAddress[0].longitude,
+          3454,
+          'jne'
+        )
+      )
+    } else {
+      dispatch(storeCourier({}))
+    }
+  }, [selectedAddress])
+
   return (
     <div>
       <div>

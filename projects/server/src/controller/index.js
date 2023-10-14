@@ -30,6 +30,8 @@ const { createWarehouseAdmin } = require('./admin/createAdmin')
 const { verifyAdminAccount } = require('./admin/verifyNewAdmin')
 const { courierOngkir } = require('./ongkir/getOngkir')
 const updateWarehouseAdmin = require('./admin/updateAdmin')
+const { createOrder } = require('./transaction/order')
+
 module.exports = {
   registerUser,
   login,
@@ -66,5 +68,6 @@ module.exports = {
   createWarehouseAdmin,
   verifyAdminAccount,
   courierOngkir,
-  updateWarehouseAdmin
+  updateWarehouseAdmin,
+  createOrder
 }

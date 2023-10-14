@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
 import {
   getCourier,
-  isCourierAvailable
+  isCourierAvailable,
+  selectedCourierData
 } from '../../services/reducer/courierReducer'
 
 export const DropdownCourier = () => {
@@ -21,6 +22,7 @@ export const DropdownCourier = () => {
 
   const handleCourierChange = (event) => {
     setSelectedCourier(event.target.value)
+    setSelectedCourierType('')
     dispatch(isCourierAvailable(true))
     dispatch(
       getCourier(
@@ -46,6 +48,20 @@ export const DropdownCourier = () => {
       }, 2000)
     }
   }, [isCourier])
+
+  useEffect(() => {
+    if (!costCourier) {
+      setSelectedCourier('')
+      setSelectedCourierType('')
+    }
+    if (costCourier) {
+      dispatch(
+        selectedCourierData(
+          selectedCourierType ? costCourier[selectedCourierType] : {}
+        )
+      )
+    }
+  }, [selectedCourierType, costCourier])
 
   const handleCourierTypeChange = (event) => {
     setSelectedCourierType(event.target.value)
@@ -84,9 +100,9 @@ export const DropdownCourier = () => {
                 )}
                 {costCourier &&
                   costCourier?.map((cost, index) => (
-                    <option key={index} value={cost.service}>
+                    <option key={index} value={index}>
                       <span>{`(${cost.service}) ${cost.description}`}</span>
-                      <span>{`Ongkir (${cost.cost[0].value}), Estimasi ${cost.cost[0].etd}`}</span>
+                      <span>{`, Ongkir (${cost.cost[0].value}), Estimasi ${cost.cost[0].etd}`}</span>
                     </option>
                   ))}
               </select>

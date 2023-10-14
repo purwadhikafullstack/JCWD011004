@@ -21,6 +21,7 @@ function CartList() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const dispatch = useDispatch()
   const items = useSelector((state) => state.cartItems.items)
+
   const handleOpenShowModalDelete = (item) => {
     setShowModalDelete(true)
     setDeleteProduct(item)
