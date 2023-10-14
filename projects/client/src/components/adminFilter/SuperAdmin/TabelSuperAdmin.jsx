@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import ConfirmationOrderModals from '../../modals/ConfirmationOrderModals'
 
 const statusTransaction = [
   'Menunggu Pembayaran',
@@ -29,7 +30,11 @@ const TabelSuperAdmin = () => {
   const [admin, setAdmin] = useState()
   console.log(admin)
   const [warehouseFilter, setWarehouseFilter] = useState('all')
+  const [isModalConfirmationOpen, setIsModalConfirmationOpen] = useState(false)
 
+  const handleConfirmationModalOpen = () => {
+    setIsModalConfirmationOpen(!isModalConfirmationOpen)
+  }
   const fetchWarehouses = async () => {
     try {
       const response = await axios.get(`${apiUrl}/warehouse/get-all`)
@@ -188,7 +193,10 @@ const TabelSuperAdmin = () => {
                   {item?.totalPrice}
                 </td>
                 <td className="px-6 py-4 text-sm">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+                  <button
+                    onClick={handleConfirmationModalOpen}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                  >
                     Edit
                   </button>
                 </td>
@@ -197,6 +205,10 @@ const TabelSuperAdmin = () => {
           </tbody>
         </table>
       </div>
+      <ConfirmationOrderModals
+        isOpen={isModalConfirmationOpen}
+        onClose={handleConfirmationModalOpen}
+      />
     </div>
   )
 }
