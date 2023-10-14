@@ -66,9 +66,9 @@ function CheckOutCart() {
       <hr className="my-4" />
       <div className="flex justify-between">
         <p className="text-lg font-bold">Total</p>
-        <div className="">
+        <div className="text-right">
           <p className="mb-1 ml-1 text-lg font-bold">{formattedTotal}</p>
-          <p className="text-sm text-gray-700">including VAT</p>
+          <p className="text-xs text-gray-700">including VAT</p>
         </div>
       </div>
       <div className="mt-10 flex justify-between">
