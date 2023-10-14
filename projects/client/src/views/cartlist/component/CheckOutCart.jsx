@@ -99,7 +99,7 @@ function CheckOutCart() {
       )
 
       if (response.status === 200) {
-        toast.success('Yey!! Your transaction created', {
+        toast.success('Yey!! Your transaction succesfully created', {
           position: toast.POSITION.TOP_CENTER
         })
         setTimeout(() => {

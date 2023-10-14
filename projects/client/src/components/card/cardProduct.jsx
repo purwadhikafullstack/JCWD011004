@@ -25,17 +25,11 @@ function Card({ product }) {
               />
             </div>
             <div className="text-center">
-              <h2 className="mb-1 font-semibold">
-                {product?.name ? product?.name : product?.product?.name}
-              </h2>
+              <h2 className="mb-1 font-semibold">{product?.name}</h2>
               <p className="mb-1 text-sm text-gray-600 truncate">
-                {product?.description
-                  ? product?.description
-                  : product?.product?.description}
+                {product?.description}
               </p>
-              <p className="mb-3 text-sm font-bold">
-                IDR {product?.price ? product?.price : product?.product?.price}
-              </p>
+              <p className="mb-3 text-sm font-bold">IDR {product?.price}</p>
             </div>
           </Link>
           <div className="pb-3 text-center">
