@@ -27,7 +27,6 @@ const TabelSuperAdmin = () => {
   const [warehouses, setWarehouses] = useState([])
   const [transactionStatusFilter, setTransactionStatusFilter] = useState(0)
   const [admin, setAdmin] = useState()
-  console.log(admin)
   const [warehouseFilter, setWarehouseFilter] = useState('all')
 
   const fetchWarehouses = async () => {
