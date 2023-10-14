@@ -11,7 +11,8 @@ import axios from 'axios'
 
 const phoneRegExp = /^(\+62|62|0)8[1-9][0-9]/
 const numberRegex = /^([0-9])/
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 export const AddAddress = () => {
   const dispatch = useDispatch()
   const cityRegencyData = useSelector((state) => state.dataAddress.cityRegency)
@@ -20,15 +21,11 @@ export const AddAddress = () => {
   const createAddress = async (values) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.post(
-        `http://localhost:8000/api/update/address`,
-        values,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await axios.post(`${apiUrl}/update/address`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       if (response.status === 200) {
         toast.success('Add address succeed', {
           position: toast.POSITION.TOP_CENTER
@@ -47,15 +44,12 @@ export const AddAddress = () => {
 
   const longLat = async () => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:8000/api/external/longlat`,
-        {
-          params: {
-            cityRegency: cityRegencyData.city_name,
-            province: cityRegencyData.province
-          }
+      const { data } = await axios.get(`${apiUrl}/external/longlat`, {
+        params: {
+          cityRegency: cityRegencyData.city_name,
+          province: cityRegencyData.province
         }
-      )
+      })
       setStateLonglat(data.results[0].geometry)
     } catch (err) {
       console.log(err.message)

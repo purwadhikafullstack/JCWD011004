@@ -4,7 +4,8 @@ import { FaChevronDown } from 'react-icons/fa'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { provinceData } from '../../../../services/reducer/addressReducer'
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 export default function DropdownProvince() {
   const [sortData, setSortData] = useState([])
   const [selected, setSelected] = useState('Province')
@@ -12,9 +13,7 @@ export default function DropdownProvince() {
 
   const provinces = async () => {
     try {
-      const { data } = await axios.get(
-        'http://localhost:8000/api/external/province'
-      )
+      const { data } = await axios.get(`${apiUrl}/external/province`)
       const provinces = data.rajaongkir.results
       setSelected(provinces[0].province)
       setSortData(provinces)

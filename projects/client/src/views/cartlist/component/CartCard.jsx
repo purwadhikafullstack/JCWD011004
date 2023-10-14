@@ -14,6 +14,7 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
   const [isDisabled, setIsDisabled] = useState(false)
   const [productImage, setProductImage] = useState(null)
   const [isChecked, setChecked] = useState(false)
+  // eslint-disable-next-line
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const handleIncrease = async () => {
     setIsDisabled(true)

@@ -7,19 +7,17 @@ import 'react-toastify/dist/ReactToastify.css'
 import { FcGoogle } from 'react-icons/fc'
 
 function SocialLogin() {
-  // const apiUrl = process.env.REACT_APP_API_BASE_URL
+  // eslint-disable-next-line
+  const apiUrl = process.env.REACT_APP_API_BASE_URL
   const [isDisabled, setIsDisabled] = useState(false)
   const handleLogin = async () => {
     try {
       setIsDisabled(true)
       const result = await signInWithPopup(auth, provider)
 
-      const response = await axios.post(
-        `http://localhost:8000/api/auth/login-social`,
-        {
-          idToken: result._tokenResponse.idToken
-        }
-      )
+      const response = await axios.post(`${apiUrl}/auth/login-social`, {
+        idToken: result._tokenResponse.idToken
+      })
 
       localStorage.setItem('token', response.data.token)
       toast.success('Login berhasil', { position: toast.POSITION.TOP_CENTER })

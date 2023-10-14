@@ -5,10 +5,16 @@ import jwt_decode from 'jwt-decode'
 
 export default function TableDashboardPemesanan() {
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
   const token = jwt_decode(localStorage.getItem('token'))
   const userId = token ? token.id : null
+
+  // eslint-disable-next-line
   const apiUrl = process.env.REACT_APP_API_BASE_URL
 
+  const handleLoading = () => {
+    setLoading(!loading)
+  }
   const fetchData = async () => {
     try {
       if (userId) {
@@ -24,7 +30,7 @@ export default function TableDashboardPemesanan() {
 
   useEffect(() => {
     fetchData()
-  }, [userId])
+  }, [userId, loading])
 
   return (
     <div className="w-full">
@@ -40,12 +46,12 @@ export default function TableDashboardPemesanan() {
         </div>
       ) : (
         <>
-          {data.map((order, orderIndex) => (
+          {data?.map((order, orderIndex) => (
             <div key={`order_${orderIndex}`}>
               <table className="min-w-full divide-y divide-gray-200 border-4 mt-2">
                 <thead>
                   <div className=" bg-orange-400 text-pr-mobile shadow-sm rounded font-bold  lg:text-pr-desktop">
-                    <p>Transaction ID: {order.id}</p>
+                    <p>Transaction ID: {order?.id}</p>
                   </div>
                   <tr>
                     <th className="px-6 py-3 text-left text-xs text-pr-mobile font-medium lg:text-pr-desktop text-gray-500 uppercase tracking-wider">
@@ -63,32 +69,32 @@ export default function TableDashboardPemesanan() {
                   </tr>
                 </thead>
                 <tbody>
-                  {order.Products.map((product, productIndex) => (
-                    <tr
-                      key={`order_${orderIndex}_product_${productIndex}`}
-                      className="bg-white hover:bg-gray-100"
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap text-pr-mobile lg:text-pr-desktop font-sm">
-                        {product?.name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-pr-mobile lg:text-pr-desktop font-sm">
-                        {product?.Transaction_Item?.quantity}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-pr-mobile lg:text-pr-desktop font-sm">
-                        {order?.transactionStatusId ? '' : 'Belum Bayar'}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-pr-mobile lg:text-pr-desktop font-sm">
-                        {product?.Transaction_Item?.totalPrice}
-                      </td>
-                    </tr>
-                  ))}
+                  {order?.Transaction_Items?.map((e, i) => {
+                    return (
+                      <tr key={i} className="bg-white hover:bg-gray-100">
+                        <td className="px-6 py-4 whitespace-nowrap text-pr-mobile lg:text-pr-desktop font-sm">
+                          {e?.Product?.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-pr-mobile lg:text-pr-desktop font-sm">
+                          {e?.quantity}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-pr-mobile lg:text-pr-desktop font-sm">
+                          {order?.transactionStatusId ? '' : 'Belum Bayar'}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-pr-mobile lg:text-pr-desktop font-sm">
+                          {e?.totalPrice}
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
-              <div className=" border-4 flex ">
+              <div className=" border-4 flex max-sm:w-1">
                 <UploadButton
                   text="Upload Bukti Bayar"
                   transactionId={order.id}
                   userId={userId}
+                  loading={handleLoading}
                 />
               </div>
             </div>

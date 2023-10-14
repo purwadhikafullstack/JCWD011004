@@ -6,6 +6,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 const validationSchema = Yup.object().shape({
   password: Yup.string()
     .required('Password is required')
@@ -28,7 +30,7 @@ function RequestResetPass() {
   const handleSubmit = async (values) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8000/api/auth/reset-password`,
+        `${apiUrl}/auth/reset-password`,
         values,
         {
           headers: { Authorization: `Bearer ${token}` }

@@ -4,7 +4,7 @@ module.exports = {
       {
         id: 1,
         warehouseId: 1,
-        productId: 1,
+        productId: 16,
         stock: 10,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -13,7 +13,7 @@ module.exports = {
         id: 2,
         warehouseId: 1,
         productId: 2,
-        stock: 15,
+        stock: 17,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -21,7 +21,7 @@ module.exports = {
         id: 3,
         warehouseId: 2,
         productId: 3,
-        stock: 8,
+        stock: 18,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -29,7 +29,15 @@ module.exports = {
         id: 4,
         warehouseId: 2,
         productId: 4,
-        stock: 12,
+        stock: 19,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+      {
+        id: 4,
+        warehouseId: 2,
+        productId: 4,
+        stock: 19,
         createdAt: new Date(),
         updatedAt: new Date()
       }

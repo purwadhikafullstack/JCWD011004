@@ -6,6 +6,8 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { FcGoogle } from 'react-icons/fc'
 
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 function SocialRegister() {
   const [isDisabled, setIsDisabled] = useState(false)
   const handleRegister = async () => {
@@ -13,12 +15,9 @@ function SocialRegister() {
       setIsDisabled(true)
       const result = await signInWithPopup(auth, provider)
       console.log(result)
-      const response = await axios.post(
-        `http://localhost:8000/api/auth/register-social`,
-        {
-          idToken: result._tokenResponse.idToken
-        }
-      )
+      const response = await axios.post(`${apiUrl}/auth/register-social`, {
+        idToken: result._tokenResponse.idToken
+      })
       // Simpan token ke localStorage
       setIsDisabled(false)
       localStorage.setItem('token', response.data.token)

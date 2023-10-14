@@ -19,6 +19,7 @@ function CartList() {
   const [subTotal, setSubTotal] = useState([])
   const dataTrigger = useSelector((state) => state.cartItems.triggerPrice)
   const isCheckout = useSelector((state) => state.checkoutData.isCheckout)
+  // eslint-disable-next-line
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const dispatch = useDispatch()
   const items = useSelector((state) => state.cartItems.items)
@@ -66,7 +67,7 @@ function CartList() {
           }
         }
       )
-
+      console.log(response)
       setTotalPages(response?.data?.totalPages)
       dispatch(setItems(response?.data?.items))
     } catch (error) {

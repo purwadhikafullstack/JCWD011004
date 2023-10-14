@@ -8,7 +8,7 @@ module.exports = {
     const transactionItemsData = [
       {
         productId: 1, // Ganti dengan productId yang sesuai
-        transactionId: 1, // Ganti dengan transactionId yang sesuai
+        transactionId: 5, // Ganti dengan transactionId yang sesuai
         productPrice: 100,
         quantity: 2,
         totalPrice: 200,
@@ -17,7 +17,7 @@ module.exports = {
       },
       {
         productId: 2, // Ganti dengan productId yang sesuai
-        transactionId: 2, // Ganti dengan transactionId yang sesuai
+        transactionId: 6, // Ganti dengan transactionId yang sesuai
         productPrice: 200,
         quantity: 3,
         totalPrice: 600,
@@ -26,7 +26,7 @@ module.exports = {
       },
       {
         productId: 5, // Ganti dengan productId yang sesuai
-        transactionId: 2, // Ganti dengan transactionId yang sesuai
+        transactionId: 7, // Ganti dengan transactionId yang sesuai
         productPrice: 300,
         quantity: 1,
         totalPrice: 300,
@@ -34,7 +34,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        productId: 1, // Ganti dengan productId yang sesuai
+        productId: 7, // Ganti dengan productId yang sesuai
         transactionId: 3, // Ganti dengan transactionId yang sesuai
         productPrice: 400,
         quantity: 4,
@@ -44,7 +44,7 @@ module.exports = {
       },
       {
         productId: 1, // Ganti dengan productId yang sesuai
-        transactionId: 4, // Ganti dengan transactionId yang sesuai
+        transactionId: 5, // Ganti dengan transactionId yang sesuai
         productPrice: 400,
         quantity: 4,
         totalPrice: 1600,

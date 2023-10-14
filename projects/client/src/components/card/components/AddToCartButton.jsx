@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 function AddToCartButton({ isProductActive, productId, quantity }) {
   const [openLoginModal, setLoginModalOpen] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
+  // eslint-disable-next-line
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const dispatch = useDispatch()
   const { productIds } = useSelector((state) => state.cart)

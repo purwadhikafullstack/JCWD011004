@@ -5,7 +5,8 @@ import * as Yup from 'yup'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 const ResetPasswordModal = ({ isOpen, onClose, onOpenLogin }) => {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -21,7 +22,7 @@ const ResetPasswordModal = ({ isOpen, onClose, onOpenLogin }) => {
     onSubmit: async (values) => {
       try {
         const response = await axios.post(
-          'http://localhost:8000/api/auth/reset-password',
+          `${apiUrl}/auth/reset-password`,
           values
         )
         if (response.status === 200) {

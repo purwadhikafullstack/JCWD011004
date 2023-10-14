@@ -16,12 +16,18 @@ import SidebarPemesananDelivery from './components/transactionPage/tableTransact
 import SidebarPemesananDiterima from './components/transactionPage/tableTransactionStatus/4.transactionAccepting/SidebarDiterima'
 import SidebarPemesananCancel from './components/transactionPage/tableTransactionStatus/5.transactionCancel/SidebarCancel'
 import CartItemPages from './pages/CartItemPages'
+import Warehouse from './components/warehouse/Warehouse'
+import CreateWarehousePage from './components/warehouse/component/CreateWarehouse'
+import EditWarehousePage from './components/warehouse/component/EditWarehouse'
+import ModalDelete from './components/warehouse/component/ModalDelete'
 import AdminDashboard from './views/adminDashboard/AdminDashboard'
 import DashboardReport from './views/adminDashboard/component/DashboardReport'
 import UserTable from './views/adminDashboard/component/components/UserTable'
 import ResidentTable from './views/adminDashboard/component/components/ResidentTable'
 import VerifyAdminChangePassword from './pages/VerifyAdminChangePassword'
 import PagesNotFound from './pages/PagesNotFound'
+import TabelSuperAdmin from './components/adminFilter/SuperAdmin/TabelSuperAdmin'
+import TabelAdminWarehouse from './components/adminFilter/AdminWarehouse/TabelAdminWarehouse'
 function App() {
   return (
     <div className="App">
@@ -75,11 +81,24 @@ function App() {
           element={<VerifyAdminChangePassword />}
         ></Route>
         <Route path="/cart" element={<CartItemPages />}></Route>
+        <Route path="/warehouse" element={<Warehouse />}></Route>
+        <Route
+          path="/create-warehouse"
+          element={<CreateWarehousePage />}
+        ></Route>
+        <Route
+          path="/edit-warehouse/:id"
+          element={<EditWarehousePage />}
+        ></Route>
+        <Route path="/delete-modal" element={<ModalDelete />}></Route>
         <Route path="/admin/*" element={<AdminDashboard />}>
           <Route index element={<DashboardReport />} />
           <Route path="dashboard-report" element={<DashboardReport />} />
           <Route path="user" element={<UserTable />} />
           <Route path="resident" element={<ResidentTable />} />
+          <Route path="warehouse" element={<Warehouse />} />
+          <Route path="order" element={<TabelSuperAdmin />} />
+          <Route path="order-admin/:id" element={<TabelAdminWarehouse />} />
         </Route>
         <Route path="*" element={<PagesNotFound />}></Route>
       </Routes>

@@ -10,8 +10,6 @@ const { uploadReceipt } = require('./payment/uploadReceipt')
 const requestResetPassword = require('./auth/requestResetPassword')
 const { firebaseLogin, firebaseRegister } = require('./auth/firebaseLogin')
 const resetPassword = require('./auth/resetPassword')
-const { getAllOrderStatus } = require('./transaction/getOrderStatus')
-const { addItem, removeItem, updateItem } = require('./cart/addingItems')
 const {
   getCartItems,
   getCartItemsSortPagination
@@ -24,14 +22,25 @@ const {
 } = require('./userUpdate/userAddress')
 const { province, cityRegency } = require('./external/rajaongkir')
 const { longlat } = require('./external/opencage')
+const { getAllOrderStatus } = require('./transaction/getOrderStatus')
+const { addItem, removeItem, updateItem } = require('./cart/addingItems')
+const {
+  createWarehouses,
+  updateWarehouses,
+  deleteWarehouses,
+  getWarehouses
+} = require('./warehouse/warehouseController')
 const { getUsersSortPagination } = require('./admin/getUserData')
-const getWarehouses = require('./admin/getWarehouses')
+const getWarehouse = require('./admin/getWarehouses')
 const { createWarehouseAdmin } = require('./admin/createAdmin')
 const { verifyAdminAccount } = require('./admin/verifyNewAdmin')
 const { courierOngkir } = require('./ongkir/getOngkir')
 const updateWarehouseAdmin = require('./admin/updateAdmin')
 const { createOrder } = require('./transaction/order')
 
+const getAllTrasaction = require('./admin/getAllTrasaction')
+const getAllTransactionAdmin = require('./admin/getTransactionAdminWarehouse')
+const { getAdminInfo } = require('./admin/adminKeepLogin')
 module.exports = {
   registerUser,
   login,
@@ -63,11 +72,18 @@ module.exports = {
   getCartItems,
   getCartItemsSortPagination,
   updateItem,
+  createWarehouses,
+  updateWarehouses,
+  deleteWarehouses,
+  getWarehouse,
   getUsersSortPagination,
   getWarehouses,
   createWarehouseAdmin,
   verifyAdminAccount,
   courierOngkir,
   updateWarehouseAdmin,
-  createOrder
+  createOrder,
+  getAllTrasaction,
+  getAllTransactionAdmin,
+  getAdminInfo
 }
