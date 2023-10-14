@@ -31,6 +31,10 @@ function CheckOutCart() {
   const totalAmount = subTotal?.reduce((total, item) => {
     return item.totalPrice * item.quantity + total
   }, 0)
+  const totalWeight = subTotal?.reduce((totalWeight, item) => {
+    return item.weight * item.quantity + totalWeight
+  }, 0)
+
   const shipping =
     selectedCourier && selectedCourier.cost && selectedCourier.cost[0]
       ? selectedCourier.cost[0].value
@@ -50,9 +54,10 @@ function CheckOutCart() {
       {isCheckout ? (
         <>
           <CheckoutAddress />
-          <div className="text-right text-sm">
+          <div className="text-right text-xs">
             <p>Subtotal {formattedSubTotal}</p>
             <p>Shipping {formattedShippingCost}</p>
+            <p>Weight {totalWeight}kg</p>
           </div>
         </>
       ) : (
@@ -60,7 +65,7 @@ function CheckOutCart() {
       )}
       <hr className="my-4" />
       <div className="flex justify-between">
-        <p className="text-lg font-bold">Total Price</p>
+        <p className="text-lg font-bold">Total</p>
         <div className="">
           <p className="mb-1 ml-1 text-lg font-bold">{formattedTotal}</p>
           <p className="text-sm text-gray-700">including VAT</p>

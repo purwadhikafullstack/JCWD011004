@@ -19,6 +19,11 @@ export const DropdownCourier = () => {
   const [selectedCourier, setSelectedCourier] = useState('')
   const [selectedCourierType, setSelectedCourierType] = useState('')
   const dataAllCourier = ['jne', 'pos', 'tiki']
+  const subTotal = useSelector((state) => state.cartItems.totalItemPrice)
+
+  const totalWeight = subTotal?.reduce((totalWeight, item) => {
+    return item.weight * item.quantity + totalWeight
+  }, 0)
 
   const handleCourierChange = (event) => {
     setSelectedCourier(event.target.value)
@@ -29,7 +34,7 @@ export const DropdownCourier = () => {
         addressData[event.target.value]?.cityId,
         addressData[event.target.value]?.latitude,
         addressData[event.target.value]?.longitude,
-        3454,
+        totalWeight,
         dataAllCourier[event.target.value]
       )
     )

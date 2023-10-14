@@ -15,6 +15,11 @@ export const DropdownAddress = () => {
   const add = useSelector((state) => state.dataAddress.addAddress)
   const dispatch = useDispatch()
   const [selectedAddress, setSelectedAddress] = useState('')
+  const subTotal = useSelector((state) => state.cartItems.totalItemPrice)
+
+  const totalWeight = subTotal?.reduce((totalWeight, item) => {
+    return item.weight * item.quantity + totalWeight
+  }, 0)
 
   useEffect(() => {
     dispatch(getAllAddress())
@@ -40,7 +45,7 @@ export const DropdownAddress = () => {
           userAddress[0].cityId,
           userAddress[0].latitude,
           userAddress[0].longitude,
-          3454,
+          totalWeight,
           'jne'
         )
       )

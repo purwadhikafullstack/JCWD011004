@@ -21,7 +21,8 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
     const checkListItem = {
       productId: item?.productId,
       quantity: item?.quantity + 1,
-      totalPrice: item?.totalPrice
+      totalPrice: item?.totalPrice,
+      weight: item?.Product.weight
     }
     handleSubTotal(checkListItem, isChecked)
     setFormattedPrice(formatRupiah(item?.totalPrice))
@@ -60,7 +61,8 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
       const checkListItem = {
         productId: item?.productId,
         quantity: item?.quantity - 1,
-        totalPrice: item?.totalPrice
+        totalPrice: item?.totalPrice,
+        weight: item?.Product.weight
       }
       handleSubTotal(checkListItem, isChecked)
       setFormattedPrice(formatRupiah(item?.totalPrice))
@@ -94,7 +96,8 @@ function CartCard({ item, handleOpenShowModalDelete, handleSubTotal }) {
       quantity: item?.quantity,
       totalPrice: item?.totalPrice,
       productImage,
-      productName: item?.Product?.name
+      productName: item?.Product?.name,
+      weight: item?.Product.weight
     }
     setChecked(event.target.checked)
     handleSubTotal(checkListItem, event.target.checked)
