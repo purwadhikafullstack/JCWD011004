@@ -13,7 +13,6 @@ const getAllTransaction = async (req, res) => {
     if (warehouseId) {
       whereCondition.warehouseId = warehouseId
     }
-    console.log(warehouseId)
 
     if (transactionStatusId) {
       whereCondition.transactionStatusId = transactionStatusId
