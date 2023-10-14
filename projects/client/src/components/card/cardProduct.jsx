@@ -10,11 +10,15 @@ function formatRupiah(number) {
 }
 
 function Card({ product }) {
-  console.log(product)
-  const stock = product?.Warehouse_Products
-    ? product?.Warehouse_Products[0]?.stock
-    : 0
-  const isProductActive = stock > 0
+  const totalStock = product.Warehouse_Products.reduce(
+    (accumulator, product) => {
+      return accumulator + (product.stock || 0)
+    },
+    0
+  )
+
+  const isProductActive = totalStock > 0
+
   return (
     <>
       <div className="flex items-center justify-center">
@@ -36,8 +40,10 @@ function Card({ product }) {
               <p className="mb-1 text-sm text-gray-600 truncate">
                 {product?.description}
               </p>
-              <p className="mb-1 text-xs text-gray-600 truncate">
-                {stock == 0 || !stock ? `Stock 0` : `Stock ${stock}`}
+              <p className="mb-1 text-xs text-gray-600 ">
+                {totalStock == 0 || !totalStock
+                  ? `Stock 0 `
+                  : `Stock ${totalStock}`}
               </p>
               <p className="mb-3 text-sm font-bold">
                 {formatRupiah(product?.price)}
