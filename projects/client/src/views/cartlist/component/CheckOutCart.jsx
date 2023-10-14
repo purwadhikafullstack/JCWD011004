@@ -54,7 +54,6 @@ function CheckOutCart() {
       : 0
 
   const productIdArray = subTotal?.map((item) => item.productId)
-  console.log(productIdArray)
 
   const combinedDataAddress =
     userAddress && userAddress[0]
@@ -69,7 +68,6 @@ function CheckOutCart() {
       : ''
 
   const warehouseId = dataCourier?.nearestWarehouse?.id
-  console.log(warehouseId)
 
   const total = totalAmount + shipping
 
