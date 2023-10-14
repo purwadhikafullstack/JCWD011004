@@ -3,6 +3,7 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Warehouse extends Model {
     static associate(models) {
+      this.hasMany(models.StockJournal, { foreignKey: 'warehouseId' })
       this.hasMany(models.Mutation, {
         foreignKey: 'fromWarehouse'
       })
@@ -37,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       subdistrict: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
         // allowNull: false
       },
       cityId: {
