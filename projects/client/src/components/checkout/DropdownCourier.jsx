@@ -1,77 +1,95 @@
 import { useEffect, useState } from 'react'
-import { PiPencilLineDuotone } from 'react-icons/pi'
 import { useDispatch, useSelector } from 'react-redux'
+import { ToastContainer, toast } from 'react-toastify'
 import {
-  addressDataId,
-  getAllAddress,
-  openAddAddress
-} from '../../services/reducer/addressReducer'
-import { ToastContainer } from 'react-toastify'
+  getCourier,
+  isCourierAvailable
+} from '../../services/reducer/courierReducer'
 
 export const DropdownCourier = () => {
-  const dataCourirer = useSelector((state) => state.dataCourier.courier)
-  console.log(dataCourirer)
+  const dispatch = useDispatch()
+  const dataCourier = useSelector((state) => state.dataCourier.courier)
+  const costCourier = dataCourier?.courier?.results[0].costs
   const { userData } = useSelector((state) => state.dataAddress.allAddress)
   const addressData = userData
-  const add = useSelector((state) => state.dataAddress.addAddress)
-  const dispatch = useDispatch()
-  const [selectedAddress, setSelectedAddress] = useState('')
-  console.log(addressData)
-  console.log(selectedAddress)
+  const isCourier = useSelector((state) => state.dataCourier.isCourier)
+  const isWait = useSelector((state) => state.dataCourier.wait)
+
+  const [selectedCourier, setSelectedCourier] = useState('')
+  const [selectedCourierType, setSelectedCourierType] = useState('')
+  const dataAllCourier = ['jne', 'pos', 'tiki']
+
+  const handleCourierChange = (event) => {
+    setSelectedCourier(event.target.value)
+    dispatch(isCourierAvailable(true))
+    dispatch(
+      getCourier(
+        addressData[event.target.value]?.cityId,
+        addressData[event.target.value]?.latitude,
+        addressData[event.target.value]?.longitude,
+        3454,
+        dataAllCourier[event.target.value]
+      )
+    )
+  }
 
   useEffect(() => {
-    dispatch(getAllAddress())
-  }, [])
+    if (!isCourier) {
+      const toastId = toast.error(
+        'Selected courier is unavailable. Please choose another one.',
+        {
+          position: toast.POSITION.TOP_CENTER
+        }
+      )
+      setTimeout(() => {
+        toast.dismiss(toastId)
+      }, 2000)
+    }
+  }, [isCourier])
 
-  const handleShowEdit = (index) => {
-    dispatch(openAddAddress(add === 0 ? 2 : 0))
-    dispatch(addressDataId(index))
+  const handleCourierTypeChange = (event) => {
+    setSelectedCourierType(event.target.value)
   }
-
-  const handleAddressChange = (event) => {
-    setSelectedAddress(event.target.value)
-  }
-
-  if (dataCourirer.success) {
+  if (dataCourier.success) {
     return (
       <div>
         <div>
           <select
-            value={selectedAddress}
-            onChange={handleAddressChange}
-            className="flex bg-white rounded-lg my-2 p-2 text-sm text-left"
+            value={selectedCourier}
+            onChange={handleCourierChange}
+            className="flex bg-white rounded-lg my-2 p-2 text-xs text-left w-60"
           >
-            <option value="">Select an address</option>
-            {addressData?.map((address, index) => (
-              <option key={index} value={address.id}>
-                {`${address.name} (${address.phone})`}
+            <option value="" disabled>
+              Select a courier
+            </option>
+            {dataAllCourier.map((courier, index) => (
+              <option key={index} value={index}>
+                {courier}
               </option>
             ))}
           </select>
-          {selectedAddress && (
-            <div className="bg-white rounded-lg p-2 text-sm text-left">
-              {addressData?.map((address, index) => {
-                if (address.id == selectedAddress) {
-                  return (
-                    <div key={address.id}>
-                      <div className="flex float-right">
-                        <a
-                          onClick={() => {
-                            handleShowEdit(index)
-                          }}
-                          className="cursor-pointer px-2"
-                        >
-                          <PiPencilLineDuotone />
-                        </a>
-                      </div>
-                      <p>{address?.address}</p>
-                      <p>{`${address?.subdistrict}, ${address?.cityRegency}, ${address?.province}`}</p>
-                      <p>{`Indonesia ${address?.postalcode}`}</p>
-                    </div>
-                  )
-                }
-                return null
-              })}
+          {selectedCourier !== '' && isCourier && (
+            <div className="w-60">
+              <select
+                className="bg-white rounded-lg p-2 text-xs text-left w-60"
+                value={selectedCourierType}
+                onChange={handleCourierTypeChange}
+              >
+                {isWait ? (
+                  <option value="">Please Wait..</option>
+                ) : (
+                  <option value="" disabled>
+                    Select a courier type
+                  </option>
+                )}
+                {costCourier &&
+                  costCourier?.map((cost, index) => (
+                    <option key={index} value={cost.service}>
+                      <span>{`(${cost.service}) ${cost.description}`}</span>
+                      <span>{`Ongkir (${cost.cost[0].value}), Estimasi ${cost.cost[0].etd}`}</span>
+                    </option>
+                  ))}
+              </select>
             </div>
           )}
         </div>

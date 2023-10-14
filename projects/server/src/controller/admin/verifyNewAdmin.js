@@ -12,7 +12,6 @@ const verifyAdminAccount = async (req, res) => {
       return res.status(400).json({ message: 'Passwords do not match.' })
     }
     const decoded = jwt.verify(token, process.env.JWT_KEY)
-    console.log(decoded)
     const user = await User.findOne({ where: { id: decoded.userId } })
     console.log(user)
     if (!user) {

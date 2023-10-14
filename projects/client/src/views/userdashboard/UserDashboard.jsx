@@ -29,7 +29,6 @@ function UserDashboard() {
           Authorization: `Bearer ${token}`
         }
       })
-      console.log(res)
       setUserData(res?.data?.userInfo)
       setLoading(false)
     } catch (error) {

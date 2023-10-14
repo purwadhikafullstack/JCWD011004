@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const initialState = {
-  courier: {}
+  courier: {},
+  isCourier: true,
+  wait: false
 }
 
 export const CourierReducer = createSlice({
@@ -11,6 +13,12 @@ export const CourierReducer = createSlice({
   reducers: {
     storeCourier: (state, action) => {
       state.courier = action.payload
+    },
+    isCourierAvailable: (state, action) => {
+      state.isCourier = action.payload
+    },
+    courierDataWait: (state, action) => {
+      state.wait = action.payload
     }
   }
 })
@@ -26,6 +34,7 @@ export const getCourier = (
   const userLongitude = parseFloat(longitude)
   const token = localStorage.getItem('token')
   return async (dispatch) => {
+    dispatch(courierDataWait(true))
     try {
       const { data } = await axios.post(
         'http://localhost:8000/api/ongkir/cost',
@@ -43,13 +52,15 @@ export const getCourier = (
           }
         }
       )
-      console.log(data)
       dispatch(storeCourier(data))
+      dispatch(courierDataWait(false))
     } catch (err) {
-      console.log(err.message)
+      dispatch(courierDataWait(false))
+      dispatch(isCourierAvailable(false))
     }
   }
 }
 
-export const { storeCourier } = CourierReducer.actions
+export const { storeCourier, isCourierAvailable, courierDataWait } =
+  CourierReducer.actions
 export default CourierReducer.reducer
