@@ -33,10 +33,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       invoiceNo: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         unique: true
       },
       totalItemPrice: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
+      shippingCost: {
         type: DataTypes.INTEGER,
         defaultValue: 0
       },
