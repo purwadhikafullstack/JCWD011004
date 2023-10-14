@@ -36,6 +36,9 @@ function Card({ product }) {
               <p className="mb-1 text-sm text-gray-600 truncate">
                 {product?.description}
               </p>
+              <p className="mb-1 text-xs text-gray-600 truncate">
+                {stock == 0 || !stock ? `Stock 0` : `Stock ${stock}`}
+              </p>
               <p className="mb-3 text-sm font-bold">
                 {formatRupiah(product?.price)}
               </p>
