@@ -2,6 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import AddToCartButton from './components/AddToCartButton'
 
+function formatRupiah(number) {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR'
+  }).format(number)
+}
+
 function Card({ product }) {
   console.log(product)
   const stock = product?.Warehouse_Products
@@ -29,7 +36,9 @@ function Card({ product }) {
               <p className="mb-1 text-sm text-gray-600 truncate">
                 {product?.description}
               </p>
-              <p className="mb-3 text-sm font-bold">IDR {product?.price}</p>
+              <p className="mb-3 text-sm font-bold">
+                {formatRupiah(product?.price)}
+              </p>
             </div>
           </Link>
           <div className="pb-3 text-center">
