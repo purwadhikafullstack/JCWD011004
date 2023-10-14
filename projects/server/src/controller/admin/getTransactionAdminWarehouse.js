@@ -25,7 +25,7 @@ const getAllTransactionAdmin = async (req, res) => {
       warehouseId: warehouseAdmin.warehouseId
     }
 
-    if (transactionStatusId !== undefined) {
+    if (transactionStatusId) {
       // Jika transactionStatusId disertakan dalam query string, tambahkan filter berdasarkan transactionStatusId
       whereCondition.transactionStatusId = transactionStatusId
     }

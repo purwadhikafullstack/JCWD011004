@@ -27,7 +27,7 @@ import ResidentTable from './views/adminDashboard/component/components/ResidentT
 import VerifyAdminChangePassword from './pages/VerifyAdminChangePassword'
 import PagesNotFound from './pages/PagesNotFound'
 import TabelSuperAdmin from './components/adminFilter/SuperAdmin/TabelSuperAdmin'
-// import TabelAdminWarehouse from './components/adminFilter/AdminWarehouse/TabelAdminWarehouse'
+import TabelAdminWarehouse from './components/adminFilter/AdminWarehouse/TabelAdminWarehouse'
 function App() {
   return (
     <div className="App">
@@ -98,7 +98,7 @@ function App() {
           <Route path="resident" element={<ResidentTable />} />
           <Route path="warehouse" element={<Warehouse />} />
           <Route path="order" element={<TabelSuperAdmin />} />
-          {/* <Route path="order-admin/:id" element={<TabelAdminWarehouse />} /> */}
+          <Route path="order-admin/:id" element={<TabelAdminWarehouse />} />
         </Route>
         <Route path="*" element={<PagesNotFound />}></Route>
       </Routes>
