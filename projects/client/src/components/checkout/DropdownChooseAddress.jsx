@@ -32,6 +32,7 @@ export const DropdownAddress = () => {
 
   const handleAddressChange = (event) => {
     setSelectedAddress(event.target.value)
+    dispatch(addressDataId(event.target.value))
   }
 
   useEffect(() => {

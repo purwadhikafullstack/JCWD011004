@@ -67,7 +67,8 @@ const userOngkir = {
       )
       return res.status(200).json({
         success: 'Get courier succeed',
-        courier: data.rajaongkir
+        courier: data.rajaongkir,
+        nearestWarehouse
       })
     } catch (err) {
       return res.status(500).json({

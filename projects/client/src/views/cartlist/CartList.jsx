@@ -9,6 +9,7 @@ import CartSort from './component/CartSort'
 import { BsFillCartXFill } from 'react-icons/bs'
 import ModalDeleteItem from './component/ModalDeleteItem'
 import CheckoutCard from '../../components/checkout/checkoutCardList'
+import { ToastContainer } from 'react-toastify'
 
 function CartList() {
   const [totalPages, setTotalPages] = useState(0)
@@ -128,6 +129,7 @@ function CartList() {
           fetchData={fetchData}
         />
       </div>
+      <ToastContainer />
     </div>
   )
 }
