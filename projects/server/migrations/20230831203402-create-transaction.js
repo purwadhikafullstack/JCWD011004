@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -19,6 +19,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       totalItemPrice: {
+        type: Sequelize.INTEGER
+      },
+      shippingCost: {
         type: Sequelize.INTEGER
       },
       totalPrice: {
@@ -47,9 +50,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Transactions');
+    await queryInterface.dropTable('Transactions')
   }
-};
+}

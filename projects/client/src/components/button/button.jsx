@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 // eslint-disable-next-line
 const apiUrl = process.env.REACT_APP_API_BASE_URL
-export function UploadButton({ transactionId, userId, onCancel, loading }) {
+export function UploadButton({ transactionId, userId, cancel, loading }) {
   const [isLoading, setIsLoading] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
 
@@ -54,9 +54,37 @@ export function UploadButton({ transactionId, userId, onCancel, loading }) {
     }
   }
 
-  const handleCancel = () => {
-    if (onCancel) {
-      onCancel()
+  const handleCancel = async () => {
+    try {
+      const token = localStorage.getItem('token')
+      const { data } = await axios.patch(
+        `${apiUrl}/transaction/status/${transactionId}`,
+        {
+          transactionStatusId: 5
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+      if (data.success) {
+        const toastId = toast.success('Transaction Cancelled', {
+          position: toast.POSITION.TOP_CENTER
+        })
+        setTimeout(() => {
+          toast.dismiss(toastId)
+          cancel()
+        }, 2000)
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error)
+      const toastId = toast.error('Failed to cancel', {
+        position: toast.POSITION.TOP_CENTER
+      })
+      setTimeout(() => {
+        toast.dismiss(toastId)
+      }, 2000)
     }
   }
 

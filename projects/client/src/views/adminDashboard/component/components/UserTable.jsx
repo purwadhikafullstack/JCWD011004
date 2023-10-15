@@ -36,7 +36,7 @@ function UserTable() {
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false)
   const [updateData, setUpdateData] = useState({})
   const itemsPerPage = 10
-  console.log(data)
+
   const handleActiveSortChange = (newSort) => {
     setSortActiveUser(newSort)
   }

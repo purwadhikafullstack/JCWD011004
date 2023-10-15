@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { openAddAddress } from '../../services/reducer/addressReducer'
 import { UpdateAddress } from '../../views/userdashboard/component/address/UpdateAddress'
 import { DropdownAddress } from './DropdownChooseAddress'
+import { DropdownCourier } from './DropdownCourier'
 
 function CheckoutAddress() {
   const add = useSelector((state) => state.dataAddress.addAddress)
@@ -29,6 +30,7 @@ function CheckoutAddress() {
       ) : (
         <UpdateAddress />
       )}
+      <DropdownCourier />
     </div>
   )
 }

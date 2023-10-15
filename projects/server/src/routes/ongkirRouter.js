@@ -1,9 +1,8 @@
-//routes/userUpdate.js
 const express = require('express')
 const router = express.Router()
 const { authenticate } = require('../middleware/userAuth')
-const { productOngkir } = require('../controller')
+const { courierOngkir } = require('../controller')
 
-router.post('/cost', authenticate, productOngkir)
+router.post('/cost', authenticate, courierOngkir)
 
 module.exports = router

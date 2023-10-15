@@ -16,7 +16,6 @@ export default function TableDashboardPemesananKonfirmasi() {
           `${apiUrl}/transaction/all-status?userId=${userId}&transactionStatusId=1`
         )
         setData(response.data.allOrderStatus)
-        console.log(response.data.allOrderStatus)
       }
     } catch (error) {
       console.error('Error fetching data:', error)

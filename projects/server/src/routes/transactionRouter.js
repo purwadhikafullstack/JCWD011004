@@ -1,14 +1,22 @@
 const express = require('express')
 const router = express.Router()
+
 const {
-  getAllOrderStatus
-} = require('../controller/transaction/getOrderStatus')
-const { rejectPayment, updatePaymentStatus } = require('../controller')
+  rejectPayment,
+  updatePaymentStatus,
+  getAllOrderStatus,
+  createOrder,
+  updateStatus
+} = require('../controller')
 const { getPaymentProofImage } = require('../service/paymentService')
 
-router.get('/all-status/', getAllOrderStatus)
-router.get('/payment-proof/:transactionId', getPaymentProofImage)
-router.put('/reject-payment/:id', rejectPayment)
+const { authenticate } = require('../middleware/userAuth')
+
 router.put('/payment/:id', updatePaymentStatus)
+router.put('/reject-payment/:id', rejectPayment)
+router.get('/payment-proof/:transactionId', getPaymentProofImage)
+router.get('/all-status/', getAllOrderStatus)
+router.post('/order', authenticate, createOrder)
+router.patch('/status/:transactionId', authenticate, updateStatus)
 
 module.exports = router

@@ -34,10 +34,12 @@ const { getUsersSortPagination } = require('./admin/getUserData')
 const getWarehouse = require('./admin/getWarehouses')
 const { createWarehouseAdmin } = require('./admin/createAdmin')
 const { verifyAdminAccount } = require('./admin/verifyNewAdmin')
-const  getAllTrasaction  = require('./admin/getAllTrasaction')
-const getAllTransactionAdmin = require('./admin/getTransactionAdminWarehouse')
-const { productOngkir } = require('./ongkir/getOngkir')
+const { courierOngkir } = require('./ongkir/getOngkir')
 const updateWarehouseAdmin = require('./admin/updateAdmin')
+const { createOrder } = require('./transaction/order')
+const { updateStatus } = require('./transaction/transactionStatus')
+const getAllTrasaction = require('./admin/getAllTrasaction')
+const getAllTransactionAdmin = require('./admin/getTransactionAdminWarehouse')
 const { getAdminInfo } = require('./admin/adminKeepLogin')
 const {rejectPayment} = require('./transaction/confirmationPayment')
 const {updatePaymentStatus} = require('./transaction/mutationAndConfirmation')
@@ -80,11 +82,13 @@ module.exports = {
   getWarehouses,
   createWarehouseAdmin,
   verifyAdminAccount,
-  productOngkir,
+  courierOngkir,
   updateWarehouseAdmin,
+  createOrder,
   getAllTrasaction,
   getAllTransactionAdmin,
   getAdminInfo,
   rejectPayment,
-  updatePaymentStatus
+  updatePaymentStatus,
+  updateStatus
 }
