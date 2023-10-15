@@ -108,8 +108,17 @@ const updatePaymentStatus = async (req, res) => {
               'increment',
               `mutation_${mutation.id}`
             )
+            await createStockJournal(
+              transaction.warehouseId,
+              newTransactionItem.id,
+              mutationQuantity,
+              'decrement',
+              `sales_${transaction.id}`
+            )
 
             // Perbarui stok di kedua gudang dan simpan perubahan
+            newTransactionItem.stock = 0
+            await newTransactionItem.save()
             warehouseProductClosest.stock -= mutationQuantity
             await warehouseProductClosest.save()
             break // Keluar dari loop setelah menemukan gudang dengan stok cukup
@@ -120,7 +129,7 @@ const updatePaymentStatus = async (req, res) => {
           await createStockJournal(
             warehouseProduct.warehouseId,
             warehouseProduct.id,
-            -item.quantity,
+            item.quantity,
             'decrement',
             `sales_${transaction.id}`
           )
@@ -169,6 +178,13 @@ const updatePaymentStatus = async (req, res) => {
                 mutationQuantity,
                 'increment',
                 `mutation_${mutation.id}`
+              )
+              await createStockJournal(
+                transaction.warehouseId,
+                warehouseProduct.id,
+                mutationQuantity,
+                'decrement',
+                `sales_${transaction.id}`
               )
 
               // Perbarui stok di kedua gudang dan simpan perubahan
