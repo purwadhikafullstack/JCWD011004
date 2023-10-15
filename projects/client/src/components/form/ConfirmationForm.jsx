@@ -10,18 +10,41 @@ const apiurl = process.env.REACT_APP_API_BASE_URL
 function ConfirmationForm({ data, onClose }) {
   const [paymentProof, setPaymentProof] = useState(null)
   const [loading, setLoading] = useState(false)
+
+  const handleConfirmPayment = async () => {
+    try {
+      setLoading(true)
+      const res = await axios.put(`${apiurl}/transaction/payment/${data?.id}}`)
+      console.log(res)
+      if (res?.status === 200) {
+        toast.success('Payment confirmed', {
+          autoClose: 2000,
+          position: 'bottom-center'
+        })
+        onClose
+      }
+    } catch (error) {
+      toast.error(error?.message, {
+        autoClose: 2000,
+        position: 'bottom-center'
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
   const handleRejectPayment = async () => {
     try {
       setLoading(true)
       const res = await axios.put(
         `${apiurl}/transaction/reject-payment/${data?.id}}`
       )
-      res?.status === 200 &&
+      if (res?.status === 200) {
         toast.success('Payment rejected', {
           autoClose: 2000,
           position: 'bottom-center'
         })
-      onClose
+        onClose
+      }
     } catch (error) {
       toast.error(error?.message, {
         autoClose: 2000,
@@ -138,9 +161,10 @@ function ConfirmationForm({ data, onClose }) {
         <div className="flex justify-end gap-4 pt-6">
           <button
             disabled={loading}
+            onClick={handleConfirmPayment}
             className={`${
               loading ? 'bg-orange-400' : 'bg-orange-600'
-            } text-white rounded-md p-2 hover:bg-orange-400 active:bg-orange-600`}
+            } text-white rounded-md  p-2 hover:bg-orange-400 active:bg-orange-600`}
           >
             {loading ? '...' : 'Confirm payment'}
           </button>
