@@ -42,6 +42,8 @@ const getAllTrasaction = require('./admin/getAllTrasaction')
 const getAllTransactionAdmin = require('./admin/getTransactionAdminWarehouse')
 const { getAdminInfo } = require('./admin/adminKeepLogin')
 
+const { updateAllByRangeTime } = require('./transaction/transactionStatus')
+
 module.exports = {
   registerUser,
   login,
@@ -87,5 +89,6 @@ module.exports = {
   getAllTrasaction,
   getAllTransactionAdmin,
   getAdminInfo,
-  updateStatus
+  updateStatus,
+  updateAllByRangeTime
 }
