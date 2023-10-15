@@ -26,6 +26,7 @@ module.exports = {
         warehouseId: 1, // Ganti dengan warehouseId yang sesuai
         invoiceNo: 1002, // Ganti dengan nomor faktur yang sesuai
         totalItemPrice: 400, // Total harga item
+        shippingCost: 3000,
         totalPrice: 450, // Total harga keseluruhan
         shippingAddress: 'Alamat Pengiriman 2',
         paymentMethod: 'Metode Pembayaran 2',
@@ -41,6 +42,7 @@ module.exports = {
         warehouseId: 2, // Ganti dengan warehouseId yang sesuai
         invoiceNo: 1003, // Ganti dengan nomor faktur yang sesuai
         totalItemPrice: 500, // Total harga item
+        shippingCost: 3000,
         totalPrice: 550, // Total harga keseluruhan
         shippingAddress: 'Alamat Pengiriman 3',
         paymentMethod: 'Metode Pembayaran 3',
@@ -56,6 +58,7 @@ module.exports = {
         warehouseId: 2, // Ganti dengan warehouseId yang sesuai
         invoiceNo: 1004, // Ganti dengan nomor faktur yang sesuai
         totalItemPrice: 600, // Total harga item
+        shippingCost: 3000,
         totalPrice: 650, // Total harga keseluruhan
         shippingAddress: 'Alamat Pengiriman 4',
         paymentMethod: 'Metode Pembayaran 4',

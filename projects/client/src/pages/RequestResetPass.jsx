@@ -36,7 +36,6 @@ function RequestResetPass() {
           headers: { Authorization: `Bearer ${token}` }
         }
       )
-      console.log(response)
       if (response.status === 200) {
         toast.success('Reset Password Berhasil Silahkan login', {
           position: toast.POSITION.TOP_CENTER

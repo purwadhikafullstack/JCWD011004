@@ -5,9 +5,33 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import AddToCartButton from './components/AddToCartButton'
 // eslint-disable-next-line
 const apiUrl = process.env.REACT_APP_API_BASE_URL
+
+function formatRupiah(number) {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR'
+  }).format(number)
+}
+
 function ProductDetailPage({ id }) {
   const [productData, setProductData] = useState(null)
   const [quantity, setQuantity] = useState(1)
+  const [stateDisabled, setStateDisabled] = useState(false)
+
+  const totalStock = productData?.Warehouse_Products.reduce(
+    (accumulator, product) => {
+      return accumulator + (product.stock || 0)
+    },
+    0
+  )
+
+  useEffect(() => {
+    if (totalStock - quantity === 0) {
+      setStateDisabled(true)
+    } else {
+      setStateDisabled(false)
+    }
+  }, [quantity, totalStock])
 
   useEffect(() => {
     const apiurl = `${apiUrl}/product/${id}`
@@ -50,8 +74,11 @@ function ProductDetailPage({ id }) {
         </div>
         <div className="md:w-1/2 p-4">
           <h2 className="text-2xl font-bold">{productData.name}</h2>
-          <p className="mb-4 text-lg">{productData.description}</p>
-          <p className="mb-4 text-xl font-bold">IDR {productData.price}</p>
+          <p className="text-lg">{productData.description}</p>
+          <p className="mb-4 text-gray-600">Stock {totalStock}</p>
+          <p className="mb-4 text-xl font-bold">
+            {formatRupiah(productData.price)}
+          </p>
           <div className="flex items-center justify-center mb-4">
             <button
               className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
@@ -76,6 +103,7 @@ function ProductDetailPage({ id }) {
             />
             <button
               className="px-4 py-2 bg-orange-300 text-black rounded-full hover:bg-orange-400 focus:outline-none"
+              disabled={stateDisabled}
               onClick={() => setQuantity(quantity + 1)}
             >
               +
