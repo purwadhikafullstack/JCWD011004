@@ -3,7 +3,6 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 function DeleteModal({ id, isOpen, onClose }) {
-  console.log(id)
   const handleClick = async () => {
     try {
       const response = await axios.delete(
@@ -11,7 +10,6 @@ function DeleteModal({ id, isOpen, onClose }) {
       )
 
       if (response.status === 200) {
-        console.log('Gudang berhasil dihapus')
         toast.success('Gudang berhasil dihapus'),
           {
             position: toast.POSITION.TOP_CENTER
