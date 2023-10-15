@@ -37,100 +37,173 @@ const sendEmail = async (email, subject, text) => {
 // Fungsi utama untuk memperbarui status pembayaran
 const updatePaymentStatus = async (req, res) => {
   try {
-    // Mencari transaksi berdasarkan id
     const transaction = await Transaction.findOne({
       where: { id: req.params.id },
-      include: [Transaction_Item, User] // Menambahkan User ke include
+      include: [
+        Transaction_Item,
+        User,
+        { model: Warehouse, include: [Warehouse_Product] }
+      ]
     })
 
-    // Jika transaksi tidak ditemukan, kirim pesan error
     if (!transaction) {
       return res.status(404).json({ message: 'Transaction not found' })
     }
 
-    // Memeriksa setiap item dalam transaksi
+    let isOrderFulfilled = true
+
     for (let item of transaction.Transaction_Items) {
-      let warehouseProduct = await Warehouse_Product.findOne({
-        where: { productId: item.productId }
-      })
-
-      // Jika jumlah item lebih besar dari stok di gudang, cari gudang lain dengan stok cukup
-      while (item.quantity > warehouseProduct.stock) {
-        let closestWarehouse = await getClosestWarehouseWithStock(
-          item.productId,
-          warehouseProduct.warehouseId
-        )
-
-        // Jika tidak ada gudang lain dengan stok cukup, perbarui status transaksi dan kirim email notifikasi ke pengguna
-        if (!closestWarehouse) {
-          transaction.transactionStatusId = 5
-          await transaction.save()
-          await sendEmail(
-            transaction.User.email,
-            'Refund Needed',
-            `There is not enough stock in any warehouse for your order. Please contact customer support for a refund. Your invoice number is ${transaction.invoiceNumber}.`
-          )
-          return res.json({ message: 'Not enough stock in any warehouse' })
-        }
-
-        // Jika ada gudang lain dengan stok cukup, buat mutasi stok dari gudang terdekat ke gudang asli
-        let mutationQuantity = Math.min(
-          item.quantity - warehouseProduct.stock,
-          closestWarehouse.stock
-        )
-        const mutation = await createMutation(
-          closestWarehouse.id,
-          warehouseProduct.warehouseId,
-          mutationQuantity
-        )
-
-        // Buat jurnal stok untuk perubahan stok
-        await createStockJournal(
-          closestWarehouse.id,
-          closestWarehouse.Warehouse_Product.id,
-          -mutationQuantity,
-          'decrement',
-          `mutation_${mutation.id}`
-        )
-        await createStockJournal(
-          warehouseProduct.warehouseId,
-          warehouseProduct.id,
-          mutationQuantity,
-          'increment',
-          `mutation_${mutation.id}`
-        )
-
-        // Perbarui stok di kedua gudang dan simpan perubahan
-        warehouseProduct.stock += mutationQuantity
-        closestWarehouse.stock -= mutationQuantity
-        await warehouseProduct.save()
-        await closestWarehouse.save()
-      }
-
-      // Buat jurnal stok untuk penjualan dan perbarui stok di gudang asli
-      await createStockJournal(
-        warehouseProduct.warehouseId,
-        warehouseProduct.id,
-        -item.quantity,
-        'decrement',
-        `sales_${transaction.id}`
+      let warehouseProduct = transaction.Warehouse.Warehouse_Products.find(
+        (wp) =>
+          wp.warehouseId === transaction.warehouseId &&
+          wp.productId === item.productId
       )
-      warehouseProduct.stock -= item.quantity
-      await warehouseProduct.save()
+
+      if (!warehouseProduct) {
+        let newTransactionItem = await Warehouse_Product.create({
+          productId: item.productId,
+          warehouseId: transaction.warehouseId,
+          stock: 0
+        })
+
+        const closestWarehouses = await getClosestWarehousesWithStock(
+          item.productId,
+          transaction.warehouseId,
+          item.quantity
+        )
+
+        for (let closestWarehouse of closestWarehouses) {
+          let warehouseProductClosest = await Warehouse_Product.findOne({
+            where: {
+              warehouseId: closestWarehouse.id,
+              productId: item.productId
+            }
+          })
+
+          if (
+            warehouseProductClosest &&
+            item.quantity <= warehouseProductClosest.stock
+          ) {
+            let mutationQuantity = item.quantity
+
+            const mutation = await createMutation(
+              closestWarehouse.id,
+              transaction.warehouseId,
+              mutationQuantity,
+              item.productId
+            )
+
+            // Buat jurnal stok untuk perubahan stok
+            await createStockJournal(
+              closestWarehouse.id,
+              warehouseProductClosest.id,
+              mutationQuantity,
+              'decrement',
+              `mutation_${mutation.id}`
+            )
+            await createStockJournal(
+              transaction.warehouseId,
+              newTransactionItem.id,
+              mutationQuantity,
+              'increment',
+              `mutation_${mutation.id}`
+            )
+
+            // Perbarui stok di kedua gudang dan simpan perubahan
+            warehouseProductClosest.stock -= mutationQuantity
+            await warehouseProductClosest.save()
+            break // Keluar dari loop setelah menemukan gudang dengan stok cukup
+          }
+        }
+      } else {
+        if (warehouseProduct && item.quantity <= warehouseProduct.stock) {
+          await createStockJournal(
+            warehouseProduct.warehouseId,
+            warehouseProduct.id,
+            -item.quantity,
+            'decrement',
+            `sales_${transaction.id}`
+          )
+          warehouseProduct.stock -= item.quantity
+          await warehouseProduct.save()
+        } else {
+          const closestWarehouses = await getClosestWarehousesWithStock(
+            item.productId,
+            transaction.warehouseId,
+            item.quantity - warehouseProduct.stock
+          )
+
+          for (let closestWarehouse of closestWarehouses) {
+            let warehouseProductClosest = await Warehouse_Product.findOne({
+              where: {
+                warehouseId: closestWarehouse.id,
+                productId: item.productId
+              }
+            })
+
+            if (
+              warehouseProductClosest &&
+              item.quantity <=
+                warehouseProductClosest.stock + warehouseProduct.stock
+            ) {
+              let mutationQuantity = item.quantity - warehouseProduct.stock
+
+              const mutation = await createMutation(
+                closestWarehouse.id,
+                transaction.warehouseId,
+                mutationQuantity,
+                item.productId
+              )
+
+              // Buat jurnal stok untuk perubahan stok
+              await createStockJournal(
+                closestWarehouse.id,
+                warehouseProductClosest.id,
+                mutationQuantity,
+                'decrement',
+                `mutation_${mutation.id}`
+              )
+              await createStockJournal(
+                transaction.warehouseId,
+                warehouseProduct.id,
+                mutationQuantity,
+                'increment',
+                `mutation_${mutation.id}`
+              )
+
+              // Perbarui stok di kedua gudang dan simpan perubahan
+              warehouseProduct.stock = 0
+              await warehouseProduct.save()
+
+              warehouseProductClosest.stock -= mutationQuantity
+              await warehouseProductClosest.save()
+
+              break // Keluar dari loop setelah menemukan gudang dengan stok cukup
+            }
+          }
+        }
+      }
     }
 
-    // Perbarui status transaksi dan simpan perubahan
-    transaction.transactionStatusId = 3
-    transaction.paymentStatus = true
-    await transaction.save()
+    if (isOrderFulfilled) {
+      transaction.transactionStatusId = 3
+      transaction.paymentStatus = true
+      await transaction.save()
 
-    // Kirim email notifikasi ke pengguna bahwa pesanan mereka sedang dikirim dan kirim pesan sukses ke pengguna
-    await sendEmail(
-      transaction.User.email,
-      'Order Shipped',
-      `Your order has been shipped. Your invoice number is ${transaction.invoiceNumber}.`
-    )
-    res.json({ message: 'Payment confirmed successfully' })
+      await sendEmail(
+        transaction.User.email,
+        'Order Shipped',
+        `Your order has been shipped. Your invoice number is ${transaction.invoiceNo}.`
+      )
+      res.json({ message: 'Payment confirmed successfully' })
+    } else {
+      await sendEmail(
+        transaction.User.email,
+        'Order Cancelled',
+        `Order Cancelled. There is not enough stock in any warehouse for your order. Please contact customer support for a refund. Your invoice number is ${transaction.invoiceNo}.`
+      )
+      res.json({ message: 'Order cancelled due to insufficient stock' })
+    }
   } catch (err) {
     console.error(err)
     res.status(500).json({ message: 'Server error' })
@@ -138,20 +211,32 @@ const updatePaymentStatus = async (req, res) => {
 }
 
 // Fungsi untuk mendapatkan gudang terdekat dengan stok cukup untuk produk tertentu
-const getClosestWarehouseWithStock = async (productId, warehouseId) => {
+const getClosestWarehousesWithStock = async (
+  productId,
+  warehouseId,
+  quantity
+) => {
   try {
     const warehouses = await Warehouse.findAll({
       include: [
         {
           model: Warehouse_Product,
-          where: { productId: productId, stock: { [Op.gt]: 0 } }
+          where: { productId: productId, stock: { [Op.gte]: quantity } }
         }
       ]
     })
+    // Throw an error if there are no warehouses with the requested product in stock
+    if (warehouses.length === 0) {
+      throw new Error(`Product with id ${productId} is out of stock`)
+    }
+    // Mencari currentWarehouse secara terpisah
+    const currentWarehouse = await Warehouse.findByPk(warehouseId)
 
-    const currentWarehouse = warehouses.find(
-      (warehouse) => warehouse.id === warehouseId
-    )
+    // Tambahkan pengecekan ini di sini
+    if (!currentWarehouse) {
+      throw new Error(`Warehouse with id ${warehouseId} not found`)
+    }
+
     warehouses.forEach((warehouse) => {
       const distance = calculateDistance(
         currentWarehouse.longitude,
@@ -163,8 +248,8 @@ const getClosestWarehouseWithStock = async (productId, warehouseId) => {
     })
 
     warehouses.sort((a, b) => a.distance - b.distance)
-
-    return warehouses.length > 0 ? warehouses[0] : null
+    // console.log(warehouses, 'ini sorted warehouses')
+    return warehouses
   } catch (err) {
     console.error(err)
     throw err
@@ -193,15 +278,21 @@ const deg2rad = (deg) => {
 }
 
 // Fungsi untuk membuat mutasi stok
-const createMutation = async (fromWarehouseId, toWarehouseId, quantity) => {
+const createMutation = async (
+  fromWarehouseId,
+  toWarehouseId,
+  quantity,
+  productId
+) => {
   try {
     const mutation = await Mutation.create({
       fromWarehouse: fromWarehouseId,
       toWarehouse: toWarehouseId,
       quantity: quantity,
+      productId: productId,
+      description: 'Stock',
       action: 'Transfer'
     })
-
     return mutation
   } catch (err) {
     console.error(err)
