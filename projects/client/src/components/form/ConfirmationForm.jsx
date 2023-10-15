@@ -1,195 +1,162 @@
-import React, { useEffect } from 'react'
-import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
+import React, { useEffect, useState } from 'react'
+
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const token = localStorage.getItem('token')
 // eslint-disable-next-line no-undef
 const apiurl = process.env.REACT_APP_API_BASE_URL
-const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
-  username: Yup.string().required('Required'),
-  firstName: Yup.string().required('Required'),
-  lastName: Yup.string().required('Required'),
-  phoneNumber: Yup.string()
-    .required('Required')
-    .min(9, 'Phone number must be at least 9 digits long')
-    .test('is-number', 'Invalid phone number', (value) => {
-      if (!value) {
-        return false
-      }
 
-      const regex = /^[0-9]*$/
-      return regex.test(value)
-    }),
-  warehouseId: Yup.string().required('Required')
-})
-
-function ConfirmationForm() {
-  const handleSubmit = async (values, { setSubmitting }) => {
+function ConfirmationForm({ data, onClose }) {
+  const [paymentProof, setPaymentProof] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const handleRejectPayment = async () => {
     try {
-      const res = await axios.post(
-        `${apiurl}/admin/create-warehouse-admin`,
-        { ...values },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+      setLoading(true)
+      const res = await axios.put(
+        `${apiurl}/transaction/reject-payment/${data?.id}}`
       )
-      console.log(res)
-      toast.success('Admin created successfully!', {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
+      res?.status === 200 &&
+        toast.success('Payment rejected', {
+          autoClose: 2000,
+          position: 'bottom-center'
+        })
+      onClose
     } catch (error) {
-      console.log(error, 'ni errror')
-      toast.error(error.response.data.message, {
-        position: toast.POSITION.BOTTOM_CENTER
+      toast.error(error?.message, {
+        autoClose: 2000,
+        position: 'bottom-center'
       })
     } finally {
-      setSubmitting(false)
+      setLoading(false)
     }
   }
-
-  useEffect(() => {}, [])
-
-  const formikProps = {
-    initialValues: {
-      email: '',
-      username: '',
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      warehouseId: 0
-    },
-    validationSchema,
-    onSubmit: handleSubmit
+  const fetchImage = async () => {
+    const response = await axios.get(
+      `${apiurl}/transaction/payment-proof/${data?.id}`
+    )
+    setPaymentProof(response?.data?.imageURL)
   }
+
+  useEffect(() => {
+    fetchImage()
+  }, [])
 
   return (
     <>
-      <Formik {...formikProps}>
-        {({ errors, touched }) => {
-          return (
-            <Form className="max-w-md mx-auto">
-              <table className="w-full">
-                <tbody>
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="username"
-                        className="block font-medium text-gray-700"
-                      >
-                        Username
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <label
-                        htmlFor="username"
-                        className="block font-medium text-gray-700"
-                      >
-                        Username
-                      </label>
-                    </td>
-                  </tr>
+      {data?.transactionStatusId !== 0 && (
+        <>
+          <img className="w-auto h-52 mx-auto" src={paymentProof} />
+        </>
+      )}
+      <table className="w-full">
+        <tbody>
+          <tr>
+            <td className="p-4">
+              <label className="block font-medium text-gray-700">
+                Username
+              </label>
+            </td>
+            <td className="p-4">
+              <label
+                htmlFor="username"
+                className="block font-medium text-gray-700"
+              >
+                {data?.User?.username}
+              </label>
+            </td>
+          </tr>
 
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="WarehouseName"
-                        className="block font-medium text-gray-700"
-                      >
-                        Warehouse Name
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <label
-                        htmlFor="WarehouseName"
-                        className="block font-medium text-gray-700"
-                      >
-                        Name Gudang
-                      </label>
-                    </td>
-                  </tr>
+          <tr>
+            <td className="p-4">
+              <label className="block font-medium text-gray-700">
+                Warehouse Name
+              </label>
+            </td>
+            <td className="p-4">
+              <label className="block font-medium text-gray-700">
+                {data?.Warehouse?.name}
+              </label>
+            </td>
+          </tr>
 
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="payment"
-                        className="block font-medium text-gray-700"
-                      >
-                        Payment Method
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <label
-                        htmlFor="firstName"
-                        className="block font-medium text-gray-700"
-                      >
-                        BCA
-                      </label>
-                    </td>
-                  </tr>
+          <tr>
+            <td className="p-4">
+              <label className="block font-medium text-gray-700">
+                Payment Method
+              </label>
+            </td>
+            <td className="p-4">
+              <label className="block font-medium text-gray-700">
+                {data?.paymentMethod}
+              </label>
+            </td>
+          </tr>
 
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="payment"
-                        className="block font-medium text-gray-700"
-                      >
-                        Shipping Address
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <label
-                        htmlFor="payment"
-                        className="block font-medium text-gray-700"
-                      >
-                        Shipping Address
-                      </label>
-                    </td>
-                  </tr>
+          <tr>
+            <td className="p-4">
+              <label className="block font-medium text-gray-700">
+                Shipping Address
+              </label>
+            </td>
+            <td className="p-4">
+              <label className="block font-medium text-gray-700">
+                {data?.shippingAddress}
+              </label>
+            </td>
+          </tr>
 
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="payment"
-                        className="block font-medium text-gray-700"
-                      >
-                        Payment Status
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <label
-                        htmlFor="payment"
-                        className="block font-medium text-gray-700"
-                      >
-                        Payment Status
-                      </label>
-                    </td>
-                  </tr>
+          <tr>
+            <td className="p-4">
+              <label className="block font-medium text-gray-700">
+                Payment Status
+              </label>
+            </td>
+            <td className="p-4">
+              <label
+                htmlFor="payment"
+                className={` text-white rounded-xl block font-medium  ${
+                  data?.paymentStatus ? 'bg-green-700' : 'bg-red-600'
+                }`}
+              >
+                {data?.paymentStatus ? 'Confirmed' : 'Not confirmed'}
+              </label>
+            </td>
+          </tr>
 
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="warehouse"
-                        className="block font-medium text-gray-700"
-                      >
-                        Rp 7.700.00
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <button>confirm payment</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </Form>
-          )
-        }}
-      </Formik>
+          <tr>
+            <td className="p-4">
+              <label className="block font-medium text-gray-700">
+                Total Payment
+              </label>
+            </td>
+            <td>Rp.{data?.totalPrice}</td>
+          </tr>
+        </tbody>
+      </table>
+      {data?.transactionStatusId === 1 && (
+        <div className="flex justify-end gap-4 pt-6">
+          <button
+            disabled={loading}
+            className={`${
+              loading ? 'bg-orange-400' : 'bg-orange-600'
+            } text-white rounded-md p-2 hover:bg-orange-400 active:bg-orange-600`}
+          >
+            {loading ? '...' : 'Confirm payment'}
+          </button>
+
+          <button
+            onClick={handleRejectPayment}
+            disabled={loading}
+            className={`${
+              loading ? 'bg-orange-400' : 'bg-orange-600'
+            } text-white rounded-md p-2 hover:bg-orange-400 active:bg-orange-600`}
+          >
+            {loading ? '...' : 'Reject payment'}
+          </button>
+        </div>
+      )}
+
       <ToastContainer />
     </>
   )

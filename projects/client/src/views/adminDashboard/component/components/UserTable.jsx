@@ -93,10 +93,10 @@ function UserTable() {
       </div>
       <div className="flex flex-col">
         <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-          <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+          <div className="py-10 inline-block min-w-full sm:px-6 lg:px-8">
             <div className="overflow-hidden">
               <table className="min-w-full">
-                <thead className="bg-white border-b">
+                <thead className="bg-gray-100 border-b">
                   <tr>
                     {tableHead &&
                       tableHead.map((item, index) => (
@@ -116,7 +116,7 @@ function UserTable() {
                       let currentIndex =
                         (currentPage - 1) * itemsPerPage + i + 1
                       return (
-                        <tr key={currentIndex} className="bg-gray-100 border-b">
+                        <tr key={currentIndex} className="bg-white border-b">
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                             {currentIndex}
                           </td>

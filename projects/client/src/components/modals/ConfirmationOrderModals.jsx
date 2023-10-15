@@ -1,7 +1,7 @@
 import React from 'react'
 import ConfirmationForm from '../form/ConfirmationForm'
 
-const CreateAdminModal = ({ isOpen, onClose }) => {
+const CreateAdminModal = ({ isOpen, onClose, data }) => {
   return (
     <div className="flex container mx-auto p-10 justify-center items-start ">
       {isOpen && (
@@ -36,7 +36,7 @@ const CreateAdminModal = ({ isOpen, onClose }) => {
             </div>
             <div className="flex w-full h-auto py-10 px-2 justify-center items-center bg-gray-200 rounded text-center text-gray-500 mb-3">
               <div className="inline-block" style={{ width: 'fit-content' }}>
-                <ConfirmationForm />
+                <ConfirmationForm data={data} onClose={onClose} />
               </div>
             </div>
           </div>

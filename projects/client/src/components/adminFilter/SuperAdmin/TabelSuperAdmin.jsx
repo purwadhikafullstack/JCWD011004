@@ -30,9 +30,11 @@ const TabelSuperAdmin = () => {
   const [admin, setAdmin] = useState()
   const [warehouseFilter, setWarehouseFilter] = useState('')
   const [isModalConfirmationOpen, setIsModalConfirmationOpen] = useState(false)
+  const [transaction, setTransactions] = useState({})
 
-  const handleConfirmationModalOpen = () => {
+  const handleConfirmationModalOpen = (data) => {
     setIsModalConfirmationOpen(!isModalConfirmationOpen)
+    setTransactions(data)
   }
   const fetchWarehouses = async () => {
     try {
@@ -75,7 +77,7 @@ const TabelSuperAdmin = () => {
 
   useEffect(() => {
     fetchData()
-  }, [warehouseFilter, transactionStatusFilter])
+  }, [warehouseFilter, transactionStatusFilter, isModalConfirmationOpen])
 
   useEffect(() => {
     fetchWarehouses()
@@ -190,7 +192,7 @@ const TabelSuperAdmin = () => {
                 </td>
                 <td className="px-6 py-4 text-sm">
                   <button
-                    onClick={handleConfirmationModalOpen}
+                    onClick={() => handleConfirmationModalOpen(item)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                   >
                     Edit
@@ -204,6 +206,7 @@ const TabelSuperAdmin = () => {
       <ConfirmationOrderModals
         isOpen={isModalConfirmationOpen}
         onClose={handleConfirmationModalOpen}
+        data={transaction}
       />
     </div>
   )
