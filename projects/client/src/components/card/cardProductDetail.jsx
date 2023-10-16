@@ -15,6 +15,7 @@ function formatRupiah(number) {
 
 function ProductDetailPage({ id }) {
   const [productData, setProductData] = useState(null)
+
   const [quantity, setQuantity] = useState(1)
   const [stateDisabled, setStateDisabled] = useState(false)
 
@@ -112,7 +113,8 @@ function ProductDetailPage({ id }) {
           <div className="mt-4">
             <AddToCartButton
               productId={id}
-              isProductActive={productData?.Warehouse_Products[0]?.stock}
+              isProductActive={totalStock}
+              quantity={quantity}
             />
           </div>
           <div className="mt-4"></div>
