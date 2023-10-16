@@ -213,6 +213,9 @@ const updatePaymentStatus = async (req, res) => {
       )
       res.json({ message: 'Payment confirmed successfully' })
     } else {
+      transaction.transactionStatusId = 5
+      transaction.paymentStatus = true
+      await transaction.save()
       await sendEmail(
         transaction.User.email,
         'Order Cancelled',
@@ -222,7 +225,7 @@ const updatePaymentStatus = async (req, res) => {
     }
   } catch (err) {
     console.error(err)
-    res.status(500).json({ message: 'Server error' })
+    res.status(500).json({ message: 'Stock Issue order cancled' })
   }
 }
 
