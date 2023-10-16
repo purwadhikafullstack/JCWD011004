@@ -53,6 +53,7 @@ const TabelSuperAdmin = () => {
         }
       })
       setAdmin(data)
+      setWarehouseFilter(data?.warehouseAdmin?.id)
     } catch (error) {
       console.log(error)
     }
