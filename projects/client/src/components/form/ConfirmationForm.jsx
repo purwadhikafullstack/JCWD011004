@@ -21,7 +21,7 @@ function ConfirmationForm({ data, onClose }) {
           autoClose: 2000,
           position: 'bottom-center'
         })
-        onClose
+        onClose(true)
       }
     } catch (error) {
       toast.error(error?.message, {
@@ -43,7 +43,7 @@ function ConfirmationForm({ data, onClose }) {
           autoClose: 2000,
           position: 'bottom-center'
         })
-        onClose
+        onClose(true)
       }
     } catch (error) {
       toast.error(error?.message, {
@@ -54,6 +54,44 @@ function ConfirmationForm({ data, onClose }) {
       setLoading(false)
     }
   }
+
+  const handleChangeStatusPayment = async (status, message) => {
+    try {
+      const token = localStorage.getItem('token')
+      const res = await axios.patch(
+        `${apiurl}/transaction/status/${data?.id}`,
+        {
+          transactionStatusId: status
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+      if (res?.status === 200) {
+        const toastId = toast.success(`Transaction ${message}`, {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+        setTimeout(() => {
+          toast.dismiss(toastId)
+          onClose(true)
+        }, 2000)
+      }
+    } catch (error) {
+      const toastId = toast.error(`Failed to ${message}`, {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      setTimeout(() => {
+        toast.dismiss(toastId)
+      }, 2000)
+    }
+  }
+
+  const handleUpdateStock = () => {
+    console.log('cancel and update stock')
+  }
+
   const fetchImage = async () => {
     const response = await axios.get(
       `${apiurl}/transaction/payment-proof/${data?.id}`
@@ -177,6 +215,52 @@ function ConfirmationForm({ data, onClose }) {
             } text-white rounded-md p-2 hover:bg-orange-400 active:bg-orange-600`}
           >
             {loading ? '...' : 'Reject payment'}
+          </button>
+
+          <button
+            onClick={() => handleChangeStatusPayment(5, 'Cancel')}
+            disabled={loading}
+            className={`${
+              loading ? 'bg-gray-400' : 'bg-gray-600'
+            } text-white rounded-md p-2 hover:bg-gray-400 active:bg-gray-600`}
+          >
+            {loading ? '...' : 'Cancel payment'}
+          </button>
+        </div>
+      )}
+      {data?.transactionStatusId === 0 && (
+        <div className="flex justify-end gap-4 pt-6">
+          <button
+            onClick={() => handleChangeStatusPayment(5, 'Cancel')}
+            disabled={loading}
+            className={`${
+              loading ? 'bg-gray-400' : 'bg-gray-600'
+            } text-white rounded-md p-2 hover:bg-gray-400 active:bg-gray-600`}
+          >
+            {loading ? '...' : 'Cancel Order'}
+          </button>
+        </div>
+      )}
+      {data?.transactionStatusId === 2 && (
+        <div className="flex justify-end gap-4 pt-6">
+          <button
+            onClick={() => handleChangeStatusPayment(3, 'Confirm')}
+            disabled={loading}
+            className={`${
+              loading ? 'bg-orange-400' : 'bg-orange-600'
+            } text-white rounded-md p-2 hover:bg-orange-400 active:bg-orange-600`}
+          >
+            {loading ? '...' : 'Confirm Shipping'}
+          </button>
+
+          <button
+            onClick={() => handleUpdateStock()}
+            disabled={loading}
+            className={`${
+              loading ? 'bg-gray-400' : 'bg-gray-600'
+            } text-white rounded-md p-2 hover:bg-gray-400 active:bg-gray-600`}
+          >
+            {loading ? '...' : 'Cancel Shipping'}
           </button>
         </div>
       )}
