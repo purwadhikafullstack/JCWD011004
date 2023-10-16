@@ -18,8 +18,6 @@ const updateUserForFirebase = async function (req, res) {
     if (!user) {
       return res.status(400).json({ message: 'User tidak ditemukan' })
     }
-
-    // Perbarui user dengan uid Firebase
     user.google = uid
     await user.save()
 

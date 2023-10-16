@@ -1,5 +1,6 @@
 // helpers/emailRegister.js
 const nodemailer = require('nodemailer')
+const { createHtmlTemplate } = require('../template/registerHtml')
 
 const transporter = nodemailer.createTransport({
   service: process.env.NODEMAILER_SERVICE,
@@ -14,11 +15,7 @@ function createMailOptions(email, token) {
     from: process.env.NODEMAILER_USER,
     to: email,
     subject: 'Account Registration Confirmation',
-    html: `
-      <p>Hello ${email},</p>
-      <p>Your account has been created. Please click the link below to set your password:</p>
-      <a href="http://localhost:3000/verify/${token}">Set Password</a>
-    `
+    html: createHtmlTemplate(email, token)
   }
 }
 

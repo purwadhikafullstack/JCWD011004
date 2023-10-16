@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken')
-
+const { createHtmlContent } = require('../template/userUpdatePassword')
 const createTransporter = () => {
   return nodemailer.createTransport({
     service: process.env.NODEMAILER_SERVICE,
@@ -9,13 +9,6 @@ const createTransporter = () => {
       pass: process.env.NODEMAILER_PASS
     }
   })
-}
-
-const createHtmlContent = (host, token) => {
-  return `<p>You are receiving this because you (or someone else) have requested the reset of the password for your account.</p>
-          <p>Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:</p>
-          <a href="http://${host}/reset-password/${token}">Reset Password</a>
-          <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>`
 }
 
 const createMailOptions = (user, req, token) => {

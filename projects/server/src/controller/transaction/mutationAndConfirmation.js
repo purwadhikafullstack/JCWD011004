@@ -8,6 +8,7 @@ const Warehouse = db.Warehouse
 const Mutation = db.Mutation
 const StockJournal = db.StockJournal
 const User = db.User
+const createHtmlContent = require('../../template/htmlTemplate')
 
 // Membuat transporter untuk nodemailer
 const transporter = nodemailer.createTransport({
@@ -18,20 +19,23 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-// Fungsi untuk mengirim email
+// Function to send email
 const sendEmail = async (email, subject, text) => {
   const mailOptions = {
     from: process.env.NODEMAILER_USER,
     to: email,
     subject: subject,
-    text: text
+    html: createHtmlContent(email, text)
   }
 
-  try {
-    await transporter.sendMail(mailOptions)
-  } catch (err) {
-    console.error(err)
-  }
+  // Send email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error)
+    } else {
+      console.log('Email sent: ' + info.response)
+    }
+  })
 }
 
 // Fungsi utama untuk memperbarui status pembayaran
