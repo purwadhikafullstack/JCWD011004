@@ -10,6 +10,7 @@ const cart = require('./cart')
 const warehouseRoute = require('./warehouseRoute')
 const adminRouter = require('./adminRouter')
 const ongkirRouter = require('./ongkirRouter')
+const stockRouter = require('./stockRouter')
 
 module.exports = {
   authRouter,
@@ -23,5 +24,6 @@ module.exports = {
   cart,
   warehouseRoute,
   adminRouter,
-  ongkirRouter
+  ongkirRouter,
+  stockRouter,
 }

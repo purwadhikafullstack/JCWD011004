@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Product, {
         foreignKey: 'productId'
       })
+      this.belongsTo(models.Warehouse, {
+        // Tambahkan asosiasi dengan Warehouse
+        foreignKey: 'warehouseId'
+      })
     }
   }
 

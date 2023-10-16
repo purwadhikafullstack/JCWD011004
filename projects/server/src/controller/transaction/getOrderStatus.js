@@ -24,7 +24,7 @@ const getAllOrderStatus = async (req, res) => {
       where: whereClause,
       include: [
         { model: db.Product },
-        { model: TransactionItem, include: [{ model: db.Product }] }
+        { model: Transaction_Item, include: [{ model: db.Product }] }
       ]
     })
 

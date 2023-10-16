@@ -39,6 +39,11 @@ const getAllTransactionAdmin = require('./admin/getTransactionAdminWarehouse')
 const { productOngkir } = require('./ongkir/getOngkir')
 const updateWarehouseAdmin = require('./admin/updateAdmin')
 const { getAdminInfo } = require('./admin/adminKeepLogin')
+const {getAllStock,
+  createStockJournal,
+  getStockJournalsByProduct,
+  getStockByProductAndWarehouse} = require('./stock/AdminSuper/stock')
+  const getAllStockWarehouse = require('./stock/AdminWarehouse/stockWarehouse')
 module.exports = {
   registerUser,
   login,
@@ -82,5 +87,10 @@ module.exports = {
   updateWarehouseAdmin,
   getAllTrasaction,
   getAllTransactionAdmin,
-  getAdminInfo
+  getAdminInfo,
+  getAllStock,
+  createStockJournal,
+  getStockJournalsByProduct,
+  getStockByProductAndWarehouse,
+  getAllStockWarehouse
 }
