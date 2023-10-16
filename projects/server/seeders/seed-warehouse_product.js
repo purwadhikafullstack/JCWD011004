@@ -4,7 +4,7 @@ module.exports = {
       {
         id: 1,
         warehouseId: 1,
-        productId: 16,
+        productId: 1,
         stock: 10,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -32,7 +32,7 @@ module.exports = {
         stock: 19,
         createdAt: new Date(),
         updatedAt: new Date()
-      }
+      },
       {
         id: 4,
         warehouseId: 2,
