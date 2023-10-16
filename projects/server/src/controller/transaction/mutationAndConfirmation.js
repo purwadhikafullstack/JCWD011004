@@ -213,6 +213,9 @@ const updatePaymentStatus = async (req, res) => {
       )
       res.json({ message: 'Payment confirmed successfully' })
     } else {
+      transaction.transactionStatusId = 5
+      transaction.paymentStatus = true
+      await transaction.save()
       await sendEmail(
         transaction.User.email,
         'Order Cancelled',
