@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
+import { ToastContainer, toast } from 'react-toastify'
 
 export default function TableDashboardPemesananDelivery() {
   const [data, setData] = useState([])
@@ -19,6 +20,39 @@ export default function TableDashboardPemesananDelivery() {
       }
     } catch (error) {
       console.error('Error fetching data:', error)
+    }
+  }
+
+  const handleConfirm = async (transactionId) => {
+    try {
+      const token = localStorage.getItem('token')
+      const { data } = await axios.patch(
+        `${apiUrl}/transaction/status/${transactionId}`,
+        {
+          transactionStatusId: 4
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+      if (data.success) {
+        const toastId = toast.success('Packet received. Thankyou!', {
+          position: toast.POSITION.TOP_CENTER
+        })
+        setTimeout(() => {
+          toast.dismiss(toastId)
+          fetchData()
+        }, 2000)
+      }
+    } catch (error) {
+      const toastId = toast.error('Failed to confirm', {
+        position: toast.POSITION.TOP_CENTER
+      })
+      setTimeout(() => {
+        toast.dismiss(toastId)
+      }, 2000)
     }
   }
 
@@ -85,10 +119,20 @@ export default function TableDashboardPemesananDelivery() {
                   })}
                 </tbody>
               </table>
+              <div className="flex justify-center">
+                <button
+                  className={`flex items-center justify-center px-2 py-1 rounded bg-orange-400 text-white hover:bg-orange-600 focus:outline-none focus:ring focus:ring-green-300`}
+                  style={{ width: '170px' }}
+                  onClick={() => handleConfirm(order?.id)}
+                >
+                  Confirm
+                </button>
+              </div>
             </div>
           ))}
         </>
       )}
+      <ToastContainer />
     </div>
   )
 }

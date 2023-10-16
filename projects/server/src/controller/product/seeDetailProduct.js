@@ -6,7 +6,7 @@ const Warehouse_Product = db.Warehouse_Product
 async function seeDetailProduct(req, res) {
   try {
     const productId = req.params.productId
-    console.log(productId)
+
     const product = await Product.findByPk(productId, {
       include: [
         { model: Category },

@@ -78,7 +78,6 @@ export function UploadButton({ transactionId, userId, cancel, loading }) {
         }, 2000)
       }
     } catch (error) {
-      console.error('Error uploading image:', error)
       const toastId = toast.error('Failed to cancel', {
         position: toast.POSITION.TOP_CENTER
       })

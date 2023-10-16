@@ -41,8 +41,9 @@ const { updateStatus } = require('./transaction/transactionStatus')
 const getAllTrasaction = require('./admin/getAllTrasaction')
 const getAllTransactionAdmin = require('./admin/getTransactionAdminWarehouse')
 const { getAdminInfo } = require('./admin/adminKeepLogin')
-const {rejectPayment} = require('./transaction/confirmationPayment')
-const {updatePaymentStatus} = require('./transaction/mutationAndConfirmation')
+const { updateAllByRangeTime } = require('./transaction/transactionStatus')
+const { rejectPayment } = require('./transaction/confirmationPayment')
+const { updatePaymentStatus } = require('./transaction/mutationAndConfirmation')
 module.exports = {
   registerUser,
   login,
@@ -88,7 +89,8 @@ module.exports = {
   getAllTrasaction,
   getAllTransactionAdmin,
   getAdminInfo,
+  updateStatus,
+  updateAllByRangeTime,
   rejectPayment,
-  updatePaymentStatus,
-  updateStatus
+  updatePaymentStatus
 }
