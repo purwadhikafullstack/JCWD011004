@@ -14,6 +14,7 @@ const {
   cart,
   ongkirRouter
 } = require('./routes')
+const { deleteUnverifiedUsers } = require('./services/checkUserScheduler')
 const PORT = process.env.PORT || 8000
 const app = express()
 const admin = require('./services/firebaseAdmin')
@@ -29,6 +30,8 @@ app.use(
 app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')))
 
 app.use(express.json())
+
+deleteUnverifiedUsers()
 // const db = require('../models')
 // db.sequelize.sync({ force: true })
 
