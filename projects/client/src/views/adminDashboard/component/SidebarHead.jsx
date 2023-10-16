@@ -1,7 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SidebarBody from './components/SidebarBody'
+import AvatarUpload from '../../../components/avatar/Avatars'
+import axios from 'axios'
+
+const adminRole = ['Super Admin', 'Warehouse Admin']
+// eslint-disable-next-line
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 function SidebarHead({ isSidebarOpen }) {
+  const [adminData, setAdminData] = useState(null)
+
+  const handleAdminData = async () => {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await axios.get(`${apiUrl}/auth/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setAdminData(response.data)
+    } catch (error) {
+      setAdminData(null)
+    }
+  }
+  useEffect(() => {
+    handleAdminData()
+  }, [])
+
   const navigate = useNavigate()
   const handleSignOut = () => {
     localStorage.clear()
@@ -24,15 +49,13 @@ function SidebarHead({ isSidebarOpen }) {
           </div>
 
           <div className="mt-8 text-center">
-            <img
-              src="https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp"
-              alt=""
-              className="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28"
-            />
+            <AvatarUpload />
             <h5 className="mt-4 text-xl font-semibold text-gray-600 lg:block">
-              Ini Admin
+              {adminData?.userInfo?.username}
             </h5>
-            <span className="text-gray-400 lg:block">Role Admin</span>
+            <span className="text-gray-400 lg:block">
+              {adminRole[adminData?.userInfo?.roleId - 1]}
+            </span>
           </div>
 
           <SidebarBody />

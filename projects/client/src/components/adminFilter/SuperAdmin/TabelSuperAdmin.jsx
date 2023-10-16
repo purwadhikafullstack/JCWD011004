@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import ConfirmationOrderModals from '../../modals/ConfirmationOrderModals'
 
 const statusTransaction = [
   'Menunggu Pembayaran',
@@ -28,7 +29,13 @@ const TabelSuperAdmin = () => {
   const [transactionStatusFilter, setTransactionStatusFilter] = useState('')
   const [admin, setAdmin] = useState()
   const [warehouseFilter, setWarehouseFilter] = useState('')
+  const [isModalConfirmationOpen, setIsModalConfirmationOpen] = useState(false)
+  const [transaction, setTransactions] = useState({})
 
+  const handleConfirmationModalOpen = (data) => {
+    setIsModalConfirmationOpen(!isModalConfirmationOpen)
+    setTransactions(data)
+  }
   const fetchWarehouses = async () => {
     try {
       const response = await axios.get(`${apiUrl}/warehouse/get-all`)
@@ -70,7 +77,7 @@ const TabelSuperAdmin = () => {
 
   useEffect(() => {
     fetchData()
-  }, [warehouseFilter, transactionStatusFilter])
+  }, [warehouseFilter, transactionStatusFilter, isModalConfirmationOpen])
 
   useEffect(() => {
     fetchWarehouses()
@@ -184,7 +191,10 @@ const TabelSuperAdmin = () => {
                   {item?.totalPrice}
                 </td>
                 <td className="px-6 py-4 text-sm">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+                  <button
+                    onClick={() => handleConfirmationModalOpen(item)}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                  >
                     Edit
                   </button>
                 </td>
@@ -193,6 +203,11 @@ const TabelSuperAdmin = () => {
           </tbody>
         </table>
       </div>
+      <ConfirmationOrderModals
+        isOpen={isModalConfirmationOpen}
+        onClose={handleConfirmationModalOpen}
+        data={transaction}
+      />
     </div>
   )
 }
