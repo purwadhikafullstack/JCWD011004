@@ -2,11 +2,23 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import AddToCartButton from './components/AddToCartButton'
 
+function formatRupiah(number) {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR'
+  }).format(number)
+}
+
 function Card({ product }) {
-  const stock = product?.Warehouse_Products
-    ? product?.Warehouse_Products[0]?.stock
-    : 0
-  const isProductActive = stock > 0
+  const totalStock = product.Warehouse_Products.reduce(
+    (accumulator, product) => {
+      return accumulator + (product.stock || 0)
+    },
+    0
+  )
+
+  const isProductActive = totalStock > 0
+
   return (
     <>
       <div className="flex items-center justify-center">
@@ -18,22 +30,23 @@ function Card({ product }) {
           >
             <div className="p-3">
               <img
-                src="/card/chair.png"
+                src={product?.Product_Images[0]?.image}
                 alt="Product Image"
-                className="m-auto w-36 h-36 object-cover rounded-t-lg"
+                className="m-auto w-36 h-36 object-cover rounded-t-2xl"
               />
             </div>
             <div className="text-center">
-              <h2 className="mb-4 text-xl font-semibold">
-                {product?.name ? product?.name : product?.product?.name}
-              </h2>
-              <p className="mb-4 text-gray-600 truncate">
-                {product?.description
-                  ? product?.description
-                  : product?.product?.description}
+              <h2 className="mb-1 font-semibold">{product?.name}</h2>
+              <p className="mb-1 text-sm text-gray-600 truncate">
+                {product?.description}
               </p>
-              <p className="mb-4 text-m font-bold">
-                IDR {product?.price ? product?.price : product?.product?.price}
+              <p className="mb-1 text-xs text-gray-600 ">
+                {totalStock == 0 || !totalStock
+                  ? `Stock 0 `
+                  : `Stock ${totalStock}`}
+              </p>
+              <p className="mb-3 text-sm font-bold">
+                {formatRupiah(product?.price)}
               </p>
             </div>
           </Link>

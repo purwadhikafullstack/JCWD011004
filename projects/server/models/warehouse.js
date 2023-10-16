@@ -3,18 +3,12 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Warehouse extends Model {
     static associate(models) {
-      this.hasMany(models.Mutation, {
-        foreignKey: 'fromWarehouse'
-      })
-      this.hasMany(models.Mutation, {
-        foreignKey: 'toWarehouse'
-      })
-      this.hasMany(models.Warehouse_Admin, {
-        foreignKey: 'warehouseId'
-      })
-      this.hasMany(models.Transaction, {
-        foreignKey: 'warehouseId'
-      })
+      this.hasMany(models.StockJournal, { foreignKey: 'warehouseId' })
+      this.hasMany(models.Mutation, { foreignKey: 'fromWarehouse' })
+      this.hasMany(models.Mutation, { foreignKey: 'toWarehouse' })
+      this.hasMany(models.Warehouse_Admin, { foreignKey: 'warehouseId' })
+      this.hasMany(models.Transaction, { foreignKey: 'warehouseId' })
+      this.hasMany(models.Warehouse_Product, { foreignKey: 'warehouseId' }) // Menambahkan relasi ke Warehouse_Product
     }
   }
 
@@ -38,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       subdistrict: {
         type: DataTypes.STRING,
-        // allowNull: false
+        allowNull: false
       },
       cityId: {
         type: DataTypes.INTEGER,

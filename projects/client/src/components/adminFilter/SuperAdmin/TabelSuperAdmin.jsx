@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import ConfirmationOrderModals from '../../modals/ConfirmationOrderModals'
 
 const statusTransaction = [
   'Menunggu Pembayaran',
@@ -25,10 +26,16 @@ const TabelSuperAdmin = () => {
 
   const [data, setData] = useState([])
   const [warehouses, setWarehouses] = useState([])
-  const [transactionStatusFilter, setTransactionStatusFilter] = useState(0)
+  const [transactionStatusFilter, setTransactionStatusFilter] = useState('')
   const [admin, setAdmin] = useState()
-  const [warehouseFilter, setWarehouseFilter] = useState('all')
+  const [warehouseFilter, setWarehouseFilter] = useState('')
+  const [isModalConfirmationOpen, setIsModalConfirmationOpen] = useState(false)
+  const [transaction, setTransactions] = useState({})
 
+  const handleConfirmationModalOpen = (data) => {
+    setIsModalConfirmationOpen(!isModalConfirmationOpen)
+    setTransactions(data)
+  }
   const fetchWarehouses = async () => {
     try {
       const response = await axios.get(`${apiUrl}/warehouse/get-all`)
@@ -51,20 +58,17 @@ const TabelSuperAdmin = () => {
       console.log(error)
     }
   }
+  const fetchUrl = () => {
+    if (admin?.userInfo?.roleId === 1) {
+      return `${apiUrl}/admin/all-transaction?warehouseId=${warehouseFilter}&transactionStatusId=${transactionStatusFilter}`
+    } else {
+      return `${apiUrl}/admin/all-transaction-admin/${admin?.userInfo?.id}?transactionStatusId=${transactionStatusFilter}`
+    }
+  }
 
   const fetchData = async () => {
     try {
-      let url = `${apiUrl}/admin/all-transaction`
-      const queryParameters = []
-      if (warehouseFilter !== 'all') {
-        queryParameters.push(`warehouseId=${warehouseFilter}`)
-      }
-      if (transactionStatusFilter !== 0) {
-        queryParameters.push(`transactionStatusId=${transactionStatusFilter}`)
-      }
-      if (queryParameters.length > 0) {
-        url += `?${queryParameters.join('&')}`
-      }
+      const url = fetchUrl()
       const response = await axios.get(url)
       setData(response?.data?.allTransaction)
     } catch (error) {
@@ -74,7 +78,7 @@ const TabelSuperAdmin = () => {
 
   useEffect(() => {
     fetchData()
-  }, [warehouseFilter, transactionStatusFilter])
+  }, [warehouseFilter, transactionStatusFilter, isModalConfirmationOpen])
 
   useEffect(() => {
     fetchWarehouses()
@@ -88,7 +92,7 @@ const TabelSuperAdmin = () => {
         onChange={(e) => setWarehouseFilter(e.target.value)}
         className="w-full p-2 rounded border border-gray-300"
       >
-        <option value="all">All Transaction</option>
+        <option value="">All Warehouse</option>
         {warehouses?.map((warehouse) => (
           <option key={warehouse.id} value={warehouse.id}>
             {warehouse?.name}
@@ -105,6 +109,7 @@ const TabelSuperAdmin = () => {
         onChange={(e) => setTransactionStatusFilter(e.target.value)}
         className="w-full p-2 rounded border border-gray-300"
       >
+        <option value="">All Transaction</option>
         {statusTransaction.map((status, index) => (
           <option key={index} value={index}>
             {status}
@@ -187,7 +192,10 @@ const TabelSuperAdmin = () => {
                   {item?.totalPrice}
                 </td>
                 <td className="px-6 py-4 text-sm">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+                  <button
+                    onClick={() => handleConfirmationModalOpen(item)}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                  >
                     Edit
                   </button>
                 </td>
@@ -196,6 +204,11 @@ const TabelSuperAdmin = () => {
           </tbody>
         </table>
       </div>
+      <ConfirmationOrderModals
+        isOpen={isModalConfirmationOpen}
+        onClose={handleConfirmationModalOpen}
+        data={transaction}
+      />
     </div>
   )
 }

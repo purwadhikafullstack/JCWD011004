@@ -15,13 +15,18 @@ export default function TableDashboardPemesanan() {
   const handleLoading = () => {
     setLoading(!loading)
   }
+
+  const handleCancel = () => {
+    setLoading(!loading)
+  }
+
   const fetchData = async () => {
     try {
       if (userId) {
         const response = await axios.get(
           `${apiUrl}/transaction/all-status?userId=${userId}&transactionStatusId=0`
         )
-        setData(response.data.allOrderStatus)
+        setData(response?.data?.allOrderStatus)
       }
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -95,6 +100,7 @@ export default function TableDashboardPemesanan() {
                   transactionId={order.id}
                   userId={userId}
                   loading={handleLoading}
+                  cancel={handleCancel}
                 />
               </div>
             </div>

@@ -60,7 +60,7 @@ function CreateAdminForm() {
         position: toast.POSITION.BOTTOM_CENTER
       })
     } catch (error) {
-      console.log(error, 'ni errror')
+      console.log(error)
       toast.error(error.response.data.message, {
         position: toast.POSITION.BOTTOM_CENTER
       })

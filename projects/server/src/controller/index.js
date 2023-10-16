@@ -35,15 +35,21 @@ const getWarehouse = require('./admin/getWarehouses')
 const { createWarehouseAdmin } = require('./admin/createAdmin')
 const { verifyAdminAccount } = require('./admin/verifyNewAdmin')
 const  getAllTrasaction  = require('./admin/getAllTrasaction')
-const getAllTransactionAdmin = require('./admin/getTransactionAdminWarehouse')
 const { productOngkir } = require('./ongkir/getOngkir')
 const updateWarehouseAdmin = require('./admin/updateAdmin')
-const { getAdminInfo } = require('./admin/adminKeepLogin')
 const {getAllStock,
   createStockJournal,
   getStockJournalsByProduct,
   getStockByProductAndWarehouse} = require('./stock/AdminSuper/stock')
   const getAllStockWarehouse = require('./stock/AdminWarehouse/stockWarehouse')
+const { courierOngkir } = require('./ongkir/getOngkir')
+const { createOrder } = require('./transaction/order')
+const { updateStatus } = require('./transaction/transactionStatus')
+const getAllTransactionAdmin = require('./admin/getTransactionAdminWarehouse')
+const { getAdminInfo } = require('./admin/adminKeepLogin')
+const { updateAllByRangeTime } = require('./transaction/transactionStatus')
+const { rejectPayment } = require('./transaction/confirmationPayment')
+const { updatePaymentStatus } = require('./transaction/mutationAndConfirmation')
 module.exports = {
   registerUser,
   login,
@@ -86,11 +92,17 @@ module.exports = {
   productOngkir,
   updateWarehouseAdmin,
   getAllTrasaction,
-  getAllTransactionAdmin,
-  getAdminInfo,
   getAllStock,
   createStockJournal,
   getStockJournalsByProduct,
   getStockByProductAndWarehouse,
-  getAllStockWarehouse
+  getAllStockWarehouse,
+  courierOngkir,
+  createOrder,
+  getAllTransactionAdmin,
+  getAdminInfo,
+  updateStatus,
+  updateAllByRangeTime,
+  rejectPayment,
+  updatePaymentStatus
 }

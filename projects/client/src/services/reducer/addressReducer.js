@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+const apiUrl = process.env.REACT_APP_API_BASE_URL
+
 const initialState = {
   addAddress: 0,
   provinceData: { province_id: '1', province: 'Bali' },
@@ -42,14 +44,11 @@ export const getAllAddress = () => {
   const token = localStorage.getItem('token')
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:8000/api/update/address`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const { data } = await axios.get(`${apiUrl}/update/address`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
+      })
       dispatch(allAddress(data))
     } catch (err) {
       console.log(err.message)

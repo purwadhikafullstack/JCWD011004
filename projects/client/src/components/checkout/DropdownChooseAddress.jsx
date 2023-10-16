@@ -7,6 +7,7 @@ import {
   openAddAddress
 } from '../../services/reducer/addressReducer'
 import { ToastContainer } from 'react-toastify'
+import { getCourier, storeCourier } from '../../services/reducer/courierReducer'
 
 export const DropdownAddress = () => {
   const { userData } = useSelector((state) => state.dataAddress.allAddress)
@@ -14,6 +15,11 @@ export const DropdownAddress = () => {
   const add = useSelector((state) => state.dataAddress.addAddress)
   const dispatch = useDispatch()
   const [selectedAddress, setSelectedAddress] = useState('')
+  const subTotal = useSelector((state) => state.cartItems.totalItemPrice)
+
+  const totalWeight = subTotal?.reduce((totalWeight, item) => {
+    return item.weight * item.quantity + totalWeight
+  }, 0)
 
   useEffect(() => {
     dispatch(getAllAddress())
@@ -26,7 +32,28 @@ export const DropdownAddress = () => {
 
   const handleAddressChange = (event) => {
     setSelectedAddress(event.target.value)
+    dispatch(addressDataId(event.target.value))
   }
+
+  useEffect(() => {
+    dispatch(storeCourier({}))
+    if (selectedAddress > 0) {
+      let userAddress = addressData?.filter(
+        (item) => item.id == selectedAddress
+      )
+      dispatch(
+        getCourier(
+          userAddress[0].cityId,
+          userAddress[0].latitude,
+          userAddress[0].longitude,
+          totalWeight,
+          'jne'
+        )
+      )
+    } else {
+      dispatch(storeCourier({}))
+    }
+  }, [selectedAddress])
 
   return (
     <div>
@@ -34,9 +61,11 @@ export const DropdownAddress = () => {
         <select
           value={selectedAddress}
           onChange={handleAddressChange}
-          className="bg-white rounded-lg my-2 p-2 text-sm text-left"
+          className="flex bg-white rounded-lg my-2 p-2 text-xs text-left w-60"
         >
-          <option value="">Select an address</option>
+          <option value="" disabled>
+            Select an address
+          </option>
           {addressData?.map((address, index) => (
             <option key={index} value={address.id}>
               {`${address.name} (${address.phone})`}
@@ -44,7 +73,7 @@ export const DropdownAddress = () => {
           ))}
         </select>
         {selectedAddress && (
-          <div className="bg-white rounded-lg p-2 text-sm text-left">
+          <div className="bg-white rounded-lg p-2 text-xs text-left w-60">
             {addressData?.map((address, index) => {
               if (address.id == selectedAddress) {
                 return (

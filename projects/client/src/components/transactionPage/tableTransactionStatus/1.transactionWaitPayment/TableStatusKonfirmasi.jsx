@@ -6,7 +6,6 @@ export default function TableDashboardPemesananKonfirmasi() {
   const [data, setData] = useState([])
   const token = jwt_decode(localStorage.getItem('token'))
   const userId = token ? token.id : null
-  console.log(data)
   // eslint-disable-next-line
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const fetchData = async () => {
@@ -16,7 +15,6 @@ export default function TableDashboardPemesananKonfirmasi() {
           `${apiUrl}/transaction/all-status?userId=${userId}&transactionStatusId=1`
         )
         setData(response.data.allOrderStatus)
-        console.log(response.data.allOrderStatus)
       }
     } catch (error) {
       console.error('Error fetching data:', error)

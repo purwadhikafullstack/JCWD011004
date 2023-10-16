@@ -28,12 +28,6 @@ const getAllOrderStatus = async (req, res) => {
       ]
     })
 
-    if (!allOrderStatus || allOrderStatus.length === 0) {
-      return res.status(404).json({
-        message: 'Data not found'
-      })
-    }
-
     res.status(200).json({
       allOrderStatus
     })
