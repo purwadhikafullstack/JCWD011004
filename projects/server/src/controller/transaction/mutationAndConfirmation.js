@@ -202,14 +202,14 @@ const updatePaymentStatus = async (req, res) => {
     }
 
     if (isOrderFulfilled) {
-      transaction.transactionStatusId = 3
+      transaction.transactionStatusId = 2
       transaction.paymentStatus = true
       await transaction.save()
 
       await sendEmail(
         transaction.User.email,
-        'Order Shipped',
-        `Your order has been shipped. Your invoice number is ${transaction.invoiceNo}.`
+        'Order Progressed',
+        `Your order has been progressed. Your invoice number is ${transaction.invoiceNo}.`
       )
       res.json({ message: 'Payment confirmed successfully' })
     } else {
