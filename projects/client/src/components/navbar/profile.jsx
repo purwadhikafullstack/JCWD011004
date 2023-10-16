@@ -23,6 +23,26 @@ export const AvatarDropdown = () => {
     }
   }
 
+  const checkOrderData = async (
+    transactionStatusId,
+    updateTransactionStatusId,
+    rangeTime,
+    status
+  ) => {
+    try {
+      const { data } = await axios.patch(`${apiUrl}/transaction/status-auto`, {
+        transactionStatusId,
+        updateTransactionStatusId,
+        rangeTime
+      })
+      if (data.success) {
+        console.log(`Number status changed ${data.transaction} ${status}`)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen)
   }
@@ -34,6 +54,12 @@ export const AvatarDropdown = () => {
     localStorage.clear()
     navigate('/')
     window.location.reload()
+  }
+
+  const checkOrder = () => {
+    console.log('checkOrder')
+    checkOrderData(0, 5, 432000, 'cancelled') //5days
+    checkOrderData(3, 4, 432000, 'received') //5days
   }
 
   useEffect(() => {
@@ -81,6 +107,7 @@ export const AvatarDropdown = () => {
               <button
                 className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 role="menuitem"
+                onClick={checkOrder}
               >
                 My Order
               </button>

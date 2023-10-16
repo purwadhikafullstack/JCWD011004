@@ -8,7 +8,7 @@ export default function TableDashboardPemesananProgress() {
   const userId = token ? token.id : null
   //eslint-disable-next-line
   const apiUrl = process.env.REACT_APP_API_BASE_URL
-  console.log(data)
+
   const fetchData = async () => {
     try {
       if (userId) {

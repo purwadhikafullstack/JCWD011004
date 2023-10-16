@@ -6,7 +6,6 @@ export default function TableDashboardPemesananKonfirmasi() {
   const [data, setData] = useState([])
   const token = jwt_decode(localStorage.getItem('token'))
   const userId = token ? token.id : null
-  console.log(data)
   // eslint-disable-next-line
   const apiUrl = process.env.REACT_APP_API_BASE_URL
   const fetchData = async () => {

@@ -6,10 +6,10 @@ const {
   updatePaymentStatus,
   getAllOrderStatus,
   createOrder,
-  updateStatus
+  updateStatus,
+  updateAllByRangeTime
 } = require('../controller')
 const { getPaymentProofImage } = require('../service/paymentService')
-
 const { authenticate } = require('../middleware/userAuth')
 
 router.put('/payment/:id', updatePaymentStatus)
@@ -18,5 +18,6 @@ router.get('/payment-proof/:transactionId', getPaymentProofImage)
 router.get('/all-status/', getAllOrderStatus)
 router.post('/order', authenticate, createOrder)
 router.patch('/status/:transactionId', authenticate, updateStatus)
+router.patch('/status-auto', updateAllByRangeTime)
 
 module.exports = router
