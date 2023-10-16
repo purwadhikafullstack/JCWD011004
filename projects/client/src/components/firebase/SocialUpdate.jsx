@@ -46,7 +46,7 @@ function UpdateButton() {
       const result = await signInWithPopup(auth, provider)
       const idToken = await result.user.getIdToken()
       const email = result.user.email
-      console.log(email, currentEmail)
+
       if (email !== currentEmail) {
         toast.error('Email harus sama', {
           position: toast.POSITION.TOP_CENTER

@@ -37,10 +37,13 @@ const { verifyAdminAccount } = require('./admin/verifyNewAdmin')
 const { courierOngkir } = require('./ongkir/getOngkir')
 const updateWarehouseAdmin = require('./admin/updateAdmin')
 const { createOrder } = require('./transaction/order')
-
+const { updateStatus } = require('./transaction/transactionStatus')
 const getAllTrasaction = require('./admin/getAllTrasaction')
 const getAllTransactionAdmin = require('./admin/getTransactionAdminWarehouse')
 const { getAdminInfo } = require('./admin/adminKeepLogin')
+const { updateAllByRangeTime } = require('./transaction/transactionStatus')
+const { rejectPayment } = require('./transaction/confirmationPayment')
+const { updatePaymentStatus } = require('./transaction/mutationAndConfirmation')
 module.exports = {
   registerUser,
   login,
@@ -85,5 +88,9 @@ module.exports = {
   createOrder,
   getAllTrasaction,
   getAllTransactionAdmin,
-  getAdminInfo
+  getAdminInfo,
+  updateStatus,
+  updateAllByRangeTime,
+  rejectPayment,
+  updatePaymentStatus
 }

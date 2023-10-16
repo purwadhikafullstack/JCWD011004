@@ -1,7 +1,7 @@
 const upload = require('../../middleware/userAvatar')
 const db = require('../../../models')
 const User = db.User
-
+const serverBaseURL = process.env.SERVER_BASE_URL || 'http://localhost:8000'
 function userUploadAvatar(req, res) {
   upload(req, res, (err) => {
     if (err) {
@@ -17,7 +17,7 @@ function userUploadAvatar(req, res) {
         // Update user's profile image in the database
         User.update(
           {
-            profileImage: `http://localhost:${process.env.PORT}/uploads/${req.file.filename}`
+            profileImage: `${serverBaseURL}/uploads/${req.file.filename}`
           },
           {
             where: {
@@ -28,7 +28,7 @@ function userUploadAvatar(req, res) {
           .then(() => {
             res.json({
               msg: 'File Uploaded!',
-              file: `http://localhost:${process.env.PORT}/uploads/${req.file.filename}`
+              file: `${serverBaseURL}/uploads/${req.file.filename}`
             })
           })
           .catch((err) => {

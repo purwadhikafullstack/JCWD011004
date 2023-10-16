@@ -9,7 +9,7 @@ const authenticateSuperAdmin = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    console.log('test', decoded)
+
     const user = await User.findOne({ where: { id: decoded.user.id } })
     if (user && user.roleId === 1) {
       req.user = user

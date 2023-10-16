@@ -14,7 +14,7 @@ function SocialRegister() {
     try {
       setIsDisabled(true)
       const result = await signInWithPopup(auth, provider)
-      console.log(result)
+
       const response = await axios.post(`${apiUrl}/auth/register-social`, {
         idToken: result._tokenResponse.idToken
       })
