@@ -24,7 +24,7 @@ const updateTransactionStatus = async (transaction, statusId) => {
   await transaction.save()
 }
 
-const sendRejectionEmail = async () => {
+const sendRejectionEmail = async (userEmail) => {
   // Nodemailer configuration
   let transporter = nodemailer.createTransport({
     service: process.env.NODEMAILER_SERVICE,
@@ -34,12 +34,32 @@ const sendRejectionEmail = async () => {
     }
   })
 
-  // Email options
+  const createHtmlContent = (email) => {
+    return `
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <title>Payment Rejection</title>
+      </head>
+      <body>
+          <div style="text-align: center;">
+              <h1>Payment Rejection</h1>
+              <p>Hello ${email},</p>
+              <p>Your payment has been rejected. Please send the payment proof with good quality and clear image.</p>
+              <br/>
+              <p>Best regards,</p>
+              <p>Your Service Team AKUI</p>
+          </div>
+      </body>
+      </html>
+    `
+  }
+
   let mailOptions = {
     from: process.env.NODEMAILER_USER,
-    to: 'recipient@example.com', // replace with recipient email
+    to: userEmail, // use user email
     subject: 'Payment Rejection',
-    text: 'Your payment has been rejected, send the payment proof with good quality and clear image.'
+    html: createHtmlContent(userEmail) // use user email
   }
 
   // Send email
