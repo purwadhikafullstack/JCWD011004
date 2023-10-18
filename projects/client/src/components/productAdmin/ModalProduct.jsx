@@ -1,8 +1,10 @@
 import React from 'react'
 import CreateProductForm from './CreateProductForm'
 import UpdateProductForm from './UpdateProductForm'
+import WarehouseProductForm from './WarehouseForm'
 
-const ModalProduct = ({ isOpen, onClose, modal }) => {
+const ModalProduct = ({ isOpen, onClose, modal, data }) => {
+  console.log(data)
   return (
     <div className="flex container mx-auto p-10 justify-center items-start ">
       {isOpen && (
@@ -17,7 +19,7 @@ const ModalProduct = ({ isOpen, onClose, modal }) => {
                   ? 'Create Product'
                   : modal == 1
                   ? 'Update Product'
-                  : ''}
+                  : 'Warehouse Product'}
               </div>
               <div
                 onClick={onClose}
@@ -42,11 +44,11 @@ const ModalProduct = ({ isOpen, onClose, modal }) => {
             <div className="flex w-full h-auto py-10 px-2 justify-center items-center bg-gray-200 rounded text-center text-gray-500 mb-3">
               <div className="inline-block" style={{ width: 'fit-content' }}>
                 {modal == 0 ? (
-                  <CreateProductForm />
+                  <CreateProductForm dataProduct={data} />
                 ) : modal == 1 ? (
                   <UpdateProductForm />
                 ) : (
-                  ''
+                  <WarehouseProductForm dataProduct={data} />
                 )}
               </div>
             </div>

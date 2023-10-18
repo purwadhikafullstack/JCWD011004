@@ -44,6 +44,10 @@ const { getAdminInfo } = require('./admin/adminKeepLogin')
 const { updateAllByRangeTime } = require('./transaction/transactionStatus')
 const { rejectPayment } = require('./transaction/confirmationPayment')
 const { updatePaymentStatus } = require('./transaction/mutationAndConfirmation')
+const {
+  addWarehouseProduct,
+  deleteWarehouseProduct
+} = require('./product/warehouseProduct')
 module.exports = {
   registerUser,
   login,
@@ -92,5 +96,7 @@ module.exports = {
   updateStatus,
   updateAllByRangeTime,
   rejectPayment,
-  updatePaymentStatus
+  updatePaymentStatus,
+  addWarehouseProduct,
+  deleteWarehouseProduct
 }

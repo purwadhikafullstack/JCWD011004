@@ -1,257 +1,145 @@
-import React, { useState, useEffect } from 'react'
-import { Formik, Form, Field } from 'formik'
-import * as Yup from 'yup'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast } from 'react-toastify'
+import { triggerWarehouseProduct } from '../../services/reducer/productReducer'
+import { useDispatch, useSelector } from 'react-redux'
 
-const token = localStorage.getItem('token')
-// eslint-disable-next-line no-undef
-const apiurl = process.env.REACT_APP_API_BASE_URL
-const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
-  username: Yup.string().required('Required'),
-  firstName: Yup.string().required('Required'),
-  lastName: Yup.string().required('Required'),
-  phoneNumber: Yup.string()
-    .required('Required')
-    .min(9, 'Phone number must be at least 9 digits long')
-    .test('is-number', 'Invalid phone number', (value) => {
-      if (!value) {
-        return false
-      }
+function WarehouseProductForm({ dataProduct }) {
+  const [warehouseData, setWarehouseData] = useState(
+    dataProduct.Warehouse_Products
+  )
+  const [warehouse, setWarehouse] = useState([])
+  const [selectedWarehouse, setSelectedWarehouse] = useState(1)
 
-      const regex = /^[0-9]*$/
-      return regex.test(value)
-    }),
-  warehouseId: Yup.string().required('Required')
-})
+  const dispatch = useDispatch()
+  const isWarehouseProduct = useSelector(
+    (state) => state.dataProduct.isWarehouseProduct
+  )
+  //eslint-disable-next-line
+  const apiUrl = process.env.REACT_APP_API_BASE_URL
 
-function UpdateProductForm() {
-  const [warehouses, setWarehouses] = useState([])
-
-  const getWarehouses = async () => {
+  const handleDeleteWarehouse = async (productWarehouseid) => {
     try {
-      const res = await axios.get(`${apiurl}/admin/warehouses`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-
-      setWarehouses(res?.data?.data?.data)
+      const res = await axios.delete(
+        `${apiUrl}/product/warehouse-product/${productWarehouseid}`
+      )
+      if (res?.status === 200) {
+        setWarehouseData((prevData) =>
+          prevData.filter((data) => data.id !== productWarehouseid)
+        )
+        const toastId = toast.success(`Warehouse product deleted`, {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+        setTimeout(() => {
+          toast.dismiss(toastId)
+        }, 2000)
+      }
     } catch (error) {
-      console.error(error)
+      const toastId = toast.error(`Failed to delete`, {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      setTimeout(() => {
+        toast.dismiss(toastId)
+      }, 2000)
     }
+    dispatch(triggerWarehouseProduct(!isWarehouseProduct))
   }
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const fetchWarehouse = async () => {
+    const { data } = await axios.get(`${apiUrl}/warehouse/get-all`)
+    return data.data.data
+  }
+
+  const handleAddWarehouse = async (warehouseId, productId) => {
     try {
-      const res = await axios.post(
-        `${apiurl}/admin/create-warehouse-admin`,
-        { ...values },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
-      console.log(res)
-      toast.success('Admin created successfully!', {
-        position: toast.POSITION.BOTTOM_CENTER
+      const res = await axios.post(`${apiUrl}/product/warehouse-product`, {
+        warehouseId,
+        productId
       })
+      if (res.status === 200) {
+        const newWarehouseProduct = res.data.product
+        setWarehouseData((prevData) => [...prevData, newWarehouseProduct])
+        const toastId = toast.success(`Warehouse product added`, {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+        setTimeout(() => {
+          toast.dismiss(toastId)
+        }, 2000)
+      }
     } catch (error) {
-      console.log(error)
-      toast.error(error.response.data.message, {
+      const toastId = toast.error(`Failed to add`, {
         position: toast.POSITION.BOTTOM_CENTER
       })
-    } finally {
-      setSubmitting(false)
+      setTimeout(() => {
+        toast.dismiss(toastId)
+      }, 2000)
     }
+    dispatch(triggerWarehouseProduct(!isWarehouseProduct))
   }
 
   useEffect(() => {
-    getWarehouses()
-  }, [])
-
-  const formikProps = {
-    initialValues: {
-      email: '',
-      username: '',
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      warehouseId: 0
-    },
-    validationSchema,
-    onSubmit: handleSubmit
-  }
+    const fetchData = async () => {
+      const dataWarehouse = await fetchWarehouse()
+      const availableWarehouses = dataWarehouse.filter(
+        (wh) => !warehouseData.some((data) => data.Warehouse.id === wh.id)
+      )
+      setWarehouse(availableWarehouses)
+      if (availableWarehouses.length > 0) {
+        setSelectedWarehouse(availableWarehouses[0].id)
+      }
+    }
+    fetchData()
+  }, [dataProduct, warehouseData])
 
   return (
     <>
-      <Formik {...formikProps}>
-        {({ errors, touched, isSubmitting }) => {
-          return (
-            <Form className="max-w-md mx-auto">
-              <table className="w-full">
-                <tbody>
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="email"
-                        className="block font-medium text-gray-700"
-                      >
-                        Email
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <Field
-                        placeholder="Email"
-                        type="email"
-                        name="email"
-                        className="form-input rounded-md shadow-sm mt-1 block w-full"
-                      />
-                      {errors.email && touched.email && (
-                        <div className="text-red-500">{errors.email}</div>
-                      )}
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="username"
-                        className="block font-medium text-gray-700"
-                      >
-                        Username
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <Field
-                        placeholder="Username"
-                        type="text"
-                        name="username"
-                        className="form-input rounded-md shadow-sm mt-1 block w-full"
-                      />
-                      {errors.username && touched.username && (
-                        <div className="text-red-500">{errors.username}</div>
-                      )}
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="firstName"
-                        className="block font-medium text-gray-700"
-                      >
-                        First Name
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <Field
-                        placeholder="First Name"
-                        type="text"
-                        name="firstName"
-                        className="form-input rounded-md shadow-sm mt-1 block w-full"
-                      />
-                      {errors.firstName && touched.firstName && (
-                        <div className="text-red-500">{errors.firstName}</div>
-                      )}
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="lastName"
-                        className="block font-medium text-gray-700"
-                      >
-                        Last Name
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <Field
-                        placeholder="Last Name"
-                        type="text"
-                        name="lastName"
-                        className="form-input rounded-md shadow-sm mt-1 block w-full"
-                      />
-                      {errors.lastName && touched.lastName && (
-                        <div className="text-red-500">{errors.lastName}</div>
-                      )}
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="phoneNumber"
-                        className="block font-medium text-gray-700"
-                      >
-                        Phone Number
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <Field
-                        placeholder="Phone Number"
-                        type="tel"
-                        name="phoneNumber"
-                        className="form-input rounded-md shadow-sm mt-1 block w-full"
-                        onKeyPress={(event) => {
-                          if (!/[0-9]/.test(event.key)) {
-                            event.preventDefault()
-                          }
-                        }}
-                      />
-                      {errors.phoneNumber && touched.phoneNumber && (
-                        <div className="text-red-500">{errors.phoneNumber}</div>
-                      )}
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="warehouse"
-                        className="block font-medium text-gray-700"
-                      >
-                        Warehouse
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <Field
-                        as="select"
-                        name="warehouseId"
-                        className="form-select rounded-md shadow-sm mt-1 block w-full"
-                      >
-                        <option value="">Select Warehouse</option>
-                        {warehouses?.map((e, i) => (
-                          <option key={i} value={e?.id}>
-                            {e?.name}
-                          </option>
-                        ))}
-                      </Field>
-                      {errors.warehouseId && touched.warehouseId && (
-                        <div className="text-red-500">{errors.warehouseId}</div>
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <button
-                type="submit"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 mt-4"
+      <table className="w-80">
+        <tbody>
+          {warehouseData.map((data, index) => (
+            <tr key={index}>
+              <td className="flex items-center justify-between px-4 py-1 border-2 border-white m-1">
+                <div className="text-black">{data.Warehouse.name}</div>
+                <button
+                  onClick={() => handleDeleteWarehouse(data.id)}
+                  key={index}
+                  className={`btn h-9 w-16 active:bg-gray-700 hover:bg-gray-400 bg-gray-700`}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+          {warehouse.length > 0 ? (
+            <div className="flex items-center justify-between pl-2 pr-4 py-1 m-1">
+              <select
+                id="warehouseSelect"
+                value={selectedWarehouse}
+                onChange={(e) => setSelectedWarehouse(e.target.value)}
+                className="form-select rounded-md shadow-sm p-1"
               >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
+                {warehouse.map((wh) => (
+                  <option key={wh.id} value={wh.id}>
+                    {wh.name}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={() =>
+                  handleAddWarehouse(selectedWarehouse, dataProduct.id)
+                }
+                className={`mt-2 btn h-9 w-16 active:bg-orange-700 hover:bg-orange-400 bg-orange-700`}
+              >
+                Add
               </button>
-            </Form>
-          )
-        }}
-      </Formik>
+            </div>
+          ) : (
+            ''
+          )}
+        </tbody>
+      </table>
       <ToastContainer />
     </>
   )
 }
 
-export default UpdateProductForm
+export default WarehouseProductForm

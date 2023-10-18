@@ -27,7 +27,8 @@ const validationSchema = Yup.object().shape({
   warehouseId: Yup.string().required('Required')
 })
 
-function CreateProductForm() {
+function CreateProductForm({ dataProduct }) {
+  console.log(dataProduct)
   const [warehouses, setWarehouses] = useState([])
 
   const getWarehouses = async () => {
