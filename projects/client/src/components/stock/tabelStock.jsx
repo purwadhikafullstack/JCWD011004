@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
+//eslint-disable-next-line
 const apiUrl = process.env.REACT_APP_API_BASE_URL
 
 const TabelStock = () => {

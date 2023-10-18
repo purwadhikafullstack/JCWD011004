@@ -29,6 +29,7 @@ import PagesNotFound from './pages/PagesNotFound'
 import TabelSuperAdmin from './components/adminFilter/SuperAdmin/TabelSuperAdmin'
 import TabelStock from './components/stock/tabelStock'
 import TabelAdminWarehouse from './components/adminFilter/AdminWarehouse/TabelAdminWarehouse'
+import Report from './components/report/report'
 function App() {
   return (
     <div className="App">
@@ -102,6 +103,7 @@ function App() {
           <Route path="tabel-stock" element={<TabelStock />} />
           <Route path="order-admin/:id" element={<TabelAdminWarehouse />} />
         </Route>
+        <Route path="report" element={<Report />}></Route>
         <Route path="*" element={<PagesNotFound />}></Route>
       </Routes>
     </div>
