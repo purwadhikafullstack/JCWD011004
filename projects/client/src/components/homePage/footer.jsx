@@ -23,7 +23,7 @@ function Footer() {
             </li>
             <li className="mb-2">
               <a
-                href="#"
+                href="/aboutus"
                 className="text-gray-400 hover:text-white transition duration-300"
               >
                 About Us

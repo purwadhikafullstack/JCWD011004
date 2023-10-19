@@ -3,7 +3,8 @@ const Category = db.Category
 
 async function getAllCategory(req, res) {
   try {
-    const data = await Category.findAll()
+    let data = await Category.findAll()
+    data = data.filter((category) => category.id !== 99)
     return res.status(200).json({
       message: 'Get Category Succeed',
       data

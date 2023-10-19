@@ -6,6 +6,7 @@ const baseUrl = 'http://localhost:8000/'
 const initialState = {
   allProducts: {},
   sortIdx: 0,
+  isWarehouseProduct: false,
   categoryIdx: 0,
   isLogin: localStorage.getItem('token')
 }
@@ -25,6 +26,9 @@ export const ProductReducer = createSlice({
     },
     isLogin: (state, action) => {
       state.isLogin = action.payload
+    },
+    triggerWarehouseProduct: (state, action) => {
+      state.isWarehouseProduct = action.payload
     }
   }
 })
@@ -40,6 +44,11 @@ export const getAllProducts = (paramUrl) => {
   }
 }
 
-export const { allDataProduct, getSortIdx, getCategoryIdx, isLogin } =
-  ProductReducer.actions
+export const {
+  allDataProduct,
+  getSortIdx,
+  getCategoryIdx,
+  isLogin,
+  triggerWarehouseProduct
+} = ProductReducer.actions
 export default ProductReducer.reducer
