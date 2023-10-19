@@ -1,90 +1,88 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Dropdown from '../dropdown/dropdownCategory'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  getCategoryIdx,
+  triggerWarehouseProduct
+} from '../../services/reducer/productReducer'
 
-const token = localStorage.getItem('token')
 // eslint-disable-next-line no-undef
-const apiurl = process.env.REACT_APP_API_BASE_URL
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
-  username: Yup.string().required('Required'),
-  firstName: Yup.string().required('Required'),
-  lastName: Yup.string().required('Required'),
-  phoneNumber: Yup.string()
-    .required('Required')
-    .min(9, 'Phone number must be at least 9 digits long')
-    .test('is-number', 'Invalid phone number', (value) => {
-      if (!value) {
-        return false
-      }
-
-      const regex = /^[0-9]*$/
-      return regex.test(value)
-    }),
-  warehouseId: Yup.string().required('Required')
+  name: Yup.string().required('Required'),
+  price: Yup.string()
+    .required('Required Number')
+    .matches(/^[0-9]+$/, 'Price must be a valid number'),
+  weight: Yup.string().required('Required'),
+  description: Yup.string().required('Required')
 })
 
-function UpdateProductForm() {
-  const [warehouses, setWarehouses] = useState([])
+function CreateProductForm({ dataProduct, onClose }) {
+  const [isProductActive, setIsProductActive] = useState(dataProduct.isActive)
+  const categoryIdx = useSelector((state) => state.dataProduct.categoryIdx)
+  const isWarehouseProduct = useSelector(
+    (state) => state.dataProduct.isWarehouseProduct
+  )
+  const dispatch = useDispatch()
 
-  const getWarehouses = async () => {
+  const handleSubmit = async (values) => {
     try {
-      const res = await axios.get(`${apiurl}/admin/warehouses`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      if (categoryIdx === 0) {
+        values.categoryId = 99
+      } else {
+        values.categoryId = categoryIdx
+      }
 
-      setWarehouses(res?.data?.data?.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+      values.isActive = isProductActive
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    try {
-      const res = await axios.post(
-        `${apiurl}/admin/create-warehouse-admin`,
-        { ...values },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
-      console.log(res)
-      toast.success('Admin created successfully!', {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
+      const res = await axios.patch(`${apiUrl}/product/edit-product`, values)
+
+      if (res.status === 200) {
+        const toastId = toast.success('Product created successfully!', {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+        setTimeout(() => {
+          toast.dismiss(toastId)
+          onClose(true)
+        }, 2000)
+      }
     } catch (error) {
-      console.log(error)
       toast.error(error.response.data.message, {
         position: toast.POSITION.BOTTOM_CENTER
       })
-    } finally {
-      setSubmitting(false)
     }
+    dispatch(triggerWarehouseProduct(!isWarehouseProduct))
   }
 
-  useEffect(() => {
-    getWarehouses()
-  }, [])
+  const handleStatus = (e) => {
+    e.preventDefault() // Prevent the form from being submitted
+    setIsProductActive(!isProductActive)
+  }
 
   const formikProps = {
     initialValues: {
-      email: '',
-      username: '',
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      warehouseId: 0
+      id: dataProduct.id,
+      name: dataProduct.name,
+      price: dataProduct.price,
+      weight: dataProduct.weight,
+      description: dataProduct.description,
+      categoryId: dataProduct.categoryId,
+      isActive: dataProduct?.isActive
     },
     validationSchema,
     onSubmit: handleSubmit
   }
+
+  useEffect(() => {
+    dispatch(
+      getCategoryIdx(dataProduct.categoryId === 99 ? 0 : dataProduct.categoryId)
+    )
+  }, [])
 
   return (
     <>
@@ -97,43 +95,21 @@ function UpdateProductForm() {
                   <tr>
                     <td className="p-4">
                       <label
-                        htmlFor="email"
+                        htmlFor="name"
                         className="block font-medium text-gray-700"
                       >
-                        Email
+                        Product Name
                       </label>
                     </td>
                     <td className="p-4">
                       <Field
-                        placeholder="Email"
-                        type="email"
-                        name="email"
-                        className="form-input rounded-md shadow-sm mt-1 block w-full"
-                      />
-                      {errors.email && touched.email && (
-                        <div className="text-red-500">{errors.email}</div>
-                      )}
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="username"
-                        className="block font-medium text-gray-700"
-                      >
-                        Username
-                      </label>
-                    </td>
-                    <td className="p-4">
-                      <Field
-                        placeholder="Username"
+                        placeholder="Product Name"
                         type="text"
-                        name="username"
-                        className="form-input rounded-md shadow-sm mt-1 block w-full"
+                        name="name"
+                        className="form-input rounded-md shadow-sm p-1 block w-full"
                       />
-                      {errors.username && touched.username && (
-                        <div className="text-red-500">{errors.username}</div>
+                      {errors.name && touched.name && (
+                        <div className="text-red-500">{errors.name}</div>
                       )}
                     </td>
                   </tr>
@@ -141,21 +117,21 @@ function UpdateProductForm() {
                   <tr>
                     <td className="p-4">
                       <label
-                        htmlFor="firstName"
+                        htmlFor="price"
                         className="block font-medium text-gray-700"
                       >
-                        First Name
+                        Price
                       </label>
                     </td>
                     <td className="p-4">
                       <Field
-                        placeholder="First Name"
+                        placeholder="Price"
                         type="text"
-                        name="firstName"
-                        className="form-input rounded-md shadow-sm mt-1 block w-full"
+                        name="price"
+                        className="form-input rounded-md shadow-sm p-1 block w-full"
                       />
-                      {errors.firstName && touched.firstName && (
-                        <div className="text-red-500">{errors.firstName}</div>
+                      {errors.price && touched.price && (
+                        <div className="text-red-500">{errors.price}</div>
                       )}
                     </td>
                   </tr>
@@ -163,21 +139,21 @@ function UpdateProductForm() {
                   <tr>
                     <td className="p-4">
                       <label
-                        htmlFor="lastName"
+                        htmlFor="weight"
                         className="block font-medium text-gray-700"
                       >
-                        Last Name
+                        Weight
                       </label>
                     </td>
                     <td className="p-4">
                       <Field
-                        placeholder="Last Name"
+                        placeholder="Weight"
                         type="text"
-                        name="lastName"
-                        className="form-input rounded-md shadow-sm mt-1 block w-full"
+                        name="weight"
+                        className="form-input rounded-md shadow-sm p-1 block w-full"
                       />
-                      {errors.lastName && touched.lastName && (
-                        <div className="text-red-500">{errors.lastName}</div>
+                      {errors.weight && touched.weight && (
+                        <div className="text-red-500">{errors.weight}</div>
                       )}
                     </td>
                   </tr>
@@ -185,26 +161,21 @@ function UpdateProductForm() {
                   <tr>
                     <td className="p-4">
                       <label
-                        htmlFor="phoneNumber"
+                        htmlFor="description"
                         className="block font-medium text-gray-700"
                       >
-                        Phone Number
+                        Description
                       </label>
                     </td>
                     <td className="p-4">
                       <Field
-                        placeholder="Phone Number"
-                        type="tel"
-                        name="phoneNumber"
-                        className="form-input rounded-md shadow-sm mt-1 block w-full"
-                        onKeyPress={(event) => {
-                          if (!/[0-9]/.test(event.key)) {
-                            event.preventDefault()
-                          }
-                        }}
+                        as="textarea"
+                        placeholder="Description"
+                        name="description"
+                        className="form-input rounded-md shadow-sm p-1 block w-full h-40"
                       />
-                      {errors.phoneNumber && touched.phoneNumber && (
-                        <div className="text-red-500">{errors.phoneNumber}</div>
+                      {errors.description && touched.description && (
+                        <div className="text-red-500">{errors.description}</div>
                       )}
                     </td>
                   </tr>
@@ -212,28 +183,39 @@ function UpdateProductForm() {
                   <tr>
                     <td className="p-4">
                       <label
-                        htmlFor="warehouse"
+                        htmlFor="category"
                         className="block font-medium text-gray-700"
                       >
-                        Warehouse
+                        Category
                       </label>
                     </td>
                     <td className="p-4">
-                      <Field
-                        as="select"
-                        name="warehouseId"
-                        className="form-select rounded-md shadow-sm mt-1 block w-full"
+                      <Dropdown admin={true} />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td className="p-4">
+                      <label
+                        htmlFor="isActive"
+                        className="block font-medium text-gray-700"
                       >
-                        <option value="">Select Warehouse</option>
-                        {warehouses?.map((e, i) => (
-                          <option key={i} value={e?.id}>
-                            {e?.name}
-                          </option>
-                        ))}
-                      </Field>
-                      {errors.warehouseId && touched.warehouseId && (
-                        <div className="text-red-500">{errors.warehouseId}</div>
-                      )}
+                        isActive
+                      </label>
+                    </td>
+                    <td className="p-4  flex justify-center">
+                      <button
+                        onClick={handleStatus} // Call the function when the button is clicked
+                        className={`w-12 h-6 flex items-center bg-${
+                          isProductActive ? 'orange-700' : 'black'
+                        } rounded-full p-1 duration-300 ease-in-out`}
+                      >
+                        <div
+                          className={`bg-white w-5 h-5 rounded-full shadow-md transform ${
+                            isProductActive ? 'translate-x-6' : 'translate-x-0'
+                          } duration-300 ease-in-out`}
+                        ></div>
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -254,4 +236,4 @@ function UpdateProductForm() {
   )
 }
 
-export default UpdateProductForm
+export default CreateProductForm

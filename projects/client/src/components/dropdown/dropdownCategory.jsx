@@ -8,19 +8,23 @@ import { useDispatch, useSelector } from 'react-redux'
 // eslint-disable-next-line
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
-export default function Dropdown() {
+export default function Dropdown({ admin }) {
   const dispatch = useDispatch()
   const [sortData, setSortData] = useState([])
   const categoryIdx = useSelector((state) => state.dataProduct.categoryIdx)
   const [selected, setSelected] = useState(
-    sortData[categoryIdx] || { id: 0, name: 'ALL PRODUCTS' }
+    !admin
+      ? sortData[categoryIdx] || { id: 0, name: 'ALL PRODUCTS' }
+      : { id: 99, name: 'UNCATEGORIZED' }
   )
 
   const getCategory = async () => {
     try {
       const { data } = await axios.get(`${baseUrl}/product/allCategory`)
       const categories = data.data
-      const updatedCategories = [{ id: 0, name: 'ALL PRODUCTS' }, ...categories]
+      const updatedCategories = !admin
+        ? [{ id: 0, name: 'ALL PRODUCTS' }, ...categories]
+        : [{ id: 0, name: 'UNCATEGORIZED' }, ...categories]
       setSortData(updatedCategories)
     } catch (err) {
       console.log(err.message)
@@ -41,7 +45,7 @@ export default function Dropdown() {
   }
 
   return (
-    <div className="w-44 font-bold hover:text-orange-400 transition duration-300 ease-in-out">
+    <div className="w-48 font-bold hover:text-orange-400 transition duration-300 ease-in-out">
       <Listbox value={sortData.indexOf(selected)} onChange={handleChange}>
         <div className="relative m-1">
           <Listbox.Button className="relative w-full cursor-default rounded-lg bg-orange-200 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-black-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">

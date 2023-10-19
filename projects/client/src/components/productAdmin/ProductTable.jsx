@@ -51,7 +51,7 @@ function ProductTable() {
       1: `all?limit=12&sort=2&page=${currentPage}`,
       2: `all?limit=12&sort=3&page=${currentPage}`
     }
-    const endpoint = sortEndpoints[sortIdx]
+    const endpoint = sortEndpoints[2]
     if (endpoint) {
       dispatch(getAllProducts(endpoint))
     }
@@ -145,7 +145,7 @@ function ProductTable() {
                           <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-5 justify-center">
                             <button
                               onClick={() => {
-                                handleOpenModal(1)
+                                handleOpenModal(1, data)
                               }}
                             >
                               <BsFillPencilFill />
