@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
@@ -22,8 +22,7 @@ const validationSchema = Yup.object().shape({
   description: Yup.string().required('Required')
 })
 
-function UpdateProductForm({ dataProduct, onClose }) {
-  const [isProductActive, setIsProductActive] = useState(dataProduct.isActive)
+function CreateProductForm({ onClose }) {
   const categoryIdx = useSelector((state) => state.dataProduct.categoryIdx)
   const isWarehouseProduct = useSelector(
     (state) => state.dataProduct.isWarehouseProduct
@@ -37,10 +36,7 @@ function UpdateProductForm({ dataProduct, onClose }) {
       } else {
         values.categoryId = categoryIdx
       }
-
-      values.isActive = isProductActive
-
-      const res = await axios.patch(`${apiUrl}/product/edit-product`, values)
+      const res = await axios.post(`${apiUrl}/product/new`, values)
 
       if (res.status === 200) {
         const toastId = toast.success('Product created successfully!', {
@@ -59,29 +55,20 @@ function UpdateProductForm({ dataProduct, onClose }) {
     dispatch(triggerWarehouseProduct(!isWarehouseProduct))
   }
 
-  const handleStatus = (e) => {
-    e.preventDefault() // Prevent the form from being submitted
-    setIsProductActive(!isProductActive)
-  }
-
   const formikProps = {
     initialValues: {
-      id: dataProduct.id,
-      name: dataProduct.name,
-      price: dataProduct.price,
-      weight: dataProduct.weight,
-      description: dataProduct.description,
-      categoryId: dataProduct.categoryId,
-      isActive: dataProduct?.isActive
+      name: '',
+      price: '',
+      weight: '',
+      description: '',
+      categoryId: 0
     },
     validationSchema,
     onSubmit: handleSubmit
   }
 
   useEffect(() => {
-    dispatch(
-      getCategoryIdx(dataProduct.categoryId === 99 ? 0 : dataProduct.categoryId)
-    )
+    dispatch(getCategoryIdx(0))
   }, [])
 
   return (
@@ -193,31 +180,6 @@ function UpdateProductForm({ dataProduct, onClose }) {
                       <Dropdown admin={true} />
                     </td>
                   </tr>
-
-                  <tr>
-                    <td className="p-4">
-                      <label
-                        htmlFor="isActive"
-                        className="block font-medium text-gray-700"
-                      >
-                        isActive
-                      </label>
-                    </td>
-                    <td className="p-4  flex justify-center">
-                      <button
-                        onClick={handleStatus} // Call the function when the button is clicked
-                        className={`w-12 h-6 flex items-center bg-${
-                          isProductActive ? 'orange-700' : 'black'
-                        } rounded-full p-1 duration-300 ease-in-out`}
-                      >
-                        <div
-                          className={`bg-white w-5 h-5 rounded-full shadow-md transform ${
-                            isProductActive ? 'translate-x-6' : 'translate-x-0'
-                          } duration-300 ease-in-out`}
-                        ></div>
-                      </button>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
 
@@ -236,4 +198,4 @@ function UpdateProductForm({ dataProduct, onClose }) {
   )
 }
 
-export default UpdateProductForm
+export default CreateProductForm
