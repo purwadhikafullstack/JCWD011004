@@ -1,7 +1,7 @@
-const db = require('../../../models')
-const Transaction = db.Transaction
-const TransactionItem = db.Transaction_Item
-const { Op } = require('sequelize')
+const db = require("../../../models");
+const Transaction = db.Transaction;
+const Transaction_Item = db.Transaction_Item;
+const { Op } = require("sequelize");
 
 const getAllOrderStatus = async (req, res) => {
   try {
@@ -24,7 +24,7 @@ const getAllOrderStatus = async (req, res) => {
       where: whereClause,
       include: [
         { model: db.Product },
-        { model: TransactionItem, include: [{ model: db.Product }] }
+        { model: Transaction_Item, include: [{ model: db.Product }] }
       ]
     })
 

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 const db = require('../../../models')
 const User = db.User
-
+const { createHtmlContent } = require('../../template/userUpdateAccount')
 module.exports = async (req, res) => {
   const { firstName, lastName, email, phoneNumber } = req.body
 
@@ -48,7 +48,11 @@ module.exports = async (req, res) => {
     from: process.env.EMAIL_USER,
     to: email || decodedToken.email, // Use the new email if it exists, otherwise use the current email
     subject: 'Update your information',
-    text: `Please click on the link to update your information: ${process.env.WHITELISTED_DOMAIN}/verify-updates/${newToken}`
+    html: createHtmlContent(
+      email || decodedToken.email,
+      'Update your information',
+      newToken
+    )
   }
 
   transporter.sendMail(mailOptions, function (error, info) {

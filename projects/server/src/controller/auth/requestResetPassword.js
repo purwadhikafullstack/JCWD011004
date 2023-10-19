@@ -18,19 +18,37 @@ const generateToken = (user) => {
   return jwt.sign({ id: user.id }, process.env.JWT_KEY, { expiresIn: '1h' })
 }
 
-const createHtmlContent = (host, token) => {
-  return `<p>You are receiving this because you (or someone else) have requested the reset of the password for your account.</p>
-          <p>Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:</p>
-          <a href="${host}/reset-password/${token}">Reset Password</a>
-          <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>`
+const createHtmlContent = (email, token) => {
+  const WHITELISTED_DOMAIN = process.env.WHITELISTED_DOMAIN
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Password Reset</title>
+    </head>
+    <body>
+        <div style="text-align: center;">
+            <h1>Welcome to AKUI!</h1>
+            <p>Hello ${email},</p>
+            <p>You are receiving this because you (or someone else) have requested the reset of the password for your account.</p>
+            <p>Please click the button below, or paste this into your browser to complete the process within one hour of receiving it:</p>
+            <a href="${WHITELISTED_DOMAIN}/reset-password/${token}" style="background-color: orange; color: white; padding: 10px 20px; text-decoration: none;">Reset Password</a>
+            <br/>
+            <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
+            <br/>
+            <p>Best regards,</p>
+            <p>Your Service Team</p>
+        </div>
+    </body>
+    </html>
+  `
 }
 
-const createMailOptions = (user, req, token) => {
+const createMailOptions = (user, token) => {
   const from = process.env.NODEMAILER_USER
   const to = user.email
   const subject = 'Password Reset'
-  const host = process.env.WHITELISTED_DOMAIN
-  const html = createHtmlContent(host, token)
+  const html = createHtmlContent(to, token)
   return {
     from,
     to,

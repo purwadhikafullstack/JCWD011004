@@ -180,11 +180,11 @@ function SidebarBody() {
           </Link>
         </li>
         <li>
-          <a
-            href="#"
-            onClick={() => setActiveLink('otherData')}
+          <Link
+            to="/admin/tabel-stock"
+            onClick={() => setActiveLink('tabel-stock')}
             className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
-              activeLink === 'otherData'
+              activeLink === 'tabel-stock'
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
@@ -204,8 +204,8 @@ function SidebarBody() {
                 d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
               />
             </svg>
-            <span className="group-hover:text-gray-700">Other</span>
-          </a>
+            <span className="group-hover:text-gray-700">Stock</span>
+          </Link>
         </li>
       </ul>
     </>
