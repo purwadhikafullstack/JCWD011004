@@ -13,6 +13,7 @@ const tableHead = [
   'Weight',
   'Description',
   'Warehouse',
+  'Image',
   'Status',
   'Action'
 ]
@@ -132,6 +133,25 @@ function ProductTable() {
                               ) : (
                                 <button
                                   onClick={() => handleOpenModal(2, data)}
+                                  className={`btn h-9 w-16 active:bg-orange-700 hover:bg-orange-400 bg-orange-700`}
+                                >
+                                  Add
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            <div className="flex justify-center">
+                              {data.Product_Images.length > 0 ? (
+                                <button
+                                  onClick={() => handleOpenModal(3, data)}
+                                  className={`btn h-9 w-20  active:bg-orange-700 hover:bg-orange-400 bg-orange-700`}
+                                >
+                                  View
+                                </button>
+                              ) : (
+                                <button
+                                  onClick={() => handleOpenModal(3, data)}
                                   className={`btn h-9 w-16 active:bg-orange-700 hover:bg-orange-400 bg-orange-700`}
                                 >
                                   Add

@@ -57,7 +57,6 @@ export const AvatarDropdown = () => {
   }
 
   const checkOrder = () => {
-    console.log('checkOrder')
     checkOrderData(0, 5, 432000, 'cancelled') //5days
     checkOrderData(3, 4, 432000, 'received') //5days
   }

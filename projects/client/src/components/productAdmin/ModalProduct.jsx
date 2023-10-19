@@ -2,6 +2,7 @@ import React from 'react'
 import CreateProductForm from './CreateProductForm'
 import UpdateProductForm from './UpdateProductForm'
 import WarehouseProductForm from './WarehouseForm'
+import ProductImage from './ProductImage'
 
 const ModalProduct = ({ isOpen, onClose, modal, data }) => {
   return (
@@ -18,7 +19,9 @@ const ModalProduct = ({ isOpen, onClose, modal, data }) => {
                   ? 'Create Product'
                   : modal == 1
                   ? 'Update Product'
-                  : 'Warehouse Product'}
+                  : modal == 2
+                  ? 'Warehouse Product'
+                  : 'Image Product'}
               </div>
               <div
                 onClick={onClose}
@@ -46,8 +49,10 @@ const ModalProduct = ({ isOpen, onClose, modal, data }) => {
                   <CreateProductForm onClose={onClose} />
                 ) : modal == 1 ? (
                   <UpdateProductForm dataProduct={data} onClose={onClose} />
-                ) : (
+                ) : modal == 2 ? (
                   <WarehouseProductForm dataProduct={data} />
+                ) : (
+                  <ProductImage dataProduct={data} />
                 )}
               </div>
             </div>
