@@ -34,14 +34,15 @@ const { getUsersSortPagination } = require('./admin/getUserData')
 const getWarehouse = require('./admin/getWarehouses')
 const { createWarehouseAdmin } = require('./admin/createAdmin')
 const { verifyAdminAccount } = require('./admin/verifyNewAdmin')
-const  getAllTrasaction  = require('./admin/getAllTrasaction')
-const { productOngkir } = require('./ongkir/getOngkir')
+const getAllTrasaction = require('./admin/getAllTrasaction')
 const updateWarehouseAdmin = require('./admin/updateAdmin')
-const {getAllStock,
+const {
+  getAllStock,
   createStockJournal,
   getStockJournalsByProduct,
-  getStockByProductAndWarehouse} = require('./stock/AdminSuper/stock')
-  const getAllStockWarehouse = require('./stock/AdminWarehouse/stockWarehouse')
+  getStockByProductAndWarehouse
+} = require('./stock/AdminSuper/stock')
+const getAllStockWarehouse = require('./stock/AdminWarehouse/stockWarehouse')
 const { courierOngkir } = require('./ongkir/getOngkir')
 const { createOrder } = require('./transaction/order')
 const { updateStatus } = require('./transaction/transactionStatus')
@@ -50,6 +51,21 @@ const { getAdminInfo } = require('./admin/adminKeepLogin')
 const { updateAllByRangeTime } = require('./transaction/transactionStatus')
 const { rejectPayment } = require('./transaction/confirmationPayment')
 const { updatePaymentStatus } = require('./transaction/mutationAndConfirmation')
+const {
+  addCategory,
+  updateCategory,
+  deleteCategory
+} = require('./category/category')
+const {
+  addProduct,
+  updateProduct,
+  uploadImage,
+  deleteImage
+} = require('./product/addProduct')
+const {
+  addWarehouseProduct,
+  deleteWarehouseProduct
+} = require('./product/warehouseProduct')
 module.exports = {
   registerUser,
   login,
@@ -89,7 +105,6 @@ module.exports = {
   getWarehouses,
   createWarehouseAdmin,
   verifyAdminAccount,
-  productOngkir,
   updateWarehouseAdmin,
   getAllTrasaction,
   getAllStock,
@@ -104,5 +119,14 @@ module.exports = {
   updateStatus,
   updateAllByRangeTime,
   rejectPayment,
-  updatePaymentStatus
+  updatePaymentStatus,
+  addWarehouseProduct,
+  deleteWarehouseProduct,
+  addProduct,
+  updateProduct,
+  uploadImage,
+  deleteImage,
+  addCategory,
+  updateCategory,
+  deleteCategory
 }

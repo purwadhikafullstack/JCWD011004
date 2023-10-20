@@ -3,6 +3,8 @@ const Product = db.Product
 const Transaction_Item = db.Transaction_Item
 const Product_Image = db.Product_Image
 const Warehouse_Product = db.Warehouse_Product
+const Warehouse = db.Warehouse
+const Category = db.Category
 const { Op } = require('sequelize')
 
 async function getAllProduct(req, res) {
@@ -33,17 +35,18 @@ async function getAllProduct(req, res) {
     const imageOptions = {
       model: Product_Image
     }
+    const categoryOption = {
+      model: Category
+    }
     const stockOptions = {
-      model: Warehouse_Product
+      model: Warehouse_Product,
+      include: [Warehouse]
     }
     const products = await Product.findAll({
       where: whereCondition,
       limit: size,
       offset: offset,
-      include: [
-        imageOptions,
-        stockOptions
-      ],
+      include: [imageOptions, stockOptions, categoryOption],
       order: order
     })
     const totalCount = await Product.count({
@@ -77,7 +80,7 @@ async function mostSales(req, res) {
       {
         model: Product_Image,
         as: 'productImage'
-      },
+      }
     ]
 
     if (categoryId) {

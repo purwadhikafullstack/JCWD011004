@@ -29,7 +29,6 @@ const rajaongkir = {
           }
         }
       )
-      console.log(response.data)
       res.json(response.data)
     } catch (error) {
       res.status(500).json({ error: 'Internal server error' })

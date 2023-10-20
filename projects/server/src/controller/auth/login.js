@@ -11,7 +11,6 @@ async function login(req, res) {
         email: email
       }
     })
-    console.log(user)
     if (!user) {
       return res.status(404).json({ message: 'Email tidak ditemukan' })
     }
