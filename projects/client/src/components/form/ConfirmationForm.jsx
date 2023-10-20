@@ -88,10 +88,23 @@ function ConfirmationForm({ data, onClose }) {
     }
   }
 
-  const handleUpdateStock = () => {
-    console.log('cancel and update stock')
-  }
+  const handleUpdateStock = async () => {
+    try {
+      const res = await axios.post(`${apiurl}/stock/create-stock-journal`, {
+        warehouseId: data?.Warehouse?.id,
+        warehouseProductId: data?.Transaction_Items[0]?.productId,
+        quantity: data?.Transaction_Items[0].quantity,
+        description: 'Transaction cancelled',
+        action: 'increment'
+      })
 
+      if (res?.status === 200) {
+        await handleChangeStatusPayment(5, 'Cancel')
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
   const fetchImage = async () => {
     const response = await axios.get(
       `${apiurl}/transaction/payment-proof/${data?.id}`
