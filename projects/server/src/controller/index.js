@@ -51,6 +51,7 @@ const { getAdminInfo } = require('./admin/adminKeepLogin')
 const { updateAllByRangeTime } = require('./transaction/transactionStatus')
 const { rejectPayment } = require('./transaction/confirmationPayment')
 const { updatePaymentStatus } = require('./transaction/mutationAndConfirmation')
+const { getSalesReport } = require('./report/sales')
 const {
   addCategory,
   updateCategory,
@@ -128,5 +129,6 @@ module.exports = {
   deleteImage,
   addCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  getSalesReport
 }

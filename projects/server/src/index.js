@@ -13,7 +13,8 @@ const {
   productRouter,
   cart,
   ongkirRouter,
-  categoryRouter
+  categoryRouter,
+  reportRouter
 } = require('./routes')
 const { deleteUnverifiedUsers } = require('./services/checkUserScheduler')
 const { stockRouter } = require('./routes')
@@ -57,6 +58,7 @@ app.use('/api/admin', adminRouter)
 app.use('/api/ongkir', ongkirRouter)
 app.use('/api/stock', stockRouter)
 app.use('/api/category', categoryRouter)
+app.use('/api/report', reportRouter)
 
 app.get('/api', (req, res) => {
   res.send(`Hello, this is my API`)

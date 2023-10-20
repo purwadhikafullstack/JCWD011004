@@ -12,6 +12,7 @@ const adminRouter = require('./adminRouter')
 const ongkirRouter = require('./ongkirRouter')
 const stockRouter = require('./stockRouter')
 const categoryRouter = require('./categoryRouter')
+const reportRouter = require('./reportRouter')
 
 module.exports = {
   authRouter,
@@ -27,5 +28,6 @@ module.exports = {
   adminRouter,
   ongkirRouter,
   stockRouter,
-  categoryRouter
+  categoryRouter,
+  reportRouter
 }
