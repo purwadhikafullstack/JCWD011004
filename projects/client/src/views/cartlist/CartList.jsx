@@ -67,7 +67,6 @@ function CartList() {
           }
         }
       )
-      console.log(response)
       setTotalPages(response?.data?.totalPages)
       dispatch(setItems(response?.data?.items))
     } catch (error) {

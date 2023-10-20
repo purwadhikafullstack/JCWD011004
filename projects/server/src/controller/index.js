@@ -56,6 +56,21 @@ const getAllProductStock = require('./history/superAdmin/superHistory')
 const getStockReport = require('./history/superAdmin/historyStock')
 const getStockReportWarehouse = require('./history/warehouseAdmin/historyWarehouse')
 const getWarehouseId = require('./history/warehouseAdmin/getWarehouseId')
+const {
+  addCategory,
+  updateCategory,
+  deleteCategory
+} = require('./category/category')
+const {
+  addProduct,
+  updateProduct,
+  uploadImage,
+  deleteImage
+} = require('./product/addProduct')
+const {
+  addWarehouseProduct,
+  deleteWarehouseProduct
+} = require('./product/warehouseProduct')
 module.exports = {
   registerUser,
   login,
@@ -95,7 +110,6 @@ module.exports = {
   getWarehouses,
   createWarehouseAdmin,
   verifyAdminAccount,
-  productOngkir,
   updateWarehouseAdmin,
   getAllTrasaction,
   getAllStock,
@@ -114,5 +128,14 @@ module.exports = {
   getAllProductStock,
   getStockReport,
   getStockReportWarehouse,
-  getWarehouseId
+  getWarehouseId,
+  addWarehouseProduct,
+  deleteWarehouseProduct,
+  addProduct,
+  updateProduct,
+  uploadImage,
+  deleteImage,
+  addCategory,
+  updateCategory,
+  deleteCategory
 }

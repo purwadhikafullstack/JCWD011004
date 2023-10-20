@@ -17,6 +17,8 @@ import SidebarPemesananDiterima from './components/transactionPage/tableTransact
 import SidebarPemesananCancel from './components/transactionPage/tableTransactionStatus/5.transactionCancel/SidebarCancel'
 import CartItemPages from './pages/CartItemPages'
 import Warehouse from './components/warehouse/Warehouse'
+import ProductTable from './components/productAdmin/ProductTable'
+import CategoryTable from './components/categoryAdmin/CategoryTable'
 import CreateWarehousePage from './components/warehouse/component/CreateWarehouse'
 import EditWarehousePage from './components/warehouse/component/EditWarehouse'
 import ModalDelete from './components/warehouse/component/ModalDelete'
@@ -98,6 +100,8 @@ function App() {
           <Route index element={<DashboardReport />} />
           <Route path="dashboard-report" element={<DashboardReport />} />
           <Route path="user" element={<UserTable />} />
+          <Route path="product" element={<ProductTable />} />
+          <Route path="category" element={<CategoryTable />} />
           <Route path="resident" element={<ResidentTable />} />
           <Route path="warehouse" element={<Warehouse />} />
           <Route path="order" element={<TabelSuperAdmin />} />
