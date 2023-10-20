@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BsFillPencilFill } from 'react-icons/bs'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
 
 const tableHead = ['No', 'Category', 'Action']
 // eslint-disable-next-line no-undef
@@ -8,29 +9,90 @@ const apiUrl = process.env.REACT_APP_API_BASE_URL
 
 function CategoryTable() {
   const [category, setCategory] = useState([])
+  const [isCategoryChange, setIsCategoryChange] = useState(false)
   const [editedCategoryName, setEditedCategoryName] = useState('')
   const [editingIndex, setEditingIndex] = useState(null)
 
-  function handleEditCategory(index) {
-    const categoryToEdit = category[index]
-    setEditedCategoryName(categoryToEdit.name)
+  const handleEditCategory = (index) => {
     setEditingIndex(index)
+    setEditedCategoryName(category[index].name)
   }
 
-  function handleCancelEdit() {
+  const handleCancelEdit = () => {
     setEditingIndex(null)
   }
 
-  function handleSaveCategory() {
-    console.log('Save')
+  const handleSaveCategory = async (index) => {
+    try {
+      const id = category[index].id // Get the ID of the category to update
+      const res = await axios.patch(`${apiUrl}/category/${id}`, {
+        name: editedCategoryName
+      })
+      if (res?.status === 200) {
+        setIsCategoryChange(!isCategoryChange)
+        const toastId = toast.success('Category updated', {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+        setTimeout(() => {
+          toast.dismiss(toastId)
+        }, 2000)
+        setEditingIndex(null)
+      }
+    } catch (error) {
+      const toastId = toast.error('Failed to update', {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      setTimeout(() => {
+        toast.dismiss(toastId)
+      }, 2000)
+    }
   }
 
-  function handleAddCategory() {
-    console.log('Add')
+  const handleAddCategory = async () => {
+    try {
+      const res = await axios.post(`${apiUrl}/category`, {
+        name: editedCategoryName
+      })
+      if (res?.status === 200) {
+        setIsCategoryChange(!isCategoryChange)
+        const toastId = toast.success('Category added', {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+        setTimeout(() => {
+          toast.dismiss(toastId)
+        }, 2000)
+        setEditedCategoryName('')
+      }
+    } catch (error) {
+      const toastId = toast.error('Failed to add', {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      setTimeout(() => {
+        toast.dismiss(toastId)
+      }, 2000)
+    }
   }
 
-  function handleDeleteCategory() {
-    console.log('Delete')
+  const handleDeleteCategory = async (id) => {
+    try {
+      const res = await axios.delete(`${apiUrl}/category/${id}`)
+      if (res?.status === 200) {
+        const toastId = setIsCategoryChange(!isCategoryChange)
+        toast.success('Category deleted', {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+        setTimeout(() => {
+          toast.dismiss(toastId)
+        }, 2000)
+      }
+    } catch (error) {
+      const toastId = toast.error('Failed to delete', {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      setTimeout(() => {
+        toast.dismiss(toastId)
+      }, 2000)
+    }
   }
 
   const getCategory = async () => {
@@ -44,78 +106,74 @@ function CategoryTable() {
 
   useEffect(() => {
     getCategory()
-  }, [])
+  }, [isCategoryChange])
 
   return (
     <>
       <table className="w-auto">
         <thead className="bg-gray-100 border-b">
           <tr>
-            {tableHead &&
-              tableHead.map((item, index) => (
-                <th
-                  scope="col"
-                  className="text-sm font-medium  text-gray-900 px-6 py-4 text-center"
-                  key={index}
-                >
-                  {item}
-                </th>
-              ))}
+            {tableHead.map((item, index) => (
+              <th
+                scope="col"
+                className="text-sm font-medium  text-gray-900 px-6 py-4 text-center"
+                key={index}
+              >
+                {item}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {category
-            ? category.map((data, index) => (
-                <tr key={index} className="bg-white border-b">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 w-5">
-                    {index + 1}
-                  </td>
-                  <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap w-96">
-                    {editingIndex === index ? (
-                      <input
-                        className="border-2 rounded-md py-1 px-3 w-64"
-                        type="text"
-                        value={editedCategoryName}
-                        onChange={(e) => setEditedCategoryName(e.target.value)}
-                      />
-                    ) : (
-                      data.name
-                    )}
-                  </td>
-                  <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-7 justify-center w-64">
-                    {editingIndex === index ? (
-                      <>
-                        <button
-                          className="btn h-9 w-16 active:bg-orange-700 hover:bg-orange-400 bg-orange-700"
-                          onClick={() => handleSaveCategory()}
-                        >
-                          Save
-                        </button>
-                        <button
-                          className="btn h-9 w-16 active:bg-gray-700 hover:bg-gray-400 bg-gray-700"
-                          onClick={handleCancelEdit}
-                        >
-                          Cancel
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <button onClick={() => handleEditCategory(index)}>
-                          <BsFillPencilFill />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteCategory()}
-                          className={`btn h-9 w-20 active:bg-gray-700 hover:bg-gray-400 bg-gray-700`}
-                        >
-                          Delete
-                        </button>
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ))
-            : ''}
-
+          {category.map((data, index) => (
+            <tr key={index} className="bg-white border-b">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 w-5">
+                {index + 1}
+              </td>
+              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap w-96">
+                {editingIndex === index ? (
+                  <input
+                    className="border-2 rounded-md py-1 px-3 w-64"
+                    type="text"
+                    value={editedCategoryName}
+                    onChange={(e) => setEditedCategoryName(e.target.value)}
+                  />
+                ) : (
+                  data.name
+                )}
+              </td>
+              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-7 justify-center w-64">
+                {editingIndex === index ? (
+                  <>
+                    <button
+                      className="btn h-9 w-16 active:bg-orange-700 hover:bg-orange-400 bg-orange-700"
+                      onClick={() => handleSaveCategory(index)}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="btn h-9 w-16 active:bg-gray-700 hover:bg-gray-400 bg-gray-700"
+                      onClick={handleCancelEdit}
+                    >
+                      Cancel
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button onClick={() => handleEditCategory(index)}>
+                      <BsFillPencilFill />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteCategory(data.id)}
+                      className="btn h-9 w-20 active:bg-gray-700 hover-bg-gray-400 bg-gray-700"
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
+              </td>
+            </tr>
+          ))}
           <tr className="bg-white border-b">
             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"></td>
             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
@@ -137,6 +195,7 @@ function CategoryTable() {
           </tr>
         </tbody>
       </table>
+      <ToastContainer />
     </>
   )
 }
