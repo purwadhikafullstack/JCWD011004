@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css'
+import jwtdecode from 'jwt-decode'
 //eslint-disable-next-line
 const apiUrl = process.env.REACT_APP_API_BASE_URL
+const info = () => {
+  const token = localStorage.getItem('token')
+  if (token) return jwtdecode(token)
+}
+console.log(info())
 
 const Report = () => {
   const [warehouses, setWarehouses] = useState([])
+  console.log(warehouses)
   const [selectedWarehouse, setSelectedWarehouse] = useState(null)
   const [stockHistory, setStockHistory] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [selectedMonth, setSelectedMonth] = useState('')
+  //   const [loading, setLoading] = useState(true)
   const [months] = useState([
     '2023-01',
     '2023-02',
@@ -25,12 +33,22 @@ const Report = () => {
     '2023-12'
   ])
 
-  const [admin, setAdmin] = useState(null) // Tambahkan state untuk menyimpan informasi admin
-
   const fetchWarehouses = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/warehouse/get-all`)
-      setWarehouses(response?.data?.data?.data)
+      if (info()?.role === 1) {
+        const response = await axios.get(`${apiUrl}/warehouse/get-all`)
+        console.log('ini adalah', response)
+        setWarehouses(response?.data?.data?.data)
+        console.log(info().role)
+      } else {
+        const userId = info()?.id
+        console.log(userId)
+        const response = await axios.get(
+          `${apiUrl}/history/get-by-user/${userId}`
+        )
+        console.log('ini adalah', response)
+        setWarehouses(response?.data)
+      }
     } catch (error) {
       console.error(error)
     }
@@ -38,16 +56,16 @@ const Report = () => {
 
   const fetchStockHistory = async () => {
     try {
-      if (admin) {
+      if (info()) {
         // Cek role admin
-        const userId = admin?.userInfo?.id
+        const userId = info()?.id
         let response
 
-        if (admin?.userInfo?.roleId === 1) {
+        if (info()?.role === 1) {
           response = await axios.get(`${apiUrl}/history/history`, {
             params: { createdAt: selectedMonth, warehouseId: selectedWarehouse }
           })
-        } else if (admin?.userInfo?.roleId === 2) {
+        } else if (info()?.role === 2) {
           response = await axios.get(
             `${apiUrl}/history/history-warehouse/${userId}`,
             {
@@ -66,32 +84,15 @@ const Report = () => {
     }
   }
 
-  const fetchAdmin = async () => {
-    try {
-      const { data } = await axios.get(`${apiUrl}/admin/info`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      setAdmin(data)
-    } catch (error) {
-      console.log(error)
+  useEffect(() => {
+    if (info()) {
+      fetchStockHistory()
     }
-  }
+  }, [selectedWarehouse, selectedMonth]) // Fetch stock history
 
   useEffect(() => {
     fetchWarehouses()
-  }, []) // Run once to fetch warehouses
-
-  useEffect(() => {
-    fetchAdmin()
-  }, []) // Fetch admin information
-
-  useEffect(() => {
-    if (admin) {
-      fetchStockHistory()
-    }
-  }, [selectedWarehouse, selectedMonth])
+  }, [])
 
   const openModal = (warehouse) => {
     setSelectedWarehouse(warehouse)
@@ -117,25 +118,28 @@ const Report = () => {
             </tr>
           </thead>
           <tbody>
-            {warehouses.map((warehouse, index) => (
-              <tr
-                key={warehouse.id}
-                className={`${
-                  index % 2 === 0 ? 'bg-gray-100' : 'bg-white'
-                } text-center`}
-              >
-                <td className="p-3">{index + 1}</td>
-                <td className="p-3">{warehouse.name}</td>
-                <td className="p-3">
-                  <button
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
-                    onClick={() => openModal(warehouse.id)}
-                  >
-                    Detail Stock
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {console.log(warehouses.length)}
+            {warehouses.length > 0 &&
+              warehouses.map((warehouse, index) => (
+                <tr
+                  {...console.log(warehouse)}
+                  key={warehouse.id}
+                  className={`${
+                    index % 2 === 0 ? 'bg-gray-100' : 'bg-white'
+                  } text-center`}
+                >
+                  <td className="p-3">{index + 1}</td>
+                  <td className="p-3">{warehouse.name}</td>
+                  <td className="p-3">
+                    <button
+                      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                      onClick={() => openModal(warehouse.id)}
+                    >
+                      Detail Stock
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
