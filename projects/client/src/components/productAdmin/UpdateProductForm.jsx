@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
   description: Yup.string().required('Required')
 })
 
-function CreateProductForm({ dataProduct, onClose }) {
+function UpdateProductForm({ dataProduct, onClose }) {
   const [isProductActive, setIsProductActive] = useState(dataProduct.isActive)
   const categoryIdx = useSelector((state) => state.dataProduct.categoryIdx)
   const isWarehouseProduct = useSelector(
@@ -236,4 +236,4 @@ function CreateProductForm({ dataProduct, onClose }) {
   )
 }
 
-export default CreateProductForm
+export default UpdateProductForm

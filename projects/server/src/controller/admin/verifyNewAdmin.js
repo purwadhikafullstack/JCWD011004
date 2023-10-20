@@ -13,7 +13,7 @@ const verifyAdminAccount = async (req, res) => {
     }
     const decoded = jwt.verify(token, process.env.JWT_KEY)
     const user = await User.findOne({ where: { id: decoded.userId } })
-    console.log(user)
+
     if (!user) {
       return res.status(404).json({ message: 'User not found.' })
     }
