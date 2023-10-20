@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
+//eslint-disable-next-line
 const apiUrl = process.env.REACT_APP_API_BASE_URL
 
 const TabelStock = () => {
@@ -19,7 +19,6 @@ const TabelStock = () => {
   const [historyData, setHistoryData] = useState([])
   const [warehouses, setWarehouses] = useState([])
   const [admin, setAdmin] = useState()
-  console.log(admin)
   const [selectedWarehouse, setSelectedWarehouse] = useState('')
   const [currentPage] = useState(0)
   const itemsPerPage = 10
@@ -34,7 +33,6 @@ const TabelStock = () => {
         setProducts(response?.data)
       } else if (admin?.userInfo?.roleId === 2) {
         const userId = admin?.userInfo?.id
-        console.log(userId)
         const response = await axios.get(
           `${apiUrl}/stock/getAllStockWarehouse/${userId}`
         )

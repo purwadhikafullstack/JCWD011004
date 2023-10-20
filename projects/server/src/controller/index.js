@@ -35,6 +35,7 @@ const getWarehouse = require('./admin/getWarehouses')
 const { createWarehouseAdmin } = require('./admin/createAdmin')
 const { verifyAdminAccount } = require('./admin/verifyNewAdmin')
 const getAllTrasaction = require('./admin/getAllTrasaction')
+const { productOngkir } = require('./ongkir/getOngkir')
 const updateWarehouseAdmin = require('./admin/updateAdmin')
 const {
   getAllStock,
@@ -52,6 +53,10 @@ const { updateAllByRangeTime } = require('./transaction/transactionStatus')
 const { rejectPayment } = require('./transaction/confirmationPayment')
 const { updatePaymentStatus } = require('./transaction/mutationAndConfirmation')
 const { getSalesReport } = require('./report/sales')
+const getAllProductStock = require('./history/superAdmin/superHistory')
+const getStockReport = require('./history/superAdmin/historyStock')
+const getStockReportWarehouse = require('./history/warehouseAdmin/historyWarehouse')
+const getWarehouseId = require('./history/warehouseAdmin/getWarehouseId')
 const {
   addCategory,
   updateCategory,
@@ -121,6 +126,10 @@ module.exports = {
   updateAllByRangeTime,
   rejectPayment,
   updatePaymentStatus,
+  getAllProductStock,
+  getStockReport,
+  getStockReportWarehouse,
+  getWarehouseId,
   addWarehouseProduct,
   deleteWarehouseProduct,
   addProduct,

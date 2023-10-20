@@ -11,6 +11,7 @@ const warehouseRoute = require('./warehouseRoute')
 const adminRouter = require('./adminRouter')
 const ongkirRouter = require('./ongkirRouter')
 const stockRouter = require('./stockRouter')
+const historyRouter = require('./historyRouter')
 const categoryRouter = require('./categoryRouter')
 const reportRouter = require('./reportRouter')
 
@@ -29,5 +30,6 @@ module.exports = {
   ongkirRouter,
   stockRouter,
   categoryRouter,
-  reportRouter
+  reportRouter,
+  historyRouter
 }
