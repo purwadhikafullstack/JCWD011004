@@ -15,7 +15,6 @@ function ConfirmationForm({ data, onClose }) {
     try {
       setLoading(true)
       const res = await axios.put(`${apiurl}/transaction/payment/${data?.id}}`)
-      console.log(res)
       if (res?.status === 200) {
         toast.success('Payment confirmed', {
           autoClose: 2000,
