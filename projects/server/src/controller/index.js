@@ -58,6 +58,11 @@ const {
   deleteCategory
 } = require('./category/category')
 const {
+  addCategory,
+  updateCategory,
+  deleteCategory
+} = require('./category/category')
+const {
   addProduct,
   updateProduct,
   uploadImage,
