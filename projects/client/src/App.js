@@ -31,8 +31,9 @@ import PagesNotFound from './pages/PagesNotFound'
 import TabelSuperAdmin from './components/adminFilter/SuperAdmin/TabelSuperAdmin'
 import TabelStock from './components/stock/tabelStock'
 import TabelAdminWarehouse from './components/adminFilter/AdminWarehouse/TabelAdminWarehouse'
+import SalesReport from './components//report/salesReport'
 import Report from './components/report/report'
-// import DetailReport from './components/report/detailReport'
+
 function App() {
   return (
     <div className="App">
@@ -59,7 +60,6 @@ function App() {
           element={<RequestResendEmail />}
         ></Route>
         <Route path="/user-dashboard" element={<UserDashboardPage />}></Route>
-        {/* Ini adalah untuk route sidebar ya */}
         <Route path="/sidebar-pemesanan" element={<SidebarPemesanan />}></Route>
         <Route
           path="/sidebar-pemesanan-not-paid"
@@ -106,10 +106,10 @@ function App() {
           <Route path="warehouse" element={<Warehouse />} />
           <Route path="order" element={<TabelSuperAdmin />} />
           <Route path="tabel-stock" element={<TabelStock />} />
+          <Route path="report-sales" element={<SalesReport />} />
           <Route path="order-admin/:id" element={<TabelAdminWarehouse />} />
           <Route path="report" element={<Report />}></Route>
         </Route>
-        {/* <Route path="detail-report" element={<DetailReport />}></Route> */}
         <Route path="*" element={<PagesNotFound />}></Route>
       </Routes>
     </div>
