@@ -1,29 +1,38 @@
-const db = require('../../../../models')
-const StockJournal = db.StockJournal
-const Warehouse_Product = db.Warehouse_Product
-const Product = db.Product
-const { Op } = require('sequelize')
+const db = require('../../../../models');
+const StockJournal = db.StockJournal;
+const Warehouse_Product = db.Warehouse_Product;
+const Warehouse_Admin = db.Warehouse_Admin;
+const Product = db.Product;
+const { Op } = require('sequelize');
 
-const getStockReport = async (req, res) => {
+const getStockReportWarehouse = async (req, res) => {
   try {
-    let filterByDate = {}
+    let filterByDate = {};
+    const { id } = req.params; // Gunakan req.params untuk mendapatkan nilai 'id' dari parameter URL
+
+    // Cari informasi gudang yang terkait dengan admin yang saat ini masuk
+    const warehouseAdmin = await Warehouse_Admin.findOne({
+      where: { adminId: id }
+    });
+
+    if (!warehouseAdmin) {
+      return res.status(403).json({ message: 'Anda tidak memiliki izin akses ke gudang.' });
+    }
 
     if (req.query.createdAt) {
-      const { createdAt, warehouseId } = req.query
-      const month = new Date(createdAt).getMonth() + 1
+      const { createdAt } = req.query;
+      const month = new Date(createdAt).getMonth() + 1;
 
       filterByDate = {
         createdAt: {
           [Op.gte]: new Date(`${createdAt}-01`), // Awal bulan
           [Op.lt]: new Date(new Date(`${createdAt}-01`).setMonth(month + 1)) // Akhir bulan
         }
-      }
-
-      if (warehouseId) {
-        // Jika warehouseId tersedia, tambahkan kondisi ke filterByDate
-        filterByDate.warehouseId = warehouseId
-      }
+      };
     }
+
+    // Tambahkan filter untuk warehouseId
+    filterByDate.warehouseId = warehouseAdmin.warehouseId;
 
     const report = await StockJournal.findAll({
       attributes: ['warehouseProductId'],
@@ -43,7 +52,7 @@ const getStockReport = async (req, res) => {
           ]
         }
       ]
-    })
+    });
 
     const summaryReport = await Promise.all(
       report.map(async (entry) => {
@@ -62,19 +71,19 @@ const getStockReport = async (req, res) => {
               ...filterByDate
             }
           })
-        ])
+        ]);
 
         const endingStock =
           (entry['Warehouse_Product.stock'] || 0) +
           (totalAddition || 0) -
-          (totalSubtraction || 0)
+          (totalSubtraction || 0);
 
         const stockJournal = await StockJournal.findOne({
           where: {
             warehouseProductId: entry.warehouseProductId,
             ...filterByDate
           }
-        })
+        });
 
         return {
           productId: entry.warehouseProductId,
@@ -84,15 +93,15 @@ const getStockReport = async (req, res) => {
           totalAddition: totalAddition || 0,
           totalSubtraction: totalSubtraction || 0,
           endingStock: endingStock
-        }
+        };
       })
-    )
+    );
 
-    res.json(summaryReport)
+    res.json(summaryReport);
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: error.message || 'Internal Server Error' })
+    console.error(error);
+    res.status(500).json({ error: error.message || 'Internal Server Error' });
   }
-}
+};
 
-module.exports = getStockReport
+module.exports = getStockReportWarehouse;

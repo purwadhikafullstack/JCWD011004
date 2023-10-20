@@ -53,7 +53,9 @@ const { updateAllByRangeTime } = require('./transaction/transactionStatus')
 const { rejectPayment } = require('./transaction/confirmationPayment')
 const { updatePaymentStatus } = require('./transaction/mutationAndConfirmation')
 const getAllProductStock = require('./history/superAdmin/superHistory')
-const getStockHistoryByProduct = require('./history/superAdmin/historyStock')
+const getStockReport = require('./history/superAdmin/historyStock')
+const getStockReportWarehouse = require('./history/warehouseAdmin/historyWarehouse')
+const getWarehouseId = require('./history/warehouseAdmin/getWarehouseId')
 module.exports = {
   registerUser,
   login,
@@ -110,5 +112,7 @@ module.exports = {
   rejectPayment,
   updatePaymentStatus,
   getAllProductStock,
-  getStockHistoryByProduct
+  getStockReport,
+  getStockReportWarehouse,
+  getWarehouseId
 }

@@ -19,7 +19,6 @@ const TabelStock = () => {
   const [historyData, setHistoryData] = useState([])
   const [warehouses, setWarehouses] = useState([])
   const [admin, setAdmin] = useState()
-  console.log(admin)
   const [selectedWarehouse, setSelectedWarehouse] = useState('')
   const [currentPage] = useState(0)
   const itemsPerPage = 10
@@ -34,7 +33,6 @@ const TabelStock = () => {
         setProducts(response?.data)
       } else if (admin?.userInfo?.roleId === 2) {
         const userId = admin?.userInfo?.id
-        console.log(userId)
         const response = await axios.get(
           `${apiUrl}/stock/getAllStockWarehouse/${userId}`
         )

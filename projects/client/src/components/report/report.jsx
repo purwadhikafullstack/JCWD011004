@@ -1,120 +1,137 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
+//eslint-disable-next-line
 const apiUrl = process.env.REACT_APP_API_BASE_URL
 
 const Report = () => {
-  const headTabel = ['No', 'Warehouse', 'Product', 'Stock', 'Actions']
-  const [products, setProducts] = useState([])
-  //   const [showHistoryModal, setShowHistoryModal] = useState(false)
-  //   const [historyData, setHistoryData] = useState([])
-  const [warehouseFilter, setWarehouseFilter] = useState('')
-  const [warehouses, setWarehouses] = useState([]) // State untuk daftar gudang
+  const [warehouses, setWarehouses] = useState([])
+  const [selectedWarehouse, setSelectedWarehouse] = useState(null)
+  const [stockHistory, setStockHistory] = useState([])
+  const [showModal, setShowModal] = useState(false)
+  const [selectedMonth, setSelectedMonth] = useState('')
+  const [months] = useState([
+    '2023-01',
+    '2023-02',
+    '2023-03',
+    '2023-04',
+    '2023-05',
+    '2023-06',
+    '2023-07',
+    '2023-08',
+    '2023-09',
+    '2023-10',
+    '2023-11',
+    '2023-12'
+  ])
 
-  const fetchProductsStock = async () => {
-    try {
-      const response = await axios.get(
-        `${apiUrl}/history/all-history?warehouseId=${warehouseFilter}`
-      )
-      //   console.log(response)
-      setProducts(response?.data)
-    } catch (error) {
-      console.error(error)
-      toast.error('Failed to fetch product data')
-    }
-  }
+  const [admin, setAdmin] = useState(null) // Tambahkan state untuk menyimpan informasi admin
 
   const fetchWarehouses = async () => {
     try {
       const response = await axios.get(`${apiUrl}/warehouse/get-all`)
-      console.log(response?.data.data.data)
       setWarehouses(response?.data?.data?.data)
     } catch (error) {
       console.error(error)
-      toast.error('Failed to fetch warehouses')
     }
   }
 
-  //   const openHistoryModal = async (product) => {
-  //     try {
-  //       const response = await axios.get(
-  //         `${apiUrl}/history/history/${product.id}`
-  //       )
-  //       console.log(response)
-  //       setHistoryData(response?.data)
-  //       setShowHistoryModal(true)
-  //     } catch (error) {
-  //       console.error(error)
-  //       toast.error('Failed to fetch history data')
-  //     }
-  //   }
+  const fetchStockHistory = async () => {
+    try {
+      if (admin) {
+        // Cek role admin
+        const userId = admin?.userInfo?.id
+        let response
 
-  //   const closeHistoryModal = () => {
-  //     setShowHistoryModal(false)
-  //     setHistoryData([])
-  //   }
+        if (admin?.userInfo?.roleId === 1) {
+          response = await axios.get(`${apiUrl}/history/history`, {
+            params: { createdAt: selectedMonth, warehouseId: selectedWarehouse }
+          })
+        } else if (admin?.userInfo?.roleId === 2) {
+          response = await axios.get(
+            `${apiUrl}/history/history-warehouse/${userId}`,
+            {
+              params: {
+                createdAt: selectedMonth,
+                warehouseId: selectedWarehouse
+              }
+            }
+          )
+        }
+
+        setStockHistory(response?.data)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const fetchAdmin = async () => {
+    try {
+      const { data } = await axios.get(`${apiUrl}/admin/info`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      setAdmin(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
-    fetchProductsStock()
-    fetchWarehouses() // Memanggil fetchWarehouses saat komponen dimuat
-  }, [warehouseFilter])
+    fetchWarehouses()
+  }, []) // Run once to fetch warehouses
+
+  useEffect(() => {
+    fetchAdmin()
+  }, []) // Fetch admin information
+
+  useEffect(() => {
+    if (admin) {
+      fetchStockHistory()
+    }
+  }, [selectedWarehouse, selectedMonth])
+
+  const openModal = (warehouse) => {
+    setSelectedWarehouse(warehouse)
+    setShowModal(true)
+  }
+
+  const closeModal = () => {
+    setSelectedWarehouse(null)
+    setStockHistory([])
+    setShowModal(false)
+  }
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">Tabel Report</h1>
-      <div className="mb-4">
-        <label
-          htmlFor="warehouseFilter"
-          className="block text-gray-700 font-bold"
-        >
-          Filter by Warehouse:
-        </label>
-        <select
-          id="warehouseFilter"
-          name="warehouseFilter"
-          className="block w-full mt-1 p-2 border rounded-md"
-          value={warehouseFilter}
-          onChange={(e) => setWarehouseFilter(e.target.value)}
-        >
-          <option value="">All Warehouses</option>
-          {warehouses.map((warehouse) => (
-            <option key={warehouse.id} value={warehouse.id}>
-              {warehouse.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="bg-white shadow-md rounded my-6 overflow-x-auto">
+      <h1 className="text-2xl font-bold mb-4">List of Warehouses</h1>
+      <div className="bg-white shadow-md rounded-lg my-6 overflow-x-auto">
         <table className="min-w-full w-full table-auto">
           <thead>
             <tr className="bg-blue-700 text-white">
-              {headTabel.map((header, index) => (
-                <th key={index} className="p-3 text-left">
-                  {header}
-                </th>
-              ))}
+              <th className="p-3">No</th>
+              <th className="p-3">Warehouse Name</th>
+              <th className="p-3">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {products.map((product, index) => (
+            {warehouses.map((warehouse, index) => (
               <tr
-                key={product.id}
+                key={warehouse.id}
                 className={`${
                   index % 2 === 0 ? 'bg-gray-100' : 'bg-white'
-                } text-left`}
+                } text-center`}
               >
                 <td className="p-3">{index + 1}</td>
-                <td className="p-3">{product?.Warehouse.name}</td>
-                <td className="p-3">{product?.Product.name}</td>
-                <td className="p-3">{product?.stock}</td>
+                <td className="p-3">{warehouse.name}</td>
                 <td className="p-3">
                   <button
-                    // onClick={() => openHistoryModal(product)}
-                    className="bg-blue-500 hover-bg-blue-600 text-white px-3 py-2 rounded-md ml-2"
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                    onClick={() => openModal(warehouse.id)}
                   >
-                    Detail Stock History
+                    Detail Stock
                   </button>
                 </td>
               </tr>
@@ -122,54 +139,91 @@ const Report = () => {
           </tbody>
         </table>
       </div>
-      {/* {showHistoryModal && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="bg-white rounded-lg p-4">
-            <h2 className="text-lg font-semibold mb-4">Product History</h2>
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-4 py-2">Date</th>
-                  <th className="px-4 py-2">Action</th>
-                  <th className="px-4 py-2">Quantity</th>
-                  <th className="px-4 py-2">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {historyData.map((history, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? 'bg-gray-200' : 'bg-white'}
+      {showModal && selectedWarehouse && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div
+            className="absolute inset-0 bg-gray-900 opacity-50"
+            onClick={closeModal}
+          ></div>
+          <div className="relative bg-white w-3/4 max-w-screen-lg rounded-lg shadow-lg">
+            <div className="p-6">
+              <h2 className="text-2xl font-bold mb-4">
+                Stock History for {selectedWarehouse.name}
+              </h2>
+
+              {/* Custom dropdown for selecting a month */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Select a Month
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedMonth}
+                    onChange={(e) => setSelectedMonth(e.target.value)}
+                    className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
                   >
-                    <td className="px-4 py-2 text-sm text-gray-900 border border-white">
-                      {history.createdAt}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-gray-900 border border-white">
-                      {history.action}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-gray-900 border border-white">
-                      {history.quantity}
-                    </td>
-                    <td className="px-4 py-2 text-sm text-gray-900 border border-white">
-                      {history.description}
-                    </td>
+                    <option value="">Select a Month</option>
+                    {months.map((month) => (
+                      <option key={month} value={month}>
+                        {month}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M12.293 7.293a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L10 9.414l-4.293 4.293a1 1 0 01-1.414-1.414l3-3a1 1 0 011.414 0z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <table className="w-full table-auto">
+                <thead>
+                  <tr className="bg-blue-700 text-white">
+                    <th className="p-3">No</th>
+                    <th className="p-3">Product</th>
+                    <th className="p-3">Description</th>
+                    <th className="p-3">Initial Stock</th>
+                    <th className="p-3">Total Addition</th>
+                    <th className="p-3">Total Subtraction</th>
+                    <th className="p-3">Total Stock</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="mt-4 flex justify-end">
+                </thead>
+                <tbody>
+                  {stockHistory?.map((history, index) => (
+                    <tr
+                      key={index}
+                      className={`${
+                        index % 2 === 0 ? 'bg-gray-100' : 'bg-white'
+                      }`}
+                    >
+                      <td className="p-3">{index + 1}</td>
+                      <td className="p-3">{history?.productName}</td>
+                      <td className="p-3">{history?.description}</td>
+                      <td className="p-3">{history?.initialStock}</td>
+                      <td className="p-3">{history?.totalAddition}</td>
+                      <td className="p-3">{history?.totalSubtraction}</td>
+                      <td className="p-3">{history?.endingStock}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="p-4 bg-gray-100 text-right">
               <button
-                type="button"
-                onClick={closeHistoryModal}
-                className="bg-red-500 text-white px-4 py-2 rounded-md ml-2 hover-bg-red-600"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                onClick={closeModal}
               >
                 Close
               </button>
             </div>
           </div>
         </div>
-      )} */}
-      <ToastContainer />
+      )}
     </div>
   )
 }
