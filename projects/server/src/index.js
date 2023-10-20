@@ -17,6 +17,7 @@ const {
 } = require('./routes')
 const { deleteUnverifiedUsers } = require('./services/checkUserScheduler')
 const { stockRouter } = require('./routes')
+const { historyRouter } = require('./routes')
 const PORT = process.env.PORT || 8000
 const app = express()
 const admin = require('./services/firebaseAdmin')
@@ -56,6 +57,7 @@ app.use('/api/warehouse', warehouseRoute)
 app.use('/api/admin', adminRouter)
 app.use('/api/ongkir', ongkirRouter)
 app.use('/api/stock', stockRouter)
+app.use('/api/history', historyRouter)
 app.use('/api/category', categoryRouter)
 
 app.get('/api', (req, res) => {
