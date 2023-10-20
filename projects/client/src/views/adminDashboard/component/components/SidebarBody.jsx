@@ -33,7 +33,7 @@ function SidebarBody() {
             to="/admin/dashboard-report"
             onClick={() => setActiveLink('dashboard')}
             aria-label="dashboard"
-            className={`relative px-4 py-3 flex items-center space-x-4 rounded-xl ${
+            className={`relative px-4 py-2 flex items-center space-x-4 rounded-xl ${
               activeLink === 'dashboard'
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
@@ -61,7 +61,7 @@ function SidebarBody() {
             <Link
               to="/admin/user"
               onClick={() => setActiveLink('user')}
-              className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
+              className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
                 activeLink === 'user'
                   ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                   : 'text-gray-600 group'
@@ -91,7 +91,7 @@ function SidebarBody() {
           <Link
             to="/admin/product"
             onClick={() => setActiveLink('product')}
-            className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
+            className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
               activeLink === 'product'
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
@@ -121,7 +121,7 @@ function SidebarBody() {
           <Link
             to="/admin/category"
             onClick={() => setActiveLink('category')}
-            className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
+            className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
               activeLink === 'category'
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
@@ -152,7 +152,7 @@ function SidebarBody() {
             <Link
               to="/admin/warehouse"
               onClick={() => setActiveLink('Warehouse')}
-              className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
+              className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
                 activeLink === 'Warehouse'
                   ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                   : 'text-gray-600 group'
@@ -183,7 +183,7 @@ function SidebarBody() {
           <Link
             to="/admin/order"
             onClick={() => setActiveLink('order')}
-            className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
+            className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
               activeLink === 'order'
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
@@ -213,7 +213,7 @@ function SidebarBody() {
           <Link
             to="/admin/tabel-stock"
             onClick={() => setActiveLink('tabel-stock')}
-            className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
+            className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
               activeLink === 'tabel-stock'
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
@@ -239,10 +239,43 @@ function SidebarBody() {
         </li>
         <li>
           <Link
-            to="/admin/report-sales"
+            to="/admin/report"
             onClick={() => setActiveLink('report')}
-            className={`px-4 py-3 flex items-center space-x-4 rounded-md ${
+            className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
               activeLink === 'report'
+                ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
+                : 'text-gray-600 group'
+            }`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 3c3.866 0 7 3.134 7 7s-3.134 7-7 7-7-3.134-7-7 3.134-7 7-7z"
+              />
+            </svg>
+            <span className="group-hover:text-gray-700">Stock Report</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin/report-sales"
+            onClick={() => setActiveLink('reportsales')}
+            className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
+              activeLink === 'reportsales'
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
