@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
+import GeneralPagination from '../../../pagination/GeneralPagination'
 
 export default function TableDashboardPemesananProgress() {
   const [data, setData] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage] = useState(5) // number of items to show per page
   const token = jwt_decode(localStorage.getItem('token'))
   const userId = token ? token.id : null
   //eslint-disable-next-line
@@ -15,7 +18,11 @@ export default function TableDashboardPemesananProgress() {
         const response = await axios.get(
           `${apiUrl}/transaction/all-status?userId=${userId}&transactionStatusId=2`
         )
-        setData(response.data.allOrderStatus)
+        setData(
+          response.data.allOrderStatus.filter(
+            (order) => order.transactionStatusId === 2
+          )
+        )
       }
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -26,21 +33,29 @@ export default function TableDashboardPemesananProgress() {
     fetchData()
   }, [userId])
 
+  // Get current items
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem)
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
   return (
-    <div className="w-full">
+    <div className="w-full h-screen">
       <h1 className="text-2xl lg:text-xl md:text-lg sm:text-sm font-semibold text-h1-mobile lg:text-hr-desktop mb-4">
         Daftar Pemesanan
       </h1>
 
-      {data.length === 0 ? (
+      {currentItems.length === 0 ? (
         <div>
-          <p className="text-pr-mobile lg:text-pr-desktop font-medium text-gray-500 text-pr-mobile lg:text-pr-desktop">
+          <p className="text-pr-mobile h-screen lg:text-pr-desktop font-medium text-gray-500 text-pr-mobile lg:text-pr-desktop">
             Tidak ada daftar transaksi barang.
           </p>
         </div>
       ) : (
         <>
-          {data?.map((order, orderIndex) => (
+          {currentItems?.map((order, orderIndex) => (
             <div key={`order_${orderIndex}`}>
               <table className="min-w-full divide-y divide-gray-200 border-4 mt-2">
                 <thead>
@@ -87,6 +102,12 @@ export default function TableDashboardPemesananProgress() {
               </table>
             </div>
           ))}
+          <GeneralPagination
+            itemsPerPage={itemsPerPage}
+            totalItems={data.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </>
       )}
     </div>

@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 // eslint-disable-next-line
 const apiUrl = process.env.REACT_APP_API_BASE_URL
+// eslint-disable-next-line
+const baseUrl = process.env.REACT_APP_FE_BASE_URL
+console.log(apiUrl)
+console.log(baseUrl)
 function SidebarBody() {
-  const [activeLink, setActiveLink] = useState('dashboard')
+  const [activeLink, setActiveLink] = useState(window.location.href)
   const [admin, setAdmin] = useState()
-
+  console.log(window.location.href)
   const fetchData = async () => {
     try {
       const { data } = await axios.get(`${apiUrl}/auth/user`, {
@@ -31,10 +35,10 @@ function SidebarBody() {
         <li>
           <Link
             to="/admin/dashboard-report"
-            onClick={() => setActiveLink('dashboard')}
+            onClick={() => setActiveLink(`${baseUrl}/admin/dashboard-report`)}
             aria-label="dashboard"
             className={`relative px-4 py-2 flex items-center space-x-4 rounded-xl ${
-              activeLink === 'dashboard'
+              activeLink === `${baseUrl}/admin/dashboard-report`
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
@@ -60,9 +64,9 @@ function SidebarBody() {
           <li>
             <Link
               to="/admin/user"
-              onClick={() => setActiveLink('user')}
+              onClick={() => setActiveLink(`${baseUrl}/admin/user`)}
               className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
-                activeLink === 'user'
+                activeLink === `${baseUrl}/admin/user`
                   ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                   : 'text-gray-600 group'
               }`}
@@ -90,9 +94,9 @@ function SidebarBody() {
         <li>
           <Link
             to="/admin/product"
-            onClick={() => setActiveLink('product')}
+            onClick={() => setActiveLink(`${baseUrl}/admin/product`)}
             className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
-              activeLink === 'product'
+              activeLink === `${baseUrl}/admin/product`
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
@@ -120,9 +124,9 @@ function SidebarBody() {
         <li>
           <Link
             to="/admin/category"
-            onClick={() => setActiveLink('category')}
+            onClick={() => setActiveLink(`${baseUrl}/admin/category`)}
             className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
-              activeLink === 'category'
+              activeLink === `${baseUrl}/admin/category`
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
@@ -151,9 +155,9 @@ function SidebarBody() {
           <li>
             <Link
               to="/admin/warehouse"
-              onClick={() => setActiveLink('Warehouse')}
+              onClick={() => setActiveLink(`${baseUrl}/admin/warehouse`)}
               className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
-                activeLink === 'Warehouse'
+                activeLink === `${baseUrl}/admin/warehouse`
                   ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                   : 'text-gray-600 group'
               }`}
@@ -182,9 +186,9 @@ function SidebarBody() {
         <li>
           <Link
             to="/admin/order"
-            onClick={() => setActiveLink('order')}
+            onClick={() => setActiveLink(`${baseUrl}/admin/order`)}
             className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
-              activeLink === 'order'
+              activeLink === `${baseUrl}/admin/order`
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
@@ -212,9 +216,9 @@ function SidebarBody() {
         <li>
           <Link
             to="/admin/tabel-stock"
-            onClick={() => setActiveLink('tabel-stock')}
+            onClick={() => setActiveLink(`${baseUrl}/admin/tabel-stock`)}
             className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
-              activeLink === 'tabel-stock'
+              activeLink === `${baseUrl}/admin/tabel-stock`
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
@@ -240,9 +244,9 @@ function SidebarBody() {
         <li>
           <Link
             to="/admin/report"
-            onClick={() => setActiveLink('report')}
+            onClick={() => setActiveLink(`${baseUrl}/admin/report`)}
             className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
-              activeLink === 'report'
+              activeLink === `${baseUrl}/admin/report`
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
@@ -273,9 +277,9 @@ function SidebarBody() {
         <li>
           <Link
             to="/admin/report-sales"
-            onClick={() => setActiveLink('reportsales')}
+            onClick={() => setActiveLink(`${baseUrl}/admin/report-sales`)}
             className={`px-4 py-2 flex items-center space-x-4 rounded-md ${
-              activeLink === 'reportsales'
+              activeLink === `${baseUrl}/admin/report-sales`
                 ? 'text-white bg-gradient-to-r from-orange-800 to-orange-400'
                 : 'text-gray-600 group'
             }`}
