@@ -116,7 +116,7 @@ const AvatarUpload = () => {
                 ? avatar?.avatar
                 : 'https://img.icons8.com/pastel-glyph/512/person-male--v3.png'
             }
-            className="w-40 h-40 py m-auto rounded-full shadow cursor-pointer hover:opacity-80 transition duration-300"
+            className="w-36 h-36 py m-auto rounded-full shadow cursor-pointer hover:opacity-80 transition duration-300"
           />
         </div>
         <div
