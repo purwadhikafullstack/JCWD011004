@@ -1,24 +1,52 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../../../navbar/navbar'
 import Footer from '../../../homePage/footer'
 import TableDashboardPemesananCancel from './TableStatusCancel'
 
 export default function SidebarPemesananCancel() {
+  const [menuOpen, setMenuOpen] = useState(window.innerWidth > 768)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setMenuOpen(window.innerWidth > 768)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
   return (
     <div className="container mx-auto max-w-screen-lg">
       <Navbar />
       <div className="h-screen flex flex-col container mx-auto max-w-screen-lg mt-20">
         <div
           id="view"
-          className="h-full w-full flex flex-col md:flex-row shadow-lg bg-white border border-neutral-200 max-md:mt-20"
+          className="h-max w-full flex flex-col md:flex-row shadow-lg bg-white border border-neutral-200 max-md:mt-20"
         >
           <div
             id="sidebar"
             className="bg-white md:block shadow-xl px-3 w-full md:w-1/4 lg:w-1/4 overflow-x-hidden transition-transform duration-300 ease-in-out border border-neutral-200"
           >
             <div className="space-y-6 md:space-y-10 mt-10">
-              <div id="menu" className="flex flex-col space-y-2">
+              <button
+                className="hamburger-menu md:hidden"
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                <svg
+                  className="w-6 h-6 fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M3 12h18a1 1 0 010 2H3a1 1 0 010-2zm0-7h18a1 1 0 010 2H3a1 1 0 010-2zm0 14h18a1 1 0 010 2H3a1 1 0 010-2z" />
+                </svg>
+              </button>
+              <div
+                id="menu"
+                className={`flex flex-col space-y-2 ${
+                  menuOpen ? `` : `hidden`
+                }`}
+              >
                 <Link
                   to="/sidebar-pemesanan"
                   className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-orange-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
@@ -123,8 +151,8 @@ export default function SidebarPemesananCancel() {
             <TableDashboardPemesananCancel />
           </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   )
 }

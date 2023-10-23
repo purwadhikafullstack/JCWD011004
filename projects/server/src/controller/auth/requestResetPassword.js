@@ -46,6 +46,7 @@ const createHtmlContent = (email, token) => {
 
 const createMailOptions = (user, token) => {
   const from = process.env.NODEMAILER_USER
+  console.log(token)
   const to = user.email
   const subject = 'Password Reset'
   const html = createHtmlContent(to, token)
@@ -57,10 +58,10 @@ const createMailOptions = (user, token) => {
   }
 }
 
-const sendEmail = async (user, req, token) => {
+const sendEmail = async (user, token) => {
   try {
     const transporter = createTransporter()
-    const mailOptions = createMailOptions(user, req, token)
+    const mailOptions = createMailOptions(user, token)
     const info = await transporter.sendMail(mailOptions)
     return info
   } catch (error) {
@@ -81,7 +82,7 @@ const requestResetPassword = async (req, res) => {
       return res.status(404).json({ message: 'User not found' })
     }
     const token = generateToken(user)
-    const info = await sendEmail(user, req, token)
+    const info = await sendEmail(user, token)
     if (info.status === 500) {
       throw new Error(info.message)
     }

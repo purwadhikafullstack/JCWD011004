@@ -23,10 +23,13 @@ function ConfirmationForm({ data, onClose }) {
         onClose(true)
       }
     } catch (error) {
-      toast.error(error?.message, {
-        autoClose: 2000,
-        position: 'bottom-center'
-      })
+      toast.error(
+        'Insufficient stock on all warehouse please contact SuperAdmin',
+        {
+          autoClose: 2000,
+          position: 'bottom-center'
+        }
+      )
     } finally {
       setLoading(false)
     }
