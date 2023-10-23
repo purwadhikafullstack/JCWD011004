@@ -12,7 +12,7 @@ const createHtmlContent = (email, subject, token) => {
             <p>Hello ${email},</p>
             <p>You are receiving this because you (or someone else) have requested the update for your account.</p>
             <p>Please click the button below, or paste this into your browser to complete the process within one hour of receiving it:</p>
-            <a href="${WHITELISTED_DOMAIN}/verify-updates/${token}" style="background-color: orange; color: white; padding: 10px 20px; text-decoration: none;">Reset Password</a>
+            <a href="${WHITELISTED_DOMAIN}/verify-updates/${token}" style="background-color: orange; color: white; padding: 10px 20px; text-decoration: none;">Update Information</a>
             <br/>
             <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
             <br/>
