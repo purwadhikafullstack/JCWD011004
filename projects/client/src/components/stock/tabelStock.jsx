@@ -147,7 +147,6 @@ const TabelStock = () => {
 
   useEffect(() => {
     if (admin) {
-      // Hanya panggil fetchProducts jika admin sudah ada
       fetchProducts()
       fetchWarehouses()
     }
