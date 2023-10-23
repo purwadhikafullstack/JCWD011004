@@ -8,7 +8,6 @@ const info = () => {
   const token = localStorage.getItem('token')
   if (token) return jwtdecode(token)
 }
-console.log(info())
 
 const Report = () => {
   const [warehouses, setWarehouses] = useState([])

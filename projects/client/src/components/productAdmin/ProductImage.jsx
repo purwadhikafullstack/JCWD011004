@@ -4,6 +4,12 @@ import { ToastContainer, toast } from 'react-toastify'
 import { triggerWarehouseProduct } from '../../services/reducer/productReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import AddImage from './AddImage'
+import jwtdecode from 'jwt-decode'
+
+const user = () => {
+  const token = localStorage.getItem('token')
+  if (token) return jwtdecode(token)
+}
 
 function ProductImage({ dataProduct }) {
   const dataAllProduct = useSelector((state) => state.dataProduct.allProducts)
@@ -61,17 +67,21 @@ function ProductImage({ dataProduct }) {
                   }
                   className="w-auto h-20 rounded-md shadow cursor-pointer hover:opacity-80 transition duration-300"
                 />
-                <button
-                  onClick={() => handleDeleteImage(data.id)}
-                  key={index}
-                  className={`btn h-9 w-16 active:bg-gray-700 hover:bg-gray-400 bg-gray-700`}
-                >
-                  Delete
-                </button>
+                {user().role === 1 ? (
+                  <button
+                    onClick={() => handleDeleteImage(data.id)}
+                    key={index}
+                    className={`btn h-9 w-16 active:bg-gray-700 hover:bg-gray-400 bg-gray-700`}
+                  >
+                    Delete
+                  </button>
+                ) : (
+                  ''
+                )}
               </td>
             </tr>
           ))}
-          <AddImage productId={dataProduct.id} />
+          {user().role === 1 ? <AddImage productId={dataProduct.id} /> : ''}
         </tbody>
       </table>
       <ToastContainer />

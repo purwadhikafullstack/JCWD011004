@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { BsFillPencilFill } from 'react-icons/bs'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
+import jwtdecode from 'jwt-decode'
+
+const user = () => {
+  const token = localStorage.getItem('token')
+  if (token) return jwtdecode(token)
+}
 
 const tableHead = ['No', 'Category', 'Action']
 // eslint-disable-next-line no-undef
@@ -143,7 +149,7 @@ function CategoryTable() {
                 )}
               </td>
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-7 justify-center w-64">
-                {editingIndex === index ? (
+                {editingIndex === index && user().role === 1 ? (
                   <>
                     <button
                       className="btn h-9 w-16 active:bg-orange-700 hover:bg-orange-400 bg-orange-700"
@@ -158,7 +164,7 @@ function CategoryTable() {
                       Cancel
                     </button>
                   </>
-                ) : (
+                ) : user().role === 1 ? (
                   <>
                     <button onClick={() => handleEditCategory(index)}>
                       <BsFillPencilFill />
@@ -170,29 +176,35 @@ function CategoryTable() {
                       Delete
                     </button>
                   </>
+                ) : (
+                  'No Action'
                 )}
               </td>
             </tr>
-          ))}
-          <tr className="bg-white border-b">
-            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"></td>
-            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-              <input
-                className="border-2 rounded-md py-1 px-3 w-64"
-                type="text"
-                placeholder="New category"
-                onChange={(e) => setEditedCategoryName(e.target.value)}
-              />
-            </td>
-            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-5 justify-center">
-              <button
-                onClick={() => handleAddCategory()}
-                className="btn h-9 w-16 active:bg-orange-700 hover:bg-orange-400 bg-orange-700"
-              >
-                Add
-              </button>
-            </td>
-          </tr>
+          ))}{' '}
+          {user().role === 1 ? (
+            <tr className="bg-white border-b">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"></td>
+              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                <input
+                  className="border-2 rounded-md py-1 px-3 w-64"
+                  type="text"
+                  placeholder="New category"
+                  onChange={(e) => setEditedCategoryName(e.target.value)}
+                />
+              </td>
+              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-5 justify-center">
+                <button
+                  onClick={() => handleAddCategory()}
+                  className="btn h-9 w-16 active:bg-orange-700 hover:bg-orange-400 bg-orange-700"
+                >
+                  Add
+                </button>
+              </td>
+            </tr>
+          ) : (
+            ''
+          )}
         </tbody>
       </table>
       <ToastContainer />

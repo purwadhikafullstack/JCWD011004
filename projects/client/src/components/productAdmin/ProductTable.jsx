@@ -4,6 +4,12 @@ import { BsFillPencilFill } from 'react-icons/bs'
 import { getAllProducts } from '../../services/reducer/productReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import ModalProduct from './ModalProduct'
+import jwtdecode from 'jwt-decode'
+
+const user = () => {
+  const token = localStorage.getItem('token')
+  if (token) return jwtdecode(token)
+}
 
 const tableHead = [
   'No',
@@ -73,12 +79,16 @@ function ProductTable() {
   return (
     <>
       <div className="w-full flex gap-10 justify-end">
-        <button
-          onClick={() => handleOpenModal(0)}
-          className={`btn h-9 w-36  active:bg-orange-700 hover:bg-orange-400 bg-orange-700`}
-        >
-          Create Product
-        </button>
+        {user().role === 1 ? (
+          <button
+            onClick={() => handleOpenModal(0)}
+            className={`btn h-9 w-36  active:bg-orange-700 hover:bg-orange-400 bg-orange-700`}
+          >
+            Create Product
+          </button>
+        ) : (
+          ''
+        )}
       </div>
       <div className="flex flex-col">
         <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
@@ -130,13 +140,15 @@ function ProductTable() {
                                 >
                                   View
                                 </button>
-                              ) : (
+                              ) : user().role === 1 ? (
                                 <button
                                   onClick={() => handleOpenModal(2, data)}
                                   className={`btn h-9 w-16 active:bg-orange-700 hover:bg-orange-400 bg-orange-700`}
                                 >
                                   Add
                                 </button>
+                              ) : (
+                                'No Warehouse'
                               )}
                             </div>
                           </td>
@@ -149,13 +161,15 @@ function ProductTable() {
                                 >
                                   View
                                 </button>
-                              ) : (
+                              ) : user().role === 1 ? (
                                 <button
                                   onClick={() => handleOpenModal(3, data)}
                                   className={`btn h-9 w-16 active:bg-orange-700 hover:bg-orange-400 bg-orange-700`}
                                 >
                                   Add
                                 </button>
+                              ) : (
+                                'No Image'
                               )}
                             </div>
                           </td>
@@ -163,13 +177,17 @@ function ProductTable() {
                             {data.isActive ? 'Active' : 'Non Active'}
                           </td>
                           <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-5 justify-center">
-                            <button
-                              onClick={() => {
-                                handleOpenModal(1, data)
-                              }}
-                            >
-                              <BsFillPencilFill />
-                            </button>
+                            {user().role === 1 ? (
+                              <button
+                                onClick={() => {
+                                  handleOpenModal(1, data)
+                                }}
+                              >
+                                <BsFillPencilFill />
+                              </button>
+                            ) : (
+                              'No Action'
+                            )}
                           </td>
                         </tr>
                       ))
