@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react'
 import Table from './component/Table'
 import { Link } from 'react-router-dom'
 
+// eslint-disable-next-line no-undef
+const apiUrl = process.env.REACT_APP_API_BASE_URL
+
 const Warehouse = () => {
   const [data, setData] = useState([])
   const [dta, setDta] = useState([])
@@ -12,7 +15,7 @@ const Warehouse = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/warehouse/get-all?page=${currentPage}&limit=10`
+        `${apiUrl}/warehouse/get-all?page=${currentPage}&limit=10`
       )
       setDta(response?.data)
       setData(response?.data?.data?.data)

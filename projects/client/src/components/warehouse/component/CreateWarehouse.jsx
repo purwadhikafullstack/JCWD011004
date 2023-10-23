@@ -17,11 +17,12 @@ function CreateWarehousePage() {
   const [isCreating, setIsCreating] = useState(false)
   const provinceName = province[selectedProvince - 1]
 
+  // eslint-disable-next-line no-undef
+  const apiUrl = process.env.REACT_APP_API_BASE_URL
+
   const fetchProvinces = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:8000/api/external/province'
-      )
+      const response = await axios.get(`${apiUrl}/external/province`)
       const provinces = response.data.rajaongkir.results
       setProvince(provinces)
     } catch (err) {
@@ -33,7 +34,7 @@ function CreateWarehousePage() {
     try {
       if (selectedProvince) {
         const response = await axios.get(
-          `http://localhost:8000/api/external/city?province=${selectedProvince}`
+          `${apiUrl}/external/city?province=${selectedProvince}`
         )
         const cities = response.data.rajaongkir.results
         setCities(cities)
@@ -85,7 +86,7 @@ function CreateWarehousePage() {
 
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/warehouse/create',
+        `${apiUrl}/warehouse/create`,
         warehouseData
       )
       console.log(response)

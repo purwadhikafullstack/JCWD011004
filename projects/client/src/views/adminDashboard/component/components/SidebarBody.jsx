@@ -5,8 +5,7 @@ import axios from 'axios'
 const apiUrl = process.env.REACT_APP_API_BASE_URL
 // eslint-disable-next-line
 const baseUrl = process.env.REACT_APP_FE_BASE_URL
-console.log(apiUrl)
-console.log(baseUrl)
+
 function SidebarBody() {
   const [activeLink, setActiveLink] = useState(window.location.href)
   const [admin, setAdmin] = useState()
