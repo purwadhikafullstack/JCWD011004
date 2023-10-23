@@ -1,0 +1,46 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  font-weight: 400;
+}
+.section-edit-acount,
+.show-account,
+.change-password {
+  background-color: #e6effb;
+  height: fit-content;
+  width: 408px;
+  padding: 32px;
+  border-radius: 10px;
+}
+
+.show-account {
+  height: 300px;
+}
+
+.change-password {
+  height: 600px;
+}
+
+input {
+  border-radius: 7px;
+}
+
+.btn-text {
+  color: #1071ff;
+}
+
+.btn {
+  background-color: #1071ff;
+  color: #fff;
+  height: 48px;
+  width: 168px;
+}
+
+.change-password {
+  text-decoration: dashed;
+}
