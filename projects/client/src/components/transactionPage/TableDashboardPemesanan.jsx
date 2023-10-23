@@ -9,6 +9,7 @@ export default function TableDashboardPemesanan() {
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage] = useState(5) // number of items to show per page
+  const [updateFetchData, setUpdateFetchData] = useState(false)
   const token = jwt_decode(localStorage.getItem('token'))
   const userId = token ? token.id : null
 
@@ -38,7 +39,7 @@ export default function TableDashboardPemesanan() {
 
   useEffect(() => {
     fetchData()
-  }, [userId, loading])
+  }, [userId, loading, updateFetchData])
 
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage
@@ -107,6 +108,8 @@ export default function TableDashboardPemesanan() {
               </table>
               <div className=" border-4 flex max-sm:w-1">
                 <UploadButton
+                  updatedFetch={setUpdateFetchData}
+                  dataUpdate={updateFetchData}
                   text="Upload Bukti Bayar"
                   transactionId={order.id}
                   userId={userId}

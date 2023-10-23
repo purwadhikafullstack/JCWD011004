@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-//eslint-disable-next-line
+
 const apiUrl = process.env.REACT_APP_API_BASE_URL
 
 const TabelStock = () => {
@@ -27,8 +27,7 @@ const TabelStock = () => {
     try {
       if (admin?.userInfo?.roleId === 1) {
         const response = await axios.get(
-          `${apiUrl}/stock/getAllStock?warehouseId=${selectedWarehouse}
-          `
+          `${apiUrl}/stock/getAllStock?warehouseId=${selectedWarehouse}`
         )
         setProducts(response?.data)
       } else if (admin?.userInfo?.roleId === 2) {
@@ -51,6 +50,7 @@ const TabelStock = () => {
       console.error(error)
     }
   }
+
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
@@ -65,11 +65,10 @@ const TabelStock = () => {
       }
     }
 
-    // Cek apakah admin sudah ada sebelum memanggil fetchAdmin
     if (!admin) {
       fetchAdmin()
     }
-  }, [admin]) // admin sebagai dependensi
+  }, [admin])
 
   const handleWarehouseChange = (e) => {
     setSelectedWarehouse(e.target.value)
@@ -96,7 +95,6 @@ const TabelStock = () => {
       const response = await axios.get(
         `${apiUrl}/stock/journals-product/${product.id}`
       )
-      console.log(response)
       setHistoryData(response?.data)
       setSelectedProduct(product)
       setShowHistoryModal(true)
@@ -112,6 +110,12 @@ const TabelStock = () => {
       return
     }
 
+    if (editAction === 'decrement' && editQuantity > selectedProduct.stock) {
+      toast.error('Cannot decrement more than the current stock', {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      return
+    }
     setIsLoading(true)
 
     try {
@@ -120,13 +124,15 @@ const TabelStock = () => {
         {
           warehouseId: selectedProduct.warehouseId,
           warehouseProductId: selectedProduct.id,
-          quantity: editQuantity,
+          quantity: editAction === 'decrement' ? -editQuantity : editQuantity,
           description: editDescription,
           action: editAction
         }
       )
 
-      toast.success('Edit successful')
+      toast.success('Edit successful', {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
       setUpdateStock(!updateStock)
       console.log('Response:', response.data)
       closeEditModal()
@@ -147,7 +153,6 @@ const TabelStock = () => {
 
   useEffect(() => {
     if (admin) {
-      // Hanya panggil fetchProducts jika admin sudah ada
       fetchProducts()
       fetchWarehouses()
     }
@@ -321,7 +326,7 @@ const TabelStock = () => {
                   }`}
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Loading...' : 'Edit'}
+                  {isLoading ? 'Loading...' : 'Save'}
                 </button>
                 <button
                   type="button"
