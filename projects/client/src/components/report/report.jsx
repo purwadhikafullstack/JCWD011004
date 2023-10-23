@@ -190,7 +190,6 @@ const Report = () => {
                     <th className="p-3">No</th>
                     <th className="p-3">Product</th>
                     <th className="p-3">Description</th>
-                    <th className="p-3">Initial Stock</th>
                     <th className="p-3">Total Addition</th>
                     <th className="p-3">Total Subtraction</th>
                     <th className="p-3">Total Stock</th>
@@ -207,10 +206,9 @@ const Report = () => {
                       <td className="p-3">{index + 1}</td>
                       <td className="p-3">{history?.productName}</td>
                       <td className="p-3">{history?.description}</td>
-                      <td className="p-3">{history?.initialStock}</td>
                       <td className="p-3">{history?.totalAddition}</td>
                       <td className="p-3">{history?.totalSubtraction}</td>
-                      <td className="p-3">{history?.endingStock}</td>
+                      <td className="p-3">{history?.initialStock}</td>
                     </tr>
                   ))}
                 </tbody>
