@@ -18,6 +18,7 @@ function CategoryTable() {
   const [isCategoryChange, setIsCategoryChange] = useState(false)
   const [editedCategoryName, setEditedCategoryName] = useState('')
   const [editingIndex, setEditingIndex] = useState(null)
+  // const [newCategoryInput, setNewCategoryInput] = useState('')
 
   const handleEditCategory = (index) => {
     setEditingIndex(index)
@@ -55,6 +56,9 @@ function CategoryTable() {
   }
 
   const handleAddCategory = async () => {
+    if (editedCategoryName.trim() === '') {
+      return
+    }
     try {
       const res = await axios.post(`${apiUrl}/category`, {
         name: editedCategoryName
@@ -197,6 +201,7 @@ function CategoryTable() {
                 <button
                   onClick={() => handleAddCategory()}
                   className="btn h-9 w-16 active:bg-orange-700 hover:bg-orange-400 bg-orange-700"
+                  disabled={editedCategoryName.trim() === ''}
                 >
                   Add
                 </button>

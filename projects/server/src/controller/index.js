@@ -41,7 +41,8 @@ const {
   getAllStock,
   createStockJournal,
   getStockJournalsByProduct,
-  getStockByProductAndWarehouse
+  getStockByProductAndWarehouse,
+  createBulkStockJournal
 } = require('./stock/AdminSuper/stock')
 const getAllStockWarehouse = require('./stock/AdminWarehouse/stockWarehouse')
 const { courierOngkir } = require('./ongkir/getOngkir')
@@ -72,6 +73,7 @@ const {
   addWarehouseProduct,
   deleteWarehouseProduct
 } = require('./product/warehouseProduct')
+
 module.exports = {
   registerUser,
   login,
@@ -139,5 +141,6 @@ module.exports = {
   addCategory,
   updateCategory,
   deleteCategory,
-  getSalesReport
+  getSalesReport,
+  createBulkStockJournal
 }

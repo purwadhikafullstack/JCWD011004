@@ -5,6 +5,8 @@ import { getAllProducts } from '../../services/reducer/productReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import ModalProduct from './ModalProduct'
 import jwtdecode from 'jwt-decode'
+import Dropdown from '../dropdown/dropdownSort'
+import DropdownCategory from '../dropdown/dropdownCategory'
 
 const user = () => {
   const token = localStorage.getItem('token')
@@ -23,8 +25,13 @@ const tableHead = [
   'Status',
   'Action'
 ]
-// eslint-disable-next-line no-undef
-// const apiUrl = process.env.REACT_APP_API_BASE_URL
+
+function formatRupiah(price) {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR'
+  }).format(price)
+}
 
 function ProductTable() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -38,6 +45,7 @@ function ProductTable() {
   const [modalNumber, setModalNumber] = useState(0)
   const [productIndex, setProductIndex] = useState(1)
   const [warehouseProduct, setWarehouseProduct] = useState([])
+  const categoryIdx = useSelector((state) => state.dataProduct.categoryIdx)
 
   function handleOpenModal(data, dataWarehouse) {
     setModalNumber(data)
@@ -54,15 +62,21 @@ function ProductTable() {
 
   useEffect(() => {
     const sortEndpoints = {
-      0: `all?limit=12&sort=1&page=${currentPage}`,
-      1: `all?limit=12&sort=2&page=${currentPage}`,
-      2: `all?limit=12&sort=3&page=${currentPage}`
+      0: `all?categoryId=${
+        categoryIdx === 0 ? '' : categoryIdx
+      }&limit=12&sort=1&page=${currentPage}`,
+      1: `all?categoryId=${
+        categoryIdx === 0 ? '' : categoryIdx
+      }&limit=12&sort=2&page=${currentPage}`,
+      2: `all?categoryId=${
+        categoryIdx === 0 ? '' : categoryIdx
+      }&limit=12&sort=3&page=${currentPage}`
     }
-    const endpoint = sortEndpoints[2]
+    const endpoint = sortEndpoints[sortIdx]
     if (endpoint) {
       dispatch(getAllProducts(endpoint))
     }
-  }, [dispatch, sortIdx, currentPage, isWarehouseProduct])
+  }, [categoryIdx, sortIdx, currentPage, isWarehouseProduct])
 
   useEffect(() => {
     setCurrentPage(1)
@@ -92,6 +106,10 @@ function ProductTable() {
       </div>
       <div className="flex flex-col">
         <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+          <div className="flex items-center">
+            <DropdownCategory />
+            <Dropdown />
+          </div>
           <div className="py-10 inline-block min-w-full sm:px-6 lg:px-8">
             <div className="overflow-hidden">
               <table className="min-w-full">
@@ -123,7 +141,7 @@ function ProductTable() {
                             {data.name}
                           </td>
                           <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {data.price}
+                            {formatRupiah(data.price)}
                           </td>
                           <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                             {data.weight}

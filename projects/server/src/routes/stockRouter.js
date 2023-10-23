@@ -4,20 +4,16 @@ const {
   getAllStock,
   createStockJournal,
   getStockJournalsByProduct,
-  getStockByProductAndWarehouse
+  getStockByProductAndWarehouse,
+  createBulkStockJournal
 } = require('../controller')
-const {getAllStockWarehouse} = require('../controller')
+const { getAllStockWarehouse } = require('../controller')
 
 router.get('/getAllStock', getAllStock)
 router.post('/create-stock-journal', createStockJournal)
-router.get(
-  '/journals-product/:productId',
-  getStockJournalsByProduct
-)
-router.get(
-  '/stock-product-warehouse',
-  getStockByProductAndWarehouse
-)
+router.post('/create-bulk-stock-journal', createBulkStockJournal)
+router.get('/journals-product/:productId', getStockJournalsByProduct)
+router.get('/stock-product-warehouse', getStockByProductAndWarehouse)
 router.get('/getAllStockWarehouse/:id', getAllStockWarehouse)
 
 module.exports = router
