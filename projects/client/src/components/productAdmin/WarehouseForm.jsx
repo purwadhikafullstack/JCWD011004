@@ -3,6 +3,12 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import { triggerWarehouseProduct } from '../../services/reducer/productReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import jwtdecode from 'jwt-decode'
+
+const user = () => {
+  const token = localStorage.getItem('token')
+  if (token) return jwtdecode(token)
+}
 
 function WarehouseProductForm({ dataProduct }) {
   const [warehouseData, setWarehouseData] = useState(
@@ -99,17 +105,21 @@ function WarehouseProductForm({ dataProduct }) {
             <tr key={index}>
               <td className="flex items-center justify-between px-4 py-1 border-2 border-white m-1">
                 <div className="text-black">{data.Warehouse.name}</div>
-                <button
-                  onClick={() => handleDeleteWarehouse(data.id)}
-                  key={index}
-                  className={`btn h-9 w-16 active:bg-gray-700 hover:bg-gray-400 bg-gray-700`}
-                >
-                  Delete
-                </button>
+                {user().role === 1 ? (
+                  <button
+                    onClick={() => handleDeleteWarehouse(data.id)}
+                    key={index}
+                    className={`btn h-9 w-16 active:bg-gray-700 hover:bg-gray-400 bg-gray-700`}
+                  >
+                    Delete
+                  </button>
+                ) : (
+                  ''
+                )}
               </td>
             </tr>
           ))}
-          {warehouse.length > 0 ? (
+          {warehouse.length > 0 && user().role === 1 ? (
             <div className="flex items-center justify-between pl-2 pr-4 py-1 m-1">
               <select
                 id="warehouseSelect"

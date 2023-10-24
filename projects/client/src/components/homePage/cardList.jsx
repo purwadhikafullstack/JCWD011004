@@ -35,6 +35,10 @@ function CardList() {
     }
   }
 
+  const activeProducts = products
+    ? products.filter((product) => product.isActive === true)
+    : []
+
   return (
     <>
       <div className="my-2 pl-5 hover:text-orange-400 transition duration-300 ease-in-out border-t border-gray-500 border-b text-left">
@@ -47,9 +51,9 @@ function CardList() {
         <Dropdown />
       </div>
       <div className="grid grid-cols-2 xl:grid-cols-4">
-        {products
-          ? products.map((data, index) => <Card key={index} product={data} />)
-          : ''}
+        {activeProducts.map((data, index) => (
+          <Card key={index} product={data} />
+        ))}
       </div>
       <div className="flex items-center justify-center m-4">
         {totalPage > 1 && (

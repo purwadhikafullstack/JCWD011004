@@ -4,43 +4,64 @@ import Dropdown from '../dropdown/dropdownSort'
 import DropdownCategory from '../dropdown/dropdownCategory'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  getAllProducts,
+  // getAllProducts,
   getCategoryIdx
 } from '../../services/reducer/productReducer'
 import { useParams } from 'react-router-dom'
+import axios from 'axios'
+
+// eslint-disable-next-line
+const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 function CardList() {
   const { category } = useParams()
   const categoryNumber = parseInt(category)
   const dispatch = useDispatch()
-  const dataProduct = useSelector((state) => state.dataProduct.allProducts)
   const sortIdx = useSelector((state) => state.dataProduct.sortIdx)
   const categoryIdx = useSelector((state) => state.dataProduct.categoryIdx)
   const [currentPage, setCurrentPage] = useState(1)
+  const [stateActiveProduct, setactiveProduct] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const products = dataProduct.products
-  const totalPage = dataProduct.totalPages
+  const totalPage = stateActiveProduct.totalPages
+
+  const fetchData = async () => {
+    const baseEndpoint = `all?${
+      categoryIdx === 0 ? '' : `categoryId=${categoryIdx}&`
+    }limit=12&sort=`
+
+    const sortEndpoints = {
+      0: `${baseEndpoint}1&page=${currentPage}`,
+      1: `${baseEndpoint}2&page=${currentPage}`,
+      2: `${baseEndpoint}3&page=${currentPage}`
+    }
+
+    const endpoint = sortEndpoints[sortIdx]
+
+    if (endpoint) {
+      try {
+        const { data } = await axios.get(`${baseUrl}/product/${endpoint}`)
+        if (data) {
+          const dataActive = data?.products?.filter(
+            (product) => product.isActive === true
+          )
+          setactiveProduct(dataActive)
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+  }
+
   useEffect(() => {
     dispatch(getCategoryIdx(categoryNumber))
-  }, [dispatch, category])
+  }, [])
 
   useEffect(() => {
-    const sortEndpoints = {
-      0: `all?categoryId=${
-        categoryIdx === 0 ? '' : categoryIdx
-      }&limit=12&sort=1&page=${currentPage}`,
-      1: `all?categoryId=${
-        categoryIdx === 0 ? '' : categoryIdx
-      }&limit=12&sort=2&page=${currentPage}`,
-      2: `all?categoryId=${
-        categoryIdx === 0 ? '' : categoryIdx
-      }&limit=12&sort=3&page=${currentPage}`
-    }
-    const endpoint = sortEndpoints[sortIdx]
-    if (endpoint) {
-      dispatch(getAllProducts(endpoint))
-    }
-  }, [dispatch, sortIdx, currentPage, categoryIdx])
+    fetchData()
+  }, [sortIdx, currentPage, categoryIdx])
 
   useEffect(() => {
     setCurrentPage(1)
@@ -62,11 +83,15 @@ function CardList() {
         <span className="mr-2">Sort By:</span>
         <Dropdown />
       </div>
-      <div className="grid grid-cols-2 xl:grid-cols-4">
-        {products
-          ? products.map((data, index) => <Card key={index} product={data} />)
-          : ''}
-      </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="grid grid-cols-2 xl:grid-cols-4">
+          {stateActiveProduct.map((data, index) => (
+            <Card key={index} product={data} />
+          ))}
+        </div>
+      )}
       <div className="flex items-center justify-center m-4">
         {totalPage > 1 && (
           <div className="flex items-center mb-20">

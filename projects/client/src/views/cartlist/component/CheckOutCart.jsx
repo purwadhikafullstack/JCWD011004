@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { setCount } from '../../../services/reducer/cartReducer'
 
+// eslint-disable-next-line no-undef
 const apiUrl = process.env.REACT_APP_API_BASE_URL
 
 function formatRupiah(number) {

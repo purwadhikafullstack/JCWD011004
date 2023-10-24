@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const db = require('../../models')
 const User = db.User
+const Warehouse_Admin = db.Warehouse_Admin
 const verifyToken = async (req, res, next) => {
   const tokenApi = req.headers.authorization
   const tokenEmail = req.params.tokenEmail
@@ -34,10 +35,20 @@ const verifyToken = async (req, res, next) => {
     }
     if (!verifiedUser.username) {
       dataUser = await User.findOne({
+        include: [
+          {
+            model: Warehouse_Admin
+          }
+        ],
         where: { id: verifiedUser.userId }
       })
     } else {
       dataUser = await User.findOne({
+        include: [
+          {
+            model: Warehouse_Admin
+          }
+        ],
         where: { username: verifiedUser.username }
       })
     }

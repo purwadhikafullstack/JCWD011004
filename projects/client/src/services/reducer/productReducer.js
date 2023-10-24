@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:8000/'
+// eslint-disable-next-line
+const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 const initialState = {
   allProducts: {},
@@ -36,8 +37,9 @@ export const ProductReducer = createSlice({
 export const getAllProducts = (paramUrl) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${baseUrl}api/product/${paramUrl}`)
+      const { data } = await axios.get(`${baseUrl}/product/${paramUrl}`)
       dispatch(allDataProduct(data))
+      return data
     } catch (err) {
       console.log(err)
     }
