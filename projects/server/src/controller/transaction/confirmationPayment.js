@@ -5,13 +5,15 @@ const Transaction = db.Transaction
 const rejectPayment = async (req, res) => {
   try {
     const transaction = await Transaction.findOne({
-      where: { id: req.params.id }
+      where: { id: req.params.id },
+      include: [db.User]
     })
+
     if (!transaction) {
       return res.status(404).json({ message: 'Transaction not found' })
     }
     await updateTransactionStatus(transaction, 0)
-    await sendRejectionEmail()
+    await sendRejectionEmail(transaction.User.email) // pass in userEmail parameter
     res.json({ message: 'Payment rejected successfully' })
   } catch (err) {
     console.error(err)

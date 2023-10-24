@@ -7,7 +7,11 @@ import {
   openAddAddress
 } from '../../services/reducer/addressReducer'
 import { ToastContainer } from 'react-toastify'
-import { getCourier, storeCourier } from '../../services/reducer/courierReducer'
+import {
+  getCourier,
+  setAddress,
+  storeCourier
+} from '../../services/reducer/courierReducer'
 
 export const DropdownAddress = () => {
   const { userData } = useSelector((state) => state.dataAddress.allAddress)
@@ -50,6 +54,7 @@ export const DropdownAddress = () => {
           'jne'
         )
       )
+      dispatch(setAddress(userAddress[0]))
     } else {
       dispatch(storeCourier({}))
     }

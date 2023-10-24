@@ -51,15 +51,12 @@ export const UpdateAddress = () => {
 
   const longLat = async () => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:8000/api/external/longlat`,
-        {
-          params: {
-            cityRegency: cityRegencyData.city_name,
-            province: cityRegencyData.province
-          }
+      const { data } = await axios.get(`${apiUrl}/external/longlat`, {
+        params: {
+          cityRegency: cityRegencyData.city_name,
+          province: cityRegencyData.province
         }
-      )
+      })
       setStateLonglat(data.results[0].geometry)
     } catch (err) {
       console.log(err.message)

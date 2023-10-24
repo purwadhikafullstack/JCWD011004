@@ -1,11 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+// eslint-disable-next-line no-undef
+const apiUrl = process.env.REACT_APP_API_BASE_URL
 
 const initialState = {
   courier: {},
   isCourier: true,
   wait: false,
-  selectedCourierData: {}
+  selectedCourierData: {},
+  selectedAddress: {}
 }
 
 export const CourierReducer = createSlice({
@@ -23,6 +26,9 @@ export const CourierReducer = createSlice({
     },
     selectedCourierData: (state, action) => {
       state.selectedCourierData = action.payload
+    },
+    setAddress: (state, action) => {
+      state.selectedAddress = action.payload
     }
   }
 })
@@ -41,7 +47,7 @@ export const getCourier = (
     dispatch(courierDataWait(true))
     try {
       const { data } = await axios.post(
-        'http://localhost:8000/api/ongkir/cost',
+        `${apiUrl}/ongkir/cost`,
         {
           userCityId,
           userLatitude,
@@ -69,6 +75,7 @@ export const {
   storeCourier,
   isCourierAvailable,
   courierDataWait,
-  selectedCourierData
+  selectedCourierData,
+  setAddress
 } = CourierReducer.actions
 export default CourierReducer.reducer

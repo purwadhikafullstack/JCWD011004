@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.hasMany(models.StockJournal, { foreignKey: 'warehouseProductId' })
       this.belongsTo(models.Product, { foreignKey: 'productId' })
-      this.belongsTo(models.Warehouse, { foreignKey: 'warehouseId' }) // Menambahkan relasi ke Warehouse
+      this.belongsTo(models.Warehouse, { foreignKey: 'warehouseId' })
     }
   }
 

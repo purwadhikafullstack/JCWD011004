@@ -23,10 +23,13 @@ function ConfirmationForm({ data, onClose }) {
         onClose(true)
       }
     } catch (error) {
-      toast.error(error?.message, {
-        autoClose: 2000,
-        position: 'bottom-center'
-      })
+      toast.error(
+        'Insufficient stock on all warehouse please contact SuperAdmin',
+        {
+          autoClose: 2000,
+          position: 'bottom-center'
+        }
+      )
     } finally {
       setLoading(false)
     }
@@ -88,22 +91,28 @@ function ConfirmationForm({ data, onClose }) {
   }
 
   const handleUpdateStock = async () => {
+    const productIds = data.Transaction_Items.map((item) => item.productId)
+    const quantities = data.Transaction_Items.map((item) => item.quantity)
     try {
-      const res = await axios.post(`${apiurl}/stock/create-stock-journal`, {
-        warehouseId: data?.Warehouse?.id,
-        warehouseProductId: data?.Transaction_Items[0]?.productId,
-        quantity: data?.Transaction_Items[0].quantity,
-        description: 'Transaction cancelled',
-        action: 'increment'
-      })
+      const res = await axios.post(
+        `${apiurl}/stock/create-bulk-stock-journal`,
+        {
+          warehouseId: data?.Warehouse?.id,
+          productId: productIds,
+          quantity: quantities,
+          description: 'Transaction cancelled',
+          action: 'increment'
+        }
+      )
 
-      if (res?.status === 200) {
+      if (res?.status === 201) {
         await handleChangeStatusPayment(5, 'Cancel')
       }
     } catch (error) {
       console.log(error.message)
     }
   }
+
   const fetchImage = async () => {
     const response = await axios.get(
       `${apiurl}/transaction/payment-proof/${data?.id}`

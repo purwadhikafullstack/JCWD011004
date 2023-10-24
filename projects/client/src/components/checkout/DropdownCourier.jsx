@@ -10,9 +10,9 @@ import {
 export const DropdownCourier = () => {
   const dispatch = useDispatch()
   const dataCourier = useSelector((state) => state.dataCourier.courier)
+  const userAddress = useSelector((state) => state.dataCourier.selectedAddress)
   const costCourier = dataCourier?.courier?.results[0].costs
-  const { userData } = useSelector((state) => state.dataAddress.allAddress)
-  const addressData = userData
+
   const isCourier = useSelector((state) => state.dataCourier.isCourier)
   const isWait = useSelector((state) => state.dataCourier.wait)
 
@@ -31,9 +31,9 @@ export const DropdownCourier = () => {
     dispatch(isCourierAvailable(true))
     dispatch(
       getCourier(
-        addressData[event.target.value]?.cityId,
-        addressData[event.target.value]?.latitude,
-        addressData[event.target.value]?.longitude,
+        userAddress.cityId,
+        userAddress.latitude,
+        userAddress.longitude,
         totalWeight,
         dataAllCourier[event.target.value]
       )
@@ -71,6 +71,7 @@ export const DropdownCourier = () => {
   const handleCourierTypeChange = (event) => {
     setSelectedCourierType(event.target.value)
   }
+
   if (dataCourier.success) {
     return (
       <div>

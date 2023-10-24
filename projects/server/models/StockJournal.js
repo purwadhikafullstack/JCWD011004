@@ -1,12 +1,16 @@
-'use strict';
-const { Model } = require('sequelize');
+const { Model } = require('sequelize')
+
 module.exports = (sequelize, DataTypes) => {
   class StockJournal extends Model {
     static associate(models) {
-      this.belongsTo(models.Warehouse, { foreignKey: 'warehouseId' });
-      this.belongsTo(models.Warehouse_Product, { foreignKey: 'warehouseProductId' });
+      this.belongsTo(models.Warehouse, { foreignKey: 'warehouseId' })
+      this.belongsTo(models.Warehouse_Product, {
+        foreignKey: 'warehouseProductId',
+        onDelete: 'CASCADE'
+      })
     }
   }
+
   StockJournal.init(
     {
       warehouseId: {
@@ -33,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'StockJournal'
     }
-  );
-  return StockJournal;
-};
+  )
+
+  return StockJournal
+}

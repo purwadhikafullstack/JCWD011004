@@ -87,7 +87,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
     >
       <div className="relative bg-white p-8 rounded-lg shadow-lg w-80 flex flex-col items-center">
         <button
-          className="absolute top-0 right-0 m-3 text-black-500 hover:text-black-500 focus:outline-none"
+          className="absolute top-0 right-0 m-3 text-gray-600 hover:text-black-500 focus:outline-none"
           onClick={onClose}
         >
           <span className="text-2xl font-bold cursor-pointer">×</span>
@@ -100,7 +100,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
           <input
             type="text"
             id="email"
-            className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
+            className="w-full p-2 border rounded text-gray-600 border-gray-300 focus:outline-none focus:border-blue-500"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -114,7 +114,7 @@ const LoginModal = ({ isOpen, onClose, onOpenRegister, onOpenResetPass }) => {
             <input
               type={showPassword ? 'text' : 'password'}
               id="password"
-              className="w-full p-2  border rounded border-gray-300 focus:outline-none focus:border-blue-500"
+              className="w-full p-2  border rounded text-gray-600 border-gray-300 focus:outline-none focus:border-blue-500"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
