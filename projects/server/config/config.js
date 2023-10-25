@@ -20,10 +20,10 @@ module.exports = {
     dialect: 'mysql'
   },
   production: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    host: process.env.DB_HOST,
+    username: 'jcwd011004',
+    password: 'jcwd011004',
+    database: 'jcwd011004',
+    host: 'adminer2.purwadhikabootcamp.com',
     dialect: 'mysql'
   }
 }
