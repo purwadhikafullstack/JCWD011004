@@ -124,7 +124,7 @@ const TabelStock = () => {
         {
           warehouseId: selectedProduct.warehouseId,
           warehouseProductId: selectedProduct.id,
-          quantity: editAction === 'decrement' ? -editQuantity : editQuantity,
+          quantity: editAction === 'decrement' ? editQuantity : editQuantity,
           description: editDescription,
           action: editAction
         }
