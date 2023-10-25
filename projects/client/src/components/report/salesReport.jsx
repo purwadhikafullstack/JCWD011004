@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Bar } from 'react-chartjs-2'
 import 'chart.js/auto'
+import jwtDecode from 'jwt-decode'
+
+const user = () => {
+  const token = localStorage.getItem('token')
+  if (token) return jwtDecode(token)
+}
 
 function formatRupiah(price) {
   return new Intl.NumberFormat('id-ID', {
@@ -23,16 +29,15 @@ function SalesReport() {
   const [month, setMonth] = useState(new Date().getMonth() + 1)
   const [filter, setFilter] = useState('category')
 
-  console.log(categoryReport)
-  console.log(productReport)
-
   // eslint-disable-next-line
   const apiUrl = process.env.REACT_APP_API_BASE_URL
 
   useEffect(() => {
     axios
       .get(
-        `${apiUrl}/report/sales?year=${year}&month=${month}&filter=${filter}`
+        `${apiUrl}/report/sales?year=${year}&month=${month}&filter=${filter}${
+          user().warehouseId ? `&warehouseId=${user().warehouseId}` : ''
+        }`
       )
       .then((response) => {
         setCategoryReport(response.data.categoryTotals)
@@ -115,6 +120,9 @@ function SalesReport() {
 
   return (
     <div className="p-4">
+      <div className="mb-8 text-2xl font-semibold">{`Warehouse : ${
+        user().warehouseName ? user().warehouseName : 'All'
+      }`}</div>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
       {!loading && !error && (

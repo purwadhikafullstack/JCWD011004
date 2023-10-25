@@ -12,6 +12,25 @@ const salesReport = {
       const year = req.query.year
       const month = req.query.month
       const filter = req.query.filter
+      const warehouseId = req.query.warehouseId
+
+      const whereClause = {
+        [Sequelize.Op.and]: [
+          Sequelize.where(
+            Sequelize.fn('YEAR', Sequelize.col('Transaction.createdAt')),
+            year
+          ),
+          Sequelize.where(
+            Sequelize.fn('MONTH', Sequelize.col('Transaction.createdAt')),
+            month
+          )
+        ],
+        transactionStatusId: 4
+      }
+
+      if (warehouseId) {
+        whereClause.warehouseId = warehouseId
+      }
 
       const salesReports = await Transaction.findAll({
         include: [
@@ -44,18 +63,7 @@ const salesReport = {
             }
           }
         ],
-        where: {
-          [Sequelize.Op.and]: [
-            Sequelize.where(
-              Sequelize.fn('YEAR', Sequelize.col('Transaction.createdAt')),
-              year
-            ),
-            Sequelize.where(
-              Sequelize.fn('MONTH', Sequelize.col('Transaction.createdAt')),
-              month
-            )
-          ]
-        }
+        where: whereClause
       })
 
       if (filter === 'category') {

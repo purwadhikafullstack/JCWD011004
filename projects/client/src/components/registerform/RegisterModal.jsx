@@ -61,7 +61,7 @@ const RegisterModal = ({ isOpen, onClose, onOpenLogin }) => {
     >
       <div className="relative bg-white p-8 rounded-lg shadow-lg w-80 flex flex-col items-center">
         <button
-          className="absolute top-0 right-0 m-3 text-black-500 hover:text-black-500 focus:outline-none"
+          className="absolute top-0 right-0 m-3 text-gray-600 hover:text-black-500 focus:outline-none"
           onClick={onClose}
         >
           <span className="text-2xl font-bold cursor-pointer">×</span>

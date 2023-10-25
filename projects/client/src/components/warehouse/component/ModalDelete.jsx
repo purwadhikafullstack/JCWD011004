@@ -2,12 +2,13 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+// eslint-disable-next-line no-undef
+const apiUrl = process.env.REACT_APP_API_BASE_URL
+
 function DeleteModal({ id, isOpen, onClose }) {
   const handleClick = async () => {
     try {
-      const response = await axios.delete(
-        `http://localhost:8000/api/warehouse/delete/${id}`
-      )
+      const response = await axios.delete(`${apiUrl}/warehouse/delete/${id}`)
 
       if (response.status === 200) {
         toast.success('Gudang berhasil dihapus'),

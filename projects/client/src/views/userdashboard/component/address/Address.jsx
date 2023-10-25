@@ -54,38 +54,42 @@ export const Address = () => {
 
   return (
     <div>
-      {addressData?.map((address, index) => (
-        <div
-          key={index}
-          className="bg-white rounded-lg my-2 p-2 text-sm text-left"
-          style={{ display: 'flex', flexDirection: 'column' }}
-        >
-          <div className="section-header flex justify-between">
-            <p className="font-semibold">{`${address?.name} (${address?.phone})`}</p>
-            <div className="flex">
-              <a
-                onClick={() => {
-                  handleShowEdit(index)
-                }}
-                className="cursor-pointer px-2"
-              >
-                <PiPencilLineDuotone />
-              </a>
-              <a
-                onClick={() => {
-                  handleDeleteAddress(index)
-                }}
-                className="cursor-pointer px-2"
-              >
-                <BsFillTrash3Fill />
-              </a>
+      {addressData?.length > 0 ? (
+        addressData?.map((address, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-lg my-2 p-2 text-sm text-left"
+            style={{ display: 'flex', flexDirection: 'column' }}
+          >
+            <div className="section-header flex justify-between">
+              <p className="font-semibold">{`${address?.name} (${address?.phone})`}</p>
+              <div className="flex">
+                <a
+                  onClick={() => {
+                    handleShowEdit(index)
+                  }}
+                  className="cursor-pointer px-2"
+                >
+                  <PiPencilLineDuotone />
+                </a>
+                <a
+                  onClick={() => {
+                    handleDeleteAddress(index)
+                  }}
+                  className="cursor-pointer px-2"
+                >
+                  <BsFillTrash3Fill />
+                </a>
+              </div>
             </div>
+            <p>{address?.address}</p>
+            <p>{`${address?.subdistrict}, ${address?.cityRegency}, ${address?.province}`}</p>
+            <p>{`Indonesia ${address?.postalcode}`}</p>
           </div>
-          <p>{address?.address}</p>
-          <p>{`${address?.subdistrict}, ${address?.cityRegency}, ${address?.province}`}</p>
-          <p>{`Indonesia ${address?.postalcode}`}</p>
-        </div>
-      ))}
+        ))
+      ) : (
+        <div className="text-gray-500">Please add address</div>
+      )}
       <ToastContainer />
     </div>
   )

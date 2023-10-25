@@ -108,7 +108,7 @@ const AddImage = ({ productId }) => {
           style={{ display: photoPreview ? 'block' : 'none' }}
         >
           <span
-            className="block w-40 h-40 rounded-full m-auto shadow"
+            className="block w-full h-40 rounded-lg m-auto shadow"
             style={{
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',

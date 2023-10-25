@@ -17,12 +17,12 @@ function EditWarehousePage() {
   const [isUpdating, setIsUpdating] = useState(false)
   const provinceName = province[selectedProvince - 1]
   const { id } = useParams()
+  //eslint-disable-next-line
+  const apiUrl = process.env.REACT_APP_API_BASE_URL
 
   const fetchProvinces = async () => {
     try {
-      const { data } = await axios.get(
-        'http://localhost:8000/api/external/province'
-      )
+      const { data } = await axios.get(`${apiUrl}/external/province`)
       const provinces = data.rajaongkir.results
       setProvince(provinces)
     } catch (err) {
@@ -34,7 +34,7 @@ function EditWarehousePage() {
     try {
       if (selectedProvince) {
         const response = await axios.get(
-          `http://localhost:8000/api/external/city?province=${selectedProvince}`
+          `${apiUrl}/external/city?province=${selectedProvince}`
         )
         const cities = response.data.rajaongkir.results
         setCities(cities)
@@ -79,7 +79,7 @@ function EditWarehousePage() {
     }
     try {
       const response = await axios.patch(
-        `http://localhost:8000/api/warehouse/update/${id}`,
+        `${apiUrl}/warehouse/update/${id}`,
         warehouseData
       )
       console.log('Response from API:', response.data)
