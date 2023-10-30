@@ -4,6 +4,7 @@ const ProductImage = db.Product_Image
 const upload = require('../../middleware/userAvatar')
 const fs = require('fs')
 const serverBaseURL = process.env.SERVER_BASE_URL || 'http://localhost:8000'
+const path = require('path')
 
 const product = {
   addProduct: async (req, res) => {
@@ -183,8 +184,8 @@ const product = {
         const parts = imageUrl.split('/')
         const fileName = parts[parts.length - 1]
 
-        if (fs.existsSync(`public/uploads/${fileName}`)) {
-          fs.unlinkSync(`public/uploads/${fileName}`)
+        if (fs.existsSync(path.resolve(__dirname, `../../../public/uploads/${fileName}`))) {
+          fs.unlinkSync(path.resolve(__dirname, `../../../public/uploads/${fileName}`))
         } else {
           res.status(404).send('Image not found')
         }
